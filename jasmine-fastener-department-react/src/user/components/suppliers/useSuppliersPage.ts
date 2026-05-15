@@ -1,0 +1,82 @@
+import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
+import {useNavigate} from "react-router-dom";
+import {useNotify} from "../../../shared/providers/NotificationProvider.tsx";
+import {useEffect, useState} from "react";
+import {
+    changeSupplier,
+    clearSelectedSupplier,
+    createSupplier,
+    getExtendedSuppliers,
+    selectSupplier
+} from "../../slices/SuppliersSlice.ts";
+import type {ChangeSupplierModel, SuppliersPageState} from "../../models/supplierModels.ts";
+import {NotificationMessage} from "../../../shared/models/notificationModel.ts";
+
+const useSuppliersPage = () => {
+    const state = useAppSelector<SuppliersPageState>(
+        (state) => state.suppliers
+    );
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const notification = useNotify();
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    function handleOpenDialogToCreate() {
+        dispatch(clearSelectedSupplier());
+        handleOpen();
+    }
+
+    function handleOpenDialogToChange(id: string) {
+        dispatch(selectSupplier({id}));
+        handleOpen();
+    }
+
+    const handleCreate = async (model: ChangeSupplierModel) => {
+        handleClose();
+        await dispatch(createSupplier(model));
+        await dispatch(getExtendedSuppliers());
+    }
+
+    const handleChange = async (model: ChangeSupplierModel) => {
+        const id = state.selectedSupplier?.id;
+
+        if (!id) {
+            return;
+        }
+
+        handleClose();
+        await dispatch(changeSupplier({id, model}));
+        await dispatch(getExtendedSuppliers());
+    }
+
+    const handleNavigateToSupplierProducts = (id: string) => {
+        navigate(id);
+    }
+
+    useEffect(() => {
+        if (state.error) {
+            const message = NotificationMessage.error(state.error!).message;
+            notification.notifyError(message!);
+        }
+    }, [notification, state.error]);
+
+    useEffect(() => {
+        dispatch(getExtendedSuppliers());
+    }, [dispatch]);
+
+    return {
+        open,
+        handleOpenDialogToCreate,
+        handleOpenDialogToChange,
+        handleCreate,
+        handleChange,
+        handleClose,
+        handleNavigateToSupplierProducts,
+    };
+}
+
+export default useSuppliersPage;
