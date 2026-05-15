@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Jasmine.FastenerDepartment.DesktopApplication.Domain\Jasmine.FastenerDepartment.Domain.csproj" />
+	  <ProjectReference Include="..\Jasmine.FastenerDepartment.Domain\Jasmine.FastenerDepartment.Domain.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

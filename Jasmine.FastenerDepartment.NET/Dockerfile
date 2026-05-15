@@ -5,7 +5,7 @@ WORKDIR /src
 COPY Jasmine.FastenerDepartment.WebApi/Jasmine.FastenerDepartment.WebApi.csproj ./Jasmine.FastenerDepartment.WebApi/
 COPY Jasmine.FastenerDepartment.Application/Jasmine.FastenerDepartment.Application.csproj ./Jasmine.FastenerDepartment.Application/
 COPY Jasmine.FastenerDepartment.EF/Jasmine.FastenerDepartment.EF.csproj ./Jasmine.FastenerDepartment.EF/
-COPY Jasmine.FastenerDepartment.DesktopApplication.Domain/Jasmine.FastenerDepartment.Domain.csproj ./Jasmine.FastenerDepartment.DesktopApplication.Domain/
+COPY Jasmine.FastenerDepartment.DesktopApplication.Domain/Jasmine.FastenerDepartment.Domain.csproj ./Jasmine.FastenerDepartment.Domain/
 COPY Jasmine.FastenerDepartment.Infrastructure/Jasmine.FastenerDepartment.Infrastructure.csproj ./Jasmine.FastenerDepartment.Infrastructure/
 COPY Jasmine.FastenerDepartment.Documents/Jasmine.FastenerDepartment.Documents.csproj ./Jasmine.FastenerDepartment.Documents/
 

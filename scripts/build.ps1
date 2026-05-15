@@ -1,7 +1,7 @@
 ﻿# build.ps1 - Скрипт сборки для IIS развёртывания (UTF-8 with BOM)
 param(
     [string]$OutputPath = "C:\Deploy",
-    [string]$BackendProject = "../Jasmine.FastenerDepartment.Wpf\Jasmine.FastenerDepartment.WebApi\Jasmine.FastenerDepartment.WebApi.csproj",
+    [string]$BackendProject = "../Jasmine.FastenerDepartment.NET\Jasmine.FastenerDepartment.WebApi\Jasmine.FastenerDepartment.WebApi.csproj",
     [string]$FrontendFolder = "../jasmine-fastener-department-react"
 )
 
