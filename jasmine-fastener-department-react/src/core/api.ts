@@ -5,6 +5,7 @@ import qs from 'qs';
 
 const api = Axios.create({
     baseURL: (window as any).app.config.apiBaseUrl,
+    headers: { 'Content-Type': 'application/json', 'Accept-Language': 'ru' },
     paramsSerializer: params => qs.stringify(params, { arrayFormat: 'repeat' })
 });
 

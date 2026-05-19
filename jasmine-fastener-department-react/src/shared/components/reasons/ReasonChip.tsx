@@ -1,9 +1,9 @@
-import type {ProductChangeReasonCode} from "../../../user/models/productModel.ts";
+import type {ProductChangeReason} from "../../../user/models/productModel.ts";
 import useReason from "../../hooks/useReason.ts";
 import Chip from "../Chip.tsx";
 
 type ReasonChipProps = {
-    reasonCode: ProductChangeReasonCode;
+    reason: ProductChangeReason;
 }
 
 const ReasonChip = (props: ReasonChipProps) => {
@@ -11,10 +11,10 @@ const ReasonChip = (props: ReasonChipProps) => {
         getReasonName
     } = useReason();
 
-    const reasonName: string = getReasonName(props.reasonCode);
+    const reasonName: string = getReasonName(props.reason.code);
 
     return (
-        <Chip title={reasonName} color={'active'} />
+        <Chip title={props.reason.description} color={'active'} />
     )
 }
 

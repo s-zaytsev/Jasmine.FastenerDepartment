@@ -25,7 +25,7 @@ const ProductHistoryCard = (props: ProductHistoryCardProps) => {
                     <Typography variant={'bodySmall'}>
                         {new Date(props.historyEntry.createdDate).toLocaleString()}
                     </Typography>
-                    <ReasonChip reasonCode={props.historyEntry.changeReasonCode}/>
+                    <ReasonChip reason={props.historyEntry.reason}/>
                 </Box>
 
                 <Box className={'w-full my-[0.5rem]'}>

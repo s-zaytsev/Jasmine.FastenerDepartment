@@ -22,9 +22,14 @@ export interface ProductHistoryEntry {
     createdDate: string;
     productId: string;
     productNumber: number;
-    changeReasonCode: ProductChangeReasonCode;
+    reason: ProductChangeReason;
     oldValue: object;
     newValue: object;
+}
+
+export interface ProductChangeReason {
+    code: ProductChangeReasonCode;
+    description: string;
 }
 
 export enum PriceTagCode {

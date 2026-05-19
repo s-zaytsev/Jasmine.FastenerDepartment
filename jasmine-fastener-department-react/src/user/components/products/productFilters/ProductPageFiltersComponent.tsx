@@ -32,7 +32,7 @@ const ProductPageFiltersComponent = (props: ProductPageFiltersProps) => {
                 <Box className={'w-full'}>
                     <Box className={'w-full flex justify-around items-center mb-[1rem] gap-[1rem]'}>
                         <ProductsSearch value={props.searchValue} onSearch={props.onSearch}/>
-                        <GroupFilter filter={props.filters.priceTags} prefix={'Размер'} onChange={props.onPriceTagsChange}/>
+                        <GroupFilter filter={props.filters.priceTags} onChange={props.onPriceTagsChange}/>
                     </Box>
 
                     <Box className={'flex justify-between gap-[1rem]'}>

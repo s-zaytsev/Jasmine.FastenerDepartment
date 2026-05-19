@@ -9,7 +9,7 @@ import type {ProductType} from "../../user/models/productTypeModels.ts";
 
 const useHistory = () => {
     const getText = (history: ProductHistoryEntry, productTypes: ProductType[]) => {
-        switch (history.changeReasonCode) {
+        switch (history.reason.code) {
             case ProductChangeReasonCode.created:
                 return [
                     'Товар создан',
