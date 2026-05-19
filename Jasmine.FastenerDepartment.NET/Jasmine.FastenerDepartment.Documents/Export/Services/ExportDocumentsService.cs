@@ -11,7 +11,8 @@ internal class ExportDocumentsService : IExportDocumentsService
         _factory = factory;
     }
 
-    public async Task<ExportDocumentResponse> ExportDocumentAsync(ExportDocumentRequest request, CancellationToken cancellationToken)
+    public async Task<ExportDocumentResponse> ExportDocumentAsync(
+        ExportDocumentRequest request, CancellationToken cancellationToken)
     {
         var service = _factory.GetService(request.DocumentType);
         var stream = await service.GetStreamAsync(request.Products, cancellationToken);

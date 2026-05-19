@@ -35,6 +35,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddWebServices();
         builder.Services.AddDomainServices(configuration);
         builder.Services.AddEFServices();
         builder.Services.AddDocumentsServices(configuration);

@@ -12,14 +12,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class ProductTypesController : ControllerBase
 {
     private readonly IProductTypesService _productTypesService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates the controller.
     /// </summary>
-    /// <param name="productTypesService"></param>
-    public ProductTypesController(IProductTypesService productTypesService)
+    /// <param name="productTypesService">Product types service.</param>
+    /// <param name="mapper">Mapper.</param>
+    public ProductTypesController(
+        IProductTypesService productTypesService,
+        WebApiMapper mapper)
     {
         _productTypesService = productTypesService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -32,7 +37,7 @@ public class ProductTypesController : ControllerBase
     public async Task<IActionResult> GetProductTypesAsync(CancellationToken cancellationToken)
     {
         var types = await _productTypesService.GetAllAsync(cancellationToken);
-        var dtos = types.Select(WebApiMapper.Map);
+        var dtos = types.Select(_mapper.Map);
 
         return Ok(dtos);
     }
@@ -47,7 +52,7 @@ public class ProductTypesController : ControllerBase
     public async Task<IActionResult> GetExtendedProductTypesAsync(CancellationToken cancellationToken)
     {
         var types = await _productTypesService.GetAllExtendedProductTypesAsync(cancellationToken);
-        var dtos = types.Select(WebApiMapper.Map);
+        var dtos = types.Select(_mapper.Map);
 
         return Ok(dtos);
     }
@@ -63,7 +68,7 @@ public class ProductTypesController : ControllerBase
     public async Task<IActionResult> CreateProductTypeAsync(
         ChangeProductTypeDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
 
         var type = await _productTypesService.CreateAsync(model, cancellationToken);
 
@@ -81,7 +86,7 @@ public class ProductTypesController : ControllerBase
     public async Task<IActionResult> UpdateProductTypeAsync(
        Guid id, ChangeProductTypeDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
 
         await _productTypesService.UpdateAsync(id, model, cancellationToken);
 

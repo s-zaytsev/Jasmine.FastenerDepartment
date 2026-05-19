@@ -12,14 +12,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class SuppliersController : ControllerBase
 {
     private readonly ISuppliersService _suppliersService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
     /// <param name="suppliersService">Supplier service.</param>
-    public SuppliersController(ISuppliersService suppliersService)
+    /// <param name="mapper">Mapper.</param>
+    public SuppliersController(
+        ISuppliersService suppliersService,
+        WebApiMapper mapper)
     {
         _suppliersService = suppliersService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -32,7 +37,7 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var suppliers = await _suppliersService.GetAllAsync(cancellationToken);
-        var dtos = suppliers.Select(WebApiMapper.Map);
+        var dtos = suppliers.Select(_mapper.Map);
 
         return Ok(dtos);
     }
@@ -47,7 +52,7 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> GetAllExtendedSuppliersAsync(CancellationToken cancellationToken)
     {
         var suppliers = await _suppliersService.GetAllExtendedSuppliersAsync(cancellationToken);
-        var dtos = suppliers.Select(WebApiMapper.Map);
+        var dtos = suppliers.Select(_mapper.Map);
 
         return Ok(dtos);
     }
@@ -63,7 +68,7 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> GetByIdAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var supplier = await _suppliersService.GetAsync(id, cancellationToken);
-        var dto = WebApiMapper.Map(supplier);
+        var dto = _mapper.Map(supplier);
 
         return Ok(dto);
     }
@@ -79,7 +84,7 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> CreateAsync(
         [FromBody] ChangeSupplierModelDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
         var supplier = await _suppliersService.AddAsync(model, cancellationToken);
 
         return Ok(supplier.Id);
@@ -96,7 +101,7 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> UpdateAsync(
         [FromRoute] Guid id, [FromBody] ChangeSupplierModelDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
         await _suppliersService.UpdateAsync(id, model, cancellationToken);
 
         return NoContent();

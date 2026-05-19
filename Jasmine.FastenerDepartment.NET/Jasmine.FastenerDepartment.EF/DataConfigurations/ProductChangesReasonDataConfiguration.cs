@@ -1,4 +1,5 @@
-﻿using Jasmine.FastenerDepartment.Domain.Products.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Products.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,20 +10,42 @@ class ProductChangesReasonDataConfiguration : IEntityTypeConfiguration<ProductCh
     public void Configure(EntityTypeBuilder<ProductChangeReason> builder)
     {
         builder.HasData(
-            Create(ProductChangeReasonCode.Created, "Product was created"),
-            Create(ProductChangeReasonCode.ChangedNumber, "Product number was changed"),
-            Create(ProductChangeReasonCode.ChangedName, "Product name was changed"),
-            Create(ProductChangeReasonCode.ChangedPrice, "Product price was changed"),
-            Create(ProductChangeReasonCode.ChangedPriceTagCode, "Product price tag code was changed"),
-            Create(ProductChangeReasonCode.ChangedMeasurementUnitCode, "Product measurement unit code was changed"),
-            Create(ProductChangeReasonCode.ChangedOrderStatus, "Product order status was changed"),
-            Create(ProductChangeReasonCode.ChangedPrintStatus, "Product print status was changed"),
-            Create(ProductChangeReasonCode.Deleted, "Product was deleted"),
-            Create(ProductChangeReasonCode.Recovered, "Product was recovered"),
-            Create(ProductChangeReasonCode.ChangedType, "Product type was changed"));
+            Create(
+                ProductChangeReasonCode.Created,
+                new("Created", "Создан")),
+            Create(
+                ProductChangeReasonCode.ChangedNumber,
+                new("Changing the number", "Изменение артикула")),
+            Create(
+                ProductChangeReasonCode.ChangedName,
+                new("Changing the name", "Изменение названия")),
+            Create(
+                ProductChangeReasonCode.ChangedPrice,
+                new("Changing the price", "Изменение цены")),
+            Create(
+                ProductChangeReasonCode.ChangedPriceTagCode,
+                new("Changing the price tag size", "Изменение размера ценника")),
+            Create(
+                ProductChangeReasonCode.ChangedMeasurementUnitCode,
+                new("Changing the measurement unit", "Изменение единицы измерения")),
+            Create(
+                ProductChangeReasonCode.ChangedOrderStatus,
+                new("Changing the order status", "Изменение статуса заказа")),
+            Create(
+                ProductChangeReasonCode.ChangedPrintStatus,
+                new("Changing the print status", "Изменение статуса печати")),
+            Create(
+                ProductChangeReasonCode.Deleted,
+                new("Deleted", "Удален")),
+            Create(
+                ProductChangeReasonCode.Recovered,
+                new("Recovered", "Восстановлен")),
+            Create(
+                ProductChangeReasonCode.ChangedType,
+                new("Changing the type", "Изменение типа")));
     }
 
-    private ProductChangeReason Create(ProductChangeReasonCode id, string description)
+    private ProductChangeReason Create(ProductChangeReasonCode id, LocalizedString description)
     {
         return new ProductChangeReason(id, description);
     }

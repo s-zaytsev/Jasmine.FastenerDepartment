@@ -13,14 +13,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly IProductsService _productsService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
     /// <param name="productsService">Product service.</param>
-    public ProductsController(IProductsService productsService)
+    /// <param name="mapper">Mapper.</param>
+    public ProductsController(
+        IProductsService productsService,
+        WebApiMapper mapper)
     {
         _productsService = productsService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -34,9 +39,11 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> GetPageFiltersAsync(
         [FromQuery] ProductsQueryDto queryDto, CancellationToken cancellationToken)
     {
-        var query = WebApiMapper.Map(queryDto);
+        var query = _mapper.Map(queryDto);
+
         var productFilters = await _productsService.GetPageFiltersAsync(query, cancellationToken);
-        var dto = WebApiMapper.Map(productFilters);
+        var dto = _mapper.Map(productFilters);
+
         return Ok(dto);
     }
 
@@ -50,10 +57,10 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(typeof(Page<ProductDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPageAsync([FromQuery] ProductsQueryDto queryDto, CancellationToken cancellationToken)
     {
-        var query = WebApiMapper.Map(queryDto);
+        var query = _mapper.Map(queryDto);
 
         var page = await _productsService.GetPageAsync(query, cancellationToken);
-        var pageDto = WebApiMapper.Map(page);
+        var pageDto = _mapper.Map(page);
 
         return Ok(pageDto);
     }
@@ -69,7 +76,7 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> GetAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var product = await _productsService.GetAsync(id, cancellationToken);
-        var dto = WebApiMapper.Map(product);
+        var dto = _mapper.Map(product);
 
         return Ok(dto);
     }
@@ -98,7 +105,7 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> CreateAsync(
         [FromBody] ChangeProductModelDto modelDto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(modelDto);
+        var model = _mapper.Map(modelDto);
         var product = await _productsService.AddAsync(model, cancellationToken);
 
         return Ok(product.Id);
@@ -115,7 +122,7 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> ChangeAsync(
         [FromRoute] Guid id, [FromBody] ChangeProductModelDto modelDto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(modelDto);
+        var model = _mapper.Map(modelDto);
         await _productsService.UpdateAsync(id, model, cancellationToken);
 
         return NoContent();

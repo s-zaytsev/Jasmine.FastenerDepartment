@@ -10,7 +10,7 @@ public class PriceTag : EntityBase<PriceTagCode>
     /// <summary>
     /// Name.
     /// </summary>
-    public string Name { get; init; }
+    public LocalizedString Name { get; private set; }
 
     private PriceTag() { }
 
@@ -21,7 +21,7 @@ public class PriceTag : EntityBase<PriceTagCode>
     /// <param name="name">Name.</param>
     public PriceTag(
         PriceTagCode id,
-        string name)
+        LocalizedString name)
     {
         Id = id;
         Name = name;

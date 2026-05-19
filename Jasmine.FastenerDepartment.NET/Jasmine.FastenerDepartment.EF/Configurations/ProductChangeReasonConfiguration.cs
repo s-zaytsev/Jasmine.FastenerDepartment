@@ -1,5 +1,5 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
-using Jasmine.FastenerDepartment.Domain.Orders.Models;
+using Jasmine.FastenerDepartment.Domain.Products.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Text.Encodings.Web;
@@ -8,11 +8,11 @@ using System.Text.Unicode;
 
 namespace Jasmine.FastenerDepartment.EF.Configurations;
 
-class OrderStatusConfiguration : IEntityTypeConfiguration<OrderStatus>
+internal class ProductChangeReasonConfiguration : IEntityTypeConfiguration<ProductChangeReason>
 {
-    public void Configure(EntityTypeBuilder<OrderStatus> builder)
+    public void Configure(EntityTypeBuilder<ProductChangeReason> builder)
     {
-        builder.ToTable("OrderStatuses");
+        builder.ToTable("ProductChangeReasons");
 
         builder.HasKey(x => x.Id);
 
@@ -22,7 +22,7 @@ class OrderStatusConfiguration : IEntityTypeConfiguration<OrderStatus>
         };
 
         builder
-            .Property(x => x.Name)
+            .Property(x => x.Description)
             .HasColumnType("jsonb")
             .HasConversion(
                 x => JsonSerializer.Serialize(x, options),

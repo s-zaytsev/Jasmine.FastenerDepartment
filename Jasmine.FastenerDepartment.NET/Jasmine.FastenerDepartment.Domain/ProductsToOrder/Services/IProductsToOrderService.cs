@@ -2,6 +2,9 @@
 
 namespace Jasmine.FastenerDepartment.Domain.ProductsToOrder.Services;
 
+/// <summary>
+/// Products to order service.
+/// </summary>
 public interface IProductsToOrderService
 {
     /// <summary>

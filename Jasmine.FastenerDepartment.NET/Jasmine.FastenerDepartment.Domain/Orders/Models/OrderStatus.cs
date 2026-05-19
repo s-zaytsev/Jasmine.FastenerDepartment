@@ -10,5 +10,18 @@ public class OrderStatus : EntityBase<OrderStatusCode>
     /// <summary>
     /// Order status name.
     /// </summary>
-    public string Name { get; set; }
+    public LocalizedString Name { get; init; }
+
+    private OrderStatus() { }
+
+    /// <summary>
+    /// Creates order status.
+    /// </summary>
+    public OrderStatus(
+        OrderStatusCode id,
+        LocalizedString name)
+    {
+        Id = id;
+        Name = name;
+    }
 }

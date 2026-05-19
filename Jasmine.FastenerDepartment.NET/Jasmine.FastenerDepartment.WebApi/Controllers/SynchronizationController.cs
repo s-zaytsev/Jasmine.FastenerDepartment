@@ -12,14 +12,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class SynchronizationController : ControllerBase
 {
     private readonly ISynchronizationService _service;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
     /// <param name="service">Synchronization service.</param>
-    public SynchronizationController(ISynchronizationService service)
+    /// <param name="mapper">Mapper.</param>
+    public SynchronizationController(
+        ISynchronizationService service,
+        WebApiMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -33,9 +38,9 @@ public class SynchronizationController : ControllerBase
     public async Task<IActionResult> SyncAsync(
         [FromBody] SynchronizationRequestDto model, CancellationToken cancellationToken)
     {
-        var request = WebApiMapper.Map(model);
+        var request = _mapper.Map(model);
         var response = await _service.SynchronizeAsync(request, cancellationToken);
-        var dto = WebApiMapper.Map(response);
+        var dto = _mapper.Map(response);
 
         return Ok(dto);
     }

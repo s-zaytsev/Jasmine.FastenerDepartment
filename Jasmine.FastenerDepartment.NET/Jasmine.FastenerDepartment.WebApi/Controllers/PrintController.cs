@@ -13,14 +13,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class PrintController : ControllerBase
 {
     private readonly IPrintService _printService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
     /// <param name="printService">Print service.</param>
-    public PrintController(IPrintService printService)
+    /// <param name="mapper">Mapper.</param>
+    public PrintController(
+        IPrintService printService,
+        WebApiMapper mapper)
     {
         _printService = printService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -33,7 +38,7 @@ public class PrintController : ControllerBase
     public async Task<IActionResult> GetProductsToPrintAsync(CancellationToken cancellationToken)
     {
         var products = await _printService.GetProductsToPrintAsync(cancellationToken);
-        var dtos = products.Select(WebApiMapper.Map);
+        var dtos = products.Select(_mapper.Map);
 
         return Ok(dtos);
     }

@@ -12,14 +12,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class DocumentsController : ControllerBase
 {
     private readonly IDocumentsService _documentsService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
     /// <param name="documentsService">Document service.</param>
-    public DocumentsController(IDocumentsService documentsService)
+    /// <param name="mapper">Mapper.</param>
+    public DocumentsController(
+        IDocumentsService documentsService,
+        WebApiMapper mapper)
     {
         _documentsService = documentsService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -33,7 +38,7 @@ public class DocumentsController : ControllerBase
     public async Task<IActionResult> DownloadDocumentAsync(
         [FromQuery] ExportDocumentRequestDto model, CancellationToken cancellationToken)
     {
-        var request = WebApiMapper.Map(model);
+        var request = _mapper.Map(model);
         var response = await _documentsService.ExportDocumentAsync(request, cancellationToken);
 
         return File(response.Stream, "application/octet-stream", response.Name);

@@ -12,14 +12,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class ProductsToOrderController : ControllerBase
 {
     private readonly IProductsToOrderService _productsToOrderService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates the controller.
     /// </summary>
     /// <param name="productsToOrderService">Products to order service.</param>
-    public ProductsToOrderController(IProductsToOrderService productsToOrderService)
+    /// <param name="mapper">Mapper.</param>
+    public ProductsToOrderController(
+        IProductsToOrderService productsToOrderService,
+        WebApiMapper mapper)
     {
         _productsToOrderService = productsToOrderService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -33,9 +38,9 @@ public class ProductsToOrderController : ControllerBase
     public async Task<IActionResult> GetAllAsync(
         [FromQuery] ProductsToOrderQueryDto queryDto, CancellationToken cancellationToken)
     {
-        var query = WebApiMapper.Map(queryDto);
+        var query = _mapper.Map(queryDto);
         var products = await _productsToOrderService.GetAllAsync(query, cancellationToken);
-        var dtos = products.Select(WebApiMapper.Map);
+        var dtos = products.Select(_mapper.Map);
 
         return Ok(dtos);
     }

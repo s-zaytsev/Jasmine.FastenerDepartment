@@ -10,12 +10,12 @@ public class MeasurementUnit : EntityBase<MeasurementUnitCode>
     /// <summary>
     /// Short name. 
     /// </summary>
-    public string ShortName { get; init; }
+    public LocalizedString ShortName { get; init; }
 
     /// <summary>
     /// Name.
     /// </summary>
-    public string Name { get; init; }
+    public LocalizedString Name { get; init; }
 
     private MeasurementUnit() { }
 
@@ -24,8 +24,8 @@ public class MeasurementUnit : EntityBase<MeasurementUnitCode>
     /// </summary>
     public MeasurementUnit(
         MeasurementUnitCode id,
-        string shortName,
-        string name)
+        LocalizedString shortName,
+        LocalizedString name)
     {
         Id = id;
         ShortName = shortName;

@@ -12,14 +12,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class ProductHistoryController : ControllerBase
 {
     private readonly IProductsService _productsService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
     /// <param name="productsService">Products service.</param>
-    public ProductHistoryController(IProductsService productsService)
+    /// <param name="mapper">Mapper.</param>
+    public ProductHistoryController(
+        IProductsService productsService,
+        WebApiMapper mapper)
     {
         _productsService = productsService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -34,7 +39,7 @@ public class ProductHistoryController : ControllerBase
         var history = await _productsService.GetDailyHistoryAsync(cancellationToken);
         var dtos = history
             .OrderByDescending(x => x.Date)
-            .Select(x => new DailyHistoryDto(x.Date, x.HistoryEntries.Select(WebApiMapper.Map)));
+            .Select(x => new DailyHistoryDto(x.Date, x.HistoryEntries.Select(_mapper.Map)));
 
         return Ok(dtos);
     }

@@ -64,7 +64,7 @@ internal class ProductsRepository : RepositoryBase<Guid, Product>, IProductsRepo
     public override async Task<Product> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await GetQuery()
-            .Include(x => x.HistoryEntries)
+            .Include(x => x.HistoryEntries).ThenInclude(x => x.Reason)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
@@ -225,7 +225,7 @@ internal class ProductsRepository : RepositoryBase<Guid, Product>, IProductsRepo
             .Select(type => new Filter<PriceTagCode>
             {
                 Id = type.Key,
-                Title = type.FirstOrDefault().PriceTag.Name ?? string.Empty,
+                Title = type.FirstOrDefault().PriceTag.Name.GetText(query.LanguageCode) ?? string.Empty,
                 Count = dbQuery.Count(x => x.PriceTagCode == type.Key)
             })
             .ToListAsync(cancellationToken);
@@ -248,7 +248,7 @@ internal class ProductsRepository : RepositoryBase<Guid, Product>, IProductsRepo
             {
                 Id = g.Key,
                 Title = g.Key == null
-                    ?  string.Empty
+                    ? string.Empty
                     : g.First().Name.Value,
                 Count = g.Count(),
                 IsEnabled = g.Key != null && query.Suppliers.Contains(g.Key.Value) == true

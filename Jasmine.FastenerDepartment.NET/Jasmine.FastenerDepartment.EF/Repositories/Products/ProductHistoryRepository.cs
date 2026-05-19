@@ -54,6 +54,7 @@ internal class ProductHistoryRepository : EntitiesRepositoryBase<Guid, ProductHi
     protected override IQueryable<ProductHistoryEntry> GetQuery()
     {
         return base.GetQuery()
-            .Include(x => x.Product);
+            .Include(x => x.Product)
+            .Include(x => x.Reason);
     }
 }

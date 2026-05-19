@@ -14,14 +14,19 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class OrdersController : ControllerBase
 {
     private readonly IOrdersService _ordersService;
+    private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
     /// <param name="ordersService">Orders service.</param>
-    public OrdersController(IOrdersService ordersService)
+    /// <param name="mapper">Mapper.</param>
+    public OrdersController(
+        IOrdersService ordersService,
+        WebApiMapper mapper)
     {
         _ordersService = ordersService;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -35,9 +40,9 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> GetPageAsync(
         [FromQuery] OrdersQueryDto queryDto, CancellationToken cancellationToken)
     {
-        var query = WebApiMapper.Map(queryDto);
+        var query = _mapper.Map(queryDto);
         var page = await _ordersService.GetPageAsync(query, cancellationToken);
-        var dtos = WebApiMapper.Map(page);
+        var dtos = _mapper.Map(page);
 
         return Ok(dtos);
     }
@@ -53,7 +58,7 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> GetOrderAsync([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var order = await _ordersService.GetAsync(id, cancellationToken);
-        var dto = WebApiMapper.Map(order);
+        var dto = _mapper.Map(order);
 
         return Ok(dto);
     }
@@ -69,7 +74,7 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> CreateOrderAsync(
         [FromBody] CreateOrderDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
 
         var order = await _ordersService.CreateAsync(model, cancellationToken);
         return Ok(order.Id);
@@ -86,7 +91,7 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> ChangeOrderAsync(
         [FromRoute] Guid id, [FromBody] ChangeOrderDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
         await _ordersService.UpdateAsync(id, model, cancellationToken);
 
         return NoContent();
@@ -103,7 +108,7 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> CompleteOrderAsync(
         [FromRoute] Guid id, [FromBody] CompleteOrderDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
         await _ordersService.CompleteAsync(id, model, cancellationToken);
 
         return NoContent();
@@ -120,7 +125,7 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> CancelOrderAsync(
         [FromRoute] Guid id, [FromBody] CancelOrderDto dto, CancellationToken cancellationToken)
     {
-        var model = WebApiMapper.Map(dto);
+        var model = _mapper.Map(dto);
         await _ordersService.CancelAsync(id, model, cancellationToken);
 
         return NoContent();

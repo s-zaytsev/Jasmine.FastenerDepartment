@@ -10,7 +10,7 @@ public class ProductChangeReason : EntityBase<ProductChangeReasonCode>
     /// <summary>
     /// Description.
     /// </summary>
-    public string Description { get; init; }
+    public LocalizedString Description { get; init; }
 
     private ProductChangeReason() { }
 
@@ -21,7 +21,7 @@ public class ProductChangeReason : EntityBase<ProductChangeReasonCode>
     /// <param name="description">Description.</param>
     public ProductChangeReason(
         ProductChangeReasonCode id,
-        string description)
+        LocalizedString description)
     {
         Id = id;
         Description = description;

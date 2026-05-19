@@ -1,4 +1,5 @@
-﻿using Jasmine.FastenerDepartment.Domain.Orders.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Orders.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,18 +10,14 @@ class OrderStatusDataConfiguration : IEntityTypeConfiguration<OrderStatus>
     public void Configure(EntityTypeBuilder<OrderStatus> builder)
     {
         builder.HasData(
-            Create(OrderStatusCode.Created, "Created"),
-            Create(OrderStatusCode.Sent, "Sent"),
-            Create(OrderStatusCode.Fulfilled, "Fulfilled"),
-            Create(OrderStatusCode.Cancelled, "Cancelled"));
+            Create(OrderStatusCode.Created, new("Created", "Создан")),
+            Create(OrderStatusCode.Sent, new("Sent", "Отправлен")),
+            Create(OrderStatusCode.Fulfilled, new("Fulfilled", "Доставлен")),
+            Create(OrderStatusCode.Cancelled, new("Cancelled", "Отменен")));
     }
 
-    private OrderStatus Create(OrderStatusCode id, string name)
+    private OrderStatus Create(OrderStatusCode id, LocalizedString name)
     {
-        return new OrderStatus
-        {
-            Id = id,
-            Name = name
-        };
+        return new OrderStatus(id, name);
     }
 }

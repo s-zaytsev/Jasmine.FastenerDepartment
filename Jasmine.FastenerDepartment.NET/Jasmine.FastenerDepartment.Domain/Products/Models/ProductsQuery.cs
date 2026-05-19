@@ -47,4 +47,9 @@ public class ProductsQuery : QueryBase<ProductsQueryParameter>
     /// Only products to order.
     /// </summary>
     public bool OnlyToOrder { get; set; }
+
+    /// <summary>
+    /// Language code.
+    /// </summary>
+    public LanguageCode? LanguageCode { get; set; }
 }

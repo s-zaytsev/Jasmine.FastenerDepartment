@@ -2,17 +2,23 @@
 
 namespace Jasmine.FastenerDepartment.WebApi.Middlewares;
 
+/// <summary>
+/// Metrics middleware.
+/// </summary>
 public class MetricsMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly Counter _requestCounter;
     private readonly Histogram _requestDuration;
 
+
+    /// <summary>
+    /// Creates middleware.
+    /// </summary>
     public MetricsMiddleware(RequestDelegate next)
     {
         _next = next;
 
-        // Создаем метрики Prometheus
         _requestCounter = Metrics.CreateCounter(
             "http_requests_total",
             "Total HTTP requests",
@@ -30,6 +36,10 @@ public class MetricsMiddleware
             });
     }
 
+    /// <summary>
+    /// Invokes.
+    /// </summary>
+    /// <param name="context">HTTP context.</param>
     public async Task InvokeAsync(HttpContext context)
     {
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
@@ -46,7 +56,6 @@ public class MetricsMiddleware
             var path = GetNormalizedPath(context.Request.Path);
             var statusCode = context.Response.StatusCode.ToString();
 
-            // Записываем метрики
             _requestCounter
                 .WithLabels(method, path, statusCode)
                 .Inc();
@@ -59,7 +68,6 @@ public class MetricsMiddleware
 
     private static string GetNormalizedPath(PathString path)
     {
-        // Нормализуем путь для группировки (например, /api/users/123 -> /api/users/{id})
         if (path.Value?.StartsWith("/api/") == true)
         {
             var segments = path.Value.Split('/');

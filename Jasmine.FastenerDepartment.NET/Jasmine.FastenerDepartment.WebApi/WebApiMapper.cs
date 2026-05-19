@@ -1,6 +1,7 @@
 ﻿using Jasmine.FastenerDepartment.Application.Models.Synchronization;
 using Jasmine.FastenerDepartment.Documents.Export.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Common.Services;
 using Jasmine.FastenerDepartment.Domain.HistoryEntries.Models;
 using Jasmine.FastenerDepartment.Domain.MeasurementUnits.Models;
 using Jasmine.FastenerDepartment.Domain.Orders.Models;
@@ -20,20 +21,33 @@ using Jasmine.FastenerDepartment.WebApi.Dtos.Synchronization;
 
 namespace Jasmine.FastenerDepartment.WebApi;
 
-internal static class WebApiMapper
+/// <summary>
+/// Web API mapper.
+/// </summary>
+public class WebApiMapper
 {
-    internal static Quantity Map(QuantityDto model)
+    private readonly ILanguageService _languageService;
+
+    /// <summary>
+    /// Creates mapper.
+    /// </summary>
+    public WebApiMapper(ILanguageService languageService)
+    {
+        _languageService = languageService;
+    }
+
+    internal Quantity Map(QuantityDto model)
     {
         return new(model.Value, model.MeasurementUnitCode, model.SpecialMeasurementUnit);
     }
 
-    internal static QuantityDto Map(Quantity model)
+    internal QuantityDto Map(Quantity model)
     {
         if (model == null) return null;
         return new(model.Value, model.MeasurementUnitCode, model.SpecialMeasurementUnit);
     }
 
-    internal static ProductsQuery Map(ProductsQueryDto query)
+    internal ProductsQuery Map(ProductsQueryDto query)
     {
         return new ProductsQuery
         {
@@ -49,11 +63,12 @@ internal static class WebApiMapper
             PriceTo = query.PriceTo,
             PriceTags = query.PriceTags ?? [],
             Suppliers = query.Suppliers ?? [],
-            Types = query.Types ?? []
+            Types = query.Types ?? [],
+            LanguageCode = _languageService.LanguageCode
         };
     }
 
-    internal static ProductFiltersDto Map(ProductFilters filters)
+    internal ProductFiltersDto Map(ProductFilters filters)
     {
         return new ProductFiltersDto
         {
@@ -66,7 +81,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static Page<ProductDto> Map(Page<Product> page)
+    internal Page<ProductDto> Map(Page<Product> page)
     {
         return new Page<ProductDto>
         {
@@ -78,7 +93,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static ProductDto Map(Product product)
+    internal ProductDto Map(Product product)
     {
         return new(
             product.Id,
@@ -104,19 +119,25 @@ internal static class WebApiMapper
                    .ToList());
     }
 
-    internal static ProductHistoryEntryDto Map(ProductHistoryEntry entry)
+    internal ProductHistoryEntryDto Map(ProductHistoryEntry entry)
     {
         return new(
             entry.Id,
             entry.CreatedDate,
             entry.ProductId,
-            entry.ChangeReasonCode,
+            Map(entry.Reason),
             entry.OldValue,
             entry.NewValue,
             entry.Product.Number.Value);
     }
 
-    internal static ChangeProductModel Map(ChangeProductModelDto model)
+    internal ProductChangeReasonDto Map(ProductChangeReason model)
+    {
+        if (model == null) return null;
+        return new ProductChangeReasonDto(model.Id, model.Description.GetText(_languageService.LanguageCode));
+    }
+
+    internal ChangeProductModel Map(ChangeProductModelDto model)
     {
         return new ChangeProductModel
         {
@@ -132,12 +153,13 @@ internal static class WebApiMapper
         };
     }
 
-    internal static MeasurementUnitDto Map(MeasurementUnit entity)
+    internal MeasurementUnitDto Map(MeasurementUnit model)
     {
-        return new(entity.Id, entity.ShortName, entity.Name);
+        if (model == null) return null;
+        return new(model.Id, model.ShortName.GetText(), model.Name.GetText());
     }
 
-    internal static ExportDocumentRequest Map(ExportDocumentRequestDto model)
+    internal ExportDocumentRequest Map(ExportDocumentRequestDto model)
     {
         return new()
         {
@@ -145,12 +167,12 @@ internal static class WebApiMapper
         };
     }
 
-    internal static ExportDocumentResponseDto Map(ExportDocumentResponse model)
+    internal ExportDocumentResponseDto Map(ExportDocumentResponse model)
     {
         return new(model.Name, model.Stream);
     }
 
-    internal static SynchronizationRequest Map(SynchronizationRequestDto model)
+    internal SynchronizationRequest Map(SynchronizationRequestDto model)
     {
         return new()
         {
@@ -159,7 +181,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static SynchronizationResponseDto Map(SynchronizationResponse model)
+    internal SynchronizationResponseDto Map(SynchronizationResponse model)
     {
         return new(
             model.NewProducts.Select(Map),
@@ -167,17 +189,17 @@ internal static class WebApiMapper
             model.HistoryEntries.Select(Map));
     }
 
-    internal static SynchronizationHistoryEntryDto Map(SynchronizationHistoryEntry model)
+    internal SynchronizationHistoryEntryDto Map(SynchronizationHistoryEntry model)
     {
         return new(model.Date, model.Items.Select(Map));
     }
 
-    internal static SynchronizationHistoryEntryItemDto Map(SynchronizationHistoryEntryItem model)
+    internal SynchronizationHistoryEntryItemDto Map(SynchronizationHistoryEntryItem model)
     {
         return new(model.ProductId, model.ProductHistoryEntries.Select(Map));
     }
 
-    internal static SynchronizationProduct Map(SynchronizationProductDto model)
+    internal SynchronizationProduct Map(SynchronizationProductDto model)
     {
         return new()
         {
@@ -195,7 +217,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static SynchronizationProductDto Map(SynchronizationProduct model)
+    internal SynchronizationProductDto Map(SynchronizationProduct model)
     {
         return new(
             model.Id,
@@ -211,23 +233,23 @@ internal static class WebApiMapper
             model.PriceTagCode);
     }
 
-    internal static SupplierDto Map(Supplier supplier)
+    internal SupplierDto Map(Supplier supplier)
     {
         if (supplier == null) return null;
         return new(supplier.Id, supplier.Name.Value, supplier.Address);
     }
 
-    internal static ExtendedSupplierDto Map(ExtendedSupplier model)
+    internal ExtendedSupplierDto Map(ExtendedSupplier model)
     {
         return new(model.Id, model.Name.Value, model.Address, model.ProductCount, model.ActiveOrderCount);
     }
 
-    internal static ChangeSupplierModel Map(ChangeSupplierModelDto model)
+    internal ChangeSupplierModel Map(ChangeSupplierModelDto model)
     {
         return new(model.Name, model.Address);
     }
 
-    internal static SupplierProductsQuery Map(SupplierProductsQueryDto query)
+    internal SupplierProductsQuery Map(SupplierProductsQueryDto query)
     {
         return new SupplierProductsQuery
         {
@@ -240,7 +262,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static Page<SupplierProductDto> Map(Page<SupplierProduct> page)
+    internal Page<SupplierProductDto> Map(Page<SupplierProduct> page)
     {
         return new Page<SupplierProductDto>
         {
@@ -252,12 +274,12 @@ internal static class WebApiMapper
         };
     }
 
-    internal static SupplierProductDto Map(SupplierProduct model)
+    internal SupplierProductDto Map(SupplierProduct model)
     {
         return new(model.Id, model.Number, Map(model.Product));
     }
 
-    internal static ChangeSupplierProductModel Map(ChangeSupplierProductModelDto model)
+    internal ChangeSupplierProductModel Map(ChangeSupplierProductModelDto model)
     {
         return new()
         {
@@ -265,7 +287,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static OrdersQuery Map(OrdersQueryDto query)
+    internal OrdersQuery Map(OrdersQueryDto query)
     {
         return new OrdersQuery
         {
@@ -279,7 +301,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static Page<OrderDto> Map(Page<Order> page)
+    internal Page<OrderDto> Map(Page<Order> page)
     {
         return new()
         {
@@ -291,7 +313,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static OrderDto Map(Order order)
+    internal OrderDto Map(Order order)
     {
         return new(
             order.Id,
@@ -303,7 +325,7 @@ internal static class WebApiMapper
             [.. order.HistoryEntries.Select(Map)]);
     }
 
-    internal static OrderProductDto Map(OrderProduct model)
+    internal OrderProductDto Map(OrderProduct model)
     {
         return new(
             model.Id,
@@ -317,12 +339,12 @@ internal static class WebApiMapper
             model.IsFulfilled);
     }
 
-    internal static OrderHistoryEntryDto Map(OrderHistoryEntry model)
+    internal OrderHistoryEntryDto Map(OrderHistoryEntry model)
     {
         return new(model.Id, model.CreatedDate, model.OrderStatusCode, model.Comment);
     }
 
-    internal static ChangeOrderModel Map(ChangeOrderDto model)
+    internal ChangeOrderModel Map(ChangeOrderDto model)
     {
         return new()
         {
@@ -330,7 +352,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static CreateOrderModel Map(CreateOrderDto model)
+    internal CreateOrderModel Map(CreateOrderDto model)
     {
         return new()
         {
@@ -339,7 +361,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static OrderProduct Map(ChangeOrderProductDto model)
+    internal OrderProduct Map(ChangeOrderProductDto model)
     {
         return new(
             model.ProductId,
@@ -349,7 +371,7 @@ internal static class WebApiMapper
             model.SupplierProductNumber);
     }
 
-    internal static CompleteOrderModel Map(CompleteOrderDto model)
+    internal CompleteOrderModel Map(CompleteOrderDto model)
     {
         return new()
         {
@@ -358,7 +380,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static CompleteOrderProduct Map(CompleteOrderProductDto model)
+    internal CompleteOrderProduct Map(CompleteOrderProductDto model)
     {
         return new()
         {
@@ -375,23 +397,23 @@ internal static class WebApiMapper
         };
     }
 
-    internal static CancelOrderModel Map(CancelOrderDto model)
+    internal CancelOrderModel Map(CancelOrderDto model)
     {
         return new() { Comment = model.Comment };
     }
 
-    internal static ProductTypeDto Map(ProductType model)
+    internal ProductTypeDto Map(ProductType model)
     {
         if (model == null) return null;
         return new(model.Id, model.Name.Value);
     }
 
-    internal static ExtendedProductTypeDto Map(ExtendedProductType model)
+    internal ExtendedProductTypeDto Map(ExtendedProductType model)
     {
         return new(model.Id, model.Name.Value, model.ProductCount);
     }
 
-    internal static ChangeProductType Map(ChangeProductTypeDto model)
+    internal ChangeProductType Map(ChangeProductTypeDto model)
     {
         return new()
         {
@@ -399,7 +421,7 @@ internal static class WebApiMapper
         };
     }
 
-    internal static Page<ProductToOrderDto> Map(Page<ProductToOrder> page)
+    internal Page<ProductToOrderDto> Map(Page<ProductToOrder> page)
     {
         return new()
         {
@@ -411,17 +433,17 @@ internal static class WebApiMapper
         };
     }
 
-    internal static ProductToOrderDto Map(ProductToOrder model)
+    internal ProductToOrderDto Map(ProductToOrder model)
     {
         return new(Map(model.Product), [.. model.SupplierNumbers.Select(Map)]);
     }
 
-    internal static SupplierNumberDto Map(SupplierNumber model)
+    internal SupplierNumberDto Map(SupplierNumber model)
     {
         return new(model.SupplierId, model.Number);
     }
 
-    internal static ProductsToOrderQuery Map(ProductsToOrderQueryDto model)
+    internal ProductsToOrderQuery Map(ProductsToOrderQueryDto model)
     {
         return new()
         {

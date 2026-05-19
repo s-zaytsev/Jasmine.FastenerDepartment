@@ -1,19 +1,29 @@
 ﻿using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using Jasmine.FastenerDepartment.Domain.Common.Services;
 using Jasmine.FastenerDepartment.Domain.Products.Models;
 
 namespace Jasmine.FastenerDepartment.Documents.Export.Services;
 
 internal class WordExportDocumentService : IWordExportDocumentsService
 {
+    private readonly ILanguageService _languageService;
+
+    public WordExportDocumentService(ILanguageService languageService)
+    {
+        _languageService = languageService;
+    }
+
     /// <summary>
     /// Returns the stream of document
     /// </summary>
     /// <param name="products">List of products.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Stream of the document.</returns>
-    public async Task<Stream> GetStreamAsync(IEnumerable<Product> products, CancellationToken cancellationToken = default)
+    public async Task<Stream> GetStreamAsync(
+        IEnumerable<Product> products,
+        CancellationToken cancellationToken = default)
     {
         var memoryStream = new MemoryStream();
 
@@ -97,7 +107,7 @@ internal class WordExportDocumentService : IWordExportDocumentsService
                 new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = "200" }));
 
             var priceTagCellParagraph = new Paragraph(
-                new Run(new RunProperties(new FontSize() { Val = "28" }), new Text(product.PriceTag.Name)));
+                new Run(new RunProperties(new FontSize() { Val = "28" }), new Text(product.PriceTag.Name.GetText(_languageService.LanguageCode))));
 
             priceTagCellParagraph.ParagraphProperties = new ParagraphProperties
             {
@@ -121,7 +131,7 @@ internal class WordExportDocumentService : IWordExportDocumentsService
             var priceCellParagraph = new Paragraph(
                 new Run(new RunProperties(
                     new FontSize() { Val = "28" }),
-                    new Text($"{product.Price.Value} руб./{product.MeasurementUnit.ShortName}")));
+                    new Text($"{product.Price.Value} руб./{product.MeasurementUnit.ShortName.GetText(_languageService.LanguageCode)}.")));
 
             priceCellParagraph.ParagraphProperties = new ParagraphProperties
             {
