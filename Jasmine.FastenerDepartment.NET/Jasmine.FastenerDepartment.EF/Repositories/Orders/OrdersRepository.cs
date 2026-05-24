@@ -17,6 +17,8 @@ internal class OrdersRepository : RepositoryBase<Guid, Order>, IOrdersRepository
         return await GetQuery()
             .Include(x => x.Supplier)
             .Include(x => x.Products).ThenInclude(x => x.Product).ThenInclude(x => x.Type)
+            .Include(x => x.Products).ThenInclude(x => x.Ordered).ThenInclude(x => x.MeasurementUnit)
+            .Include(x => x.Products).ThenInclude(x => x.Fulfilled).ThenInclude(x => x.MeasurementUnit)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 

@@ -61,6 +61,11 @@ public record Quantity
         }
     }
 
+    /// <summary>
+    /// Measurement unit.
+    /// </summary>
+    public MeasurementUnit MeasurementUnit { get; private set; }
+
     private Quantity() { }
 
     /// <summary>

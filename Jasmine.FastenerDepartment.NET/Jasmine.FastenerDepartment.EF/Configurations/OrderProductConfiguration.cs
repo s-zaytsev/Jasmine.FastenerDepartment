@@ -25,6 +25,10 @@ class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
                 o.Property(x => x.SpecialMeasurementUnit)
                     .HasColumnName("OrderedSpecialMeasurementUnit")
                     .HasColumnType("varchar(100)");
+
+                o.HasOne(x => x.MeasurementUnit)
+                    .WithMany()
+                    .HasForeignKey(x => x.MeasurementUnitCode);
             });
 
         builder
@@ -35,6 +39,10 @@ class OrderProductConfiguration : IEntityTypeConfiguration<OrderProduct>
                o.Property(x => x.SpecialMeasurementUnit)
                    .HasColumnName("FulfilledSpecialMeasurementUnit")
                    .HasColumnType("varchar(100)");
+
+               o.HasOne(x => x.MeasurementUnit)
+                    .WithMany()
+                    .HasForeignKey(x => x.MeasurementUnitCode);
            });
 
         builder
