@@ -118,4 +118,12 @@ public class Order : AggregateRootBase<Guid>
 
         _products = [.. products];
     }
+
+    /// <summary>
+    /// Returns order number as text.
+    /// </summary>
+    public string GetNumberAsText()
+    {
+        return string.Join("", string.Join("", Enumerable.Repeat("0", 8 - Number.ToString().Length)), Number);
+    }
 }
