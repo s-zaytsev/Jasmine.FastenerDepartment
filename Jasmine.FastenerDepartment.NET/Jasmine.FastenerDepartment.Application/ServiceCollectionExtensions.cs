@@ -4,12 +4,14 @@ using Jasmine.FastenerDepartment.Application.Services.Print;
 using Jasmine.FastenerDepartment.Application.Services.Products;
 using Jasmine.FastenerDepartment.Application.Services.ProductsToOrder;
 using Jasmine.FastenerDepartment.Application.Services.ProductTypes;
+using Jasmine.FastenerDepartment.Application.Services.SettingsEntries;
 using Jasmine.FastenerDepartment.Application.Services.Suppliers;
 using Jasmine.FastenerDepartment.Application.Services.Synchronization;
 using Jasmine.FastenerDepartment.Domain.Orders.Services;
 using Jasmine.FastenerDepartment.Domain.Products.Services;
 using Jasmine.FastenerDepartment.Domain.ProductsToOrder.Services;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Services;
+using Jasmine.FastenerDepartment.Domain.Settings.Services;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,5 +49,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPrintService, PrintService>();
         services.AddScoped<IProductTypesService, ProductTypesService>();
         services.AddScoped<IProductsToOrderService, ProductsToOrderService>();
+        services.AddScoped<ISettingsEntriesService, SettingsEntriesService>();
     }
 }

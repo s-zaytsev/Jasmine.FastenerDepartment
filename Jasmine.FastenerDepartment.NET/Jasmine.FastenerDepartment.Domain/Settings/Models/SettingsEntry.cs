@@ -10,7 +10,7 @@ public class SettingsEntry : EntityBase<string>
     /// <summary>
     /// Value.
     /// </summary>
-    public string Value { get; init; }
+    public string Value { get; private set; }
 
     /// <summary>
     /// Description.
@@ -33,5 +33,14 @@ public class SettingsEntry : EntityBase<string>
         Id = id;
         Value = value;
         Description = description;
+    }
+
+    /// <summary>
+    /// Changes value. 
+    /// </summary>
+    /// <param name="value">Value.</param>
+    public void ChangeValue(string value)
+    {
+        Value = value;
     }
 }

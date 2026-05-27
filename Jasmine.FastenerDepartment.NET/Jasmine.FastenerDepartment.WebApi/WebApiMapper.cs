@@ -8,6 +8,8 @@ using Jasmine.FastenerDepartment.Domain.Orders.Models;
 using Jasmine.FastenerDepartment.Domain.Products.Models;
 using Jasmine.FastenerDepartment.Domain.ProductsToOrder.Models;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Models;
+using Jasmine.FastenerDepartment.Domain.Settings.Models.Company;
+using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Common;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Documents;
@@ -16,6 +18,7 @@ using Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Products;
 using Jasmine.FastenerDepartment.WebApi.Dtos.ProductsToOrder;
 using Jasmine.FastenerDepartment.WebApi.Dtos.ProductTypes;
+using Jasmine.FastenerDepartment.WebApi.Dtos.SettingsEntries;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Suppliers;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Synchronization;
 
@@ -156,7 +159,10 @@ public class WebApiMapper
     internal MeasurementUnitDto Map(MeasurementUnit model)
     {
         if (model == null) return null;
-        return new(model.Id, model.ShortName.GetText(), model.Name.GetText());
+        return new(
+            model.Id,
+            model.ShortName.GetText(_languageService.LanguageCode),
+            model.Name.GetText(_languageService.LanguageCode));
     }
 
     internal ExportDocumentRequest Map(ExportDocumentRequestDto model)
@@ -450,6 +456,42 @@ public class WebApiMapper
             Search = model.Search,
             SupplierId = model.SupplierId,
             OnlyToOrder = model.OnlyToOrder
+        };
+    }
+
+    internal CompanySettingsDto Map(CompanySettings model)
+    {
+        return new(model.Title, model.SubTitle);
+    }
+
+    internal EmailSettingsDto Map(EmailSettings model)
+    {
+        return new(
+            model.SmtpUrl,
+            model.SmtpPort,
+            model.UserName,
+            model.Password,
+            model.DisplayName);
+    }
+
+    internal ChangeCompanySettings Map(ChangeCompanySettingsDto dto)
+    {
+        return new()
+        {
+            Title = dto.Title,
+            SubTitle = dto.SubTitle
+        };
+    }
+
+    internal ChangeEmailSettings Map(ChangeEmailSettingsDto dto)
+    {
+        return new()
+        {
+            SmtpUrl = dto.SmtpUrl,
+            SmtpPort = dto.SmtpPort,
+            UserName = dto.UserName,
+            Password = dto.Password,
+            DisplayName = dto.DisplayName
         };
     }
 }

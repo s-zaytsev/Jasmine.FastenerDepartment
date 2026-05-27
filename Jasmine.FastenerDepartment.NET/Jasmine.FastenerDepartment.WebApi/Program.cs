@@ -2,11 +2,13 @@ using Jasmine.FastenerDepartment.Application;
 using Jasmine.FastenerDepartment.Documents;
 using Jasmine.FastenerDepartment.Domain;
 using Jasmine.FastenerDepartment.EF;
+using Jasmine.FastenerDepartment.Messaging;
+using Jasmine.FastenerDepartment.Templates;
+using Jasmine.FastenerDepartment.WebApi.Configuration;
 using Jasmine.FastenerDepartment.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
-using Serilog.Sinks.Grafana.Loki;
 
 namespace Jasmine.FastenerDepartment.WebApi;
 
@@ -22,7 +24,10 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        var configuration = GetConfiguration();
+
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+        builder.Configuration.AddDatabaseConfiguration(options => options.UseNpgsql(connectionString));
 
         builder.Host.UseSerilog();
         SetupLogger(builder);
@@ -30,22 +35,24 @@ public class Program
         builder.Services.AddSingleton(sp => Log.Logger);
 
         builder.Services.AddDbContextPool<ApplicationDbContext>(opt =>
-            opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            opt.UseNpgsql(connectionString));
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddWebServices();
-        builder.Services.AddDomainServices(configuration);
+        builder.Services.AddDomainServices(builder.Configuration);
         builder.Services.AddEFServices();
-        builder.Services.AddDocumentsServices(configuration);
-        builder.Services.AddApplicationServices(configuration);
+        builder.Services.AddDocumentsServices(builder.Configuration);
+        builder.Services.AddApplicationServices(builder.Configuration);
+        builder.Services.AddTemplatesServices();
+        builder.Services.AddMessagingServices(builder.Configuration);
 
         var app = builder.Build();
 
         app.UseSerilogRequestLogging();
 
-      //  app.UseMiddleware<MetricsMiddleware>();
+        //  app.UseMiddleware<MetricsMiddleware>();
         app.UseMiddleware<ErrorHandlingMiddleware>();
         app.UseMiddleware<RequestLoggingMiddleware>();
 
@@ -76,16 +83,6 @@ public class Program
         app.Run();
     }
 
-    private static IConfigurationRoot GetConfiguration()
-    {
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddEnvironmentVariables()
-            .Build();
-
-        return configuration;
-    }
-
     private static void Migrate(WebApplication app)
     {
         using var scope = app.Services.CreateScope();
@@ -108,7 +105,7 @@ public class Program
                 rollingInterval: RollingInterval.Day,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
             // ��� Grafana Loki
-       //     .WriteTo.GrafanaLoki("http://localhost:3100")
+            //     .WriteTo.GrafanaLoki("http://localhost:3100")
             .CreateLogger();
     }
 }
