@@ -1,4 +1,4 @@
-﻿namespace Jasmine.FastenerDepartment.Messaging.Models;
+﻿namespace Jasmine.FastenerDepartment.Domain.Common.Models;
 
 /// <summary>
 /// Message type.

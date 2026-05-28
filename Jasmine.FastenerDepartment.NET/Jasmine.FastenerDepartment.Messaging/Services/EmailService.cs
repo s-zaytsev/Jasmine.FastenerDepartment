@@ -15,12 +15,12 @@ internal class EmailService : IEmailService
         _settings = settings.Value;
     }
 
-    public async Task<string> SendAsync(MessageRequest request)
+    public async Task<string> SendAsync(MessageRequest request, CancellationToken cancellationToken)
     {
         using var client = CreateSmtpClient();
         var message = CreateMessage(request);
 
- //       await client.SendMailAsync(message);
+        await client.SendMailAsync(message, cancellationToken);
 
         return request.RecipientContact;
     }

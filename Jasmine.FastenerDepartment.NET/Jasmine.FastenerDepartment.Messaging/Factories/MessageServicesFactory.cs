@@ -1,14 +1,14 @@
-﻿using Jasmine.FastenerDepartment.Messaging.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Messaging.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jasmine.FastenerDepartment.Messaging.Factories;
 
-internal class MessageFactory : IMessageFactory
+internal class MessageServicesFactory : IMessageServicesFactory
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public MessageFactory(IServiceProvider serviceProvider)
+    public MessageServicesFactory(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }

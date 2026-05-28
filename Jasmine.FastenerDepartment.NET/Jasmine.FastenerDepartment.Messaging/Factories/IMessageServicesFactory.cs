@@ -1,4 +1,4 @@
-﻿using Jasmine.FastenerDepartment.Messaging.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Messaging.Services;
 
 namespace Jasmine.FastenerDepartment.Messaging.Factories;

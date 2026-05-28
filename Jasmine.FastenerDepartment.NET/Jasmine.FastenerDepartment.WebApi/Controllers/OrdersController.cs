@@ -101,6 +101,23 @@ public class OrdersController : ControllerBase
     /// Completes the order.
     /// </summary>
     /// <param name="id">Order identifier.</param>
+    /// <param name="dto">Send order model.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPost("{id}/send")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> SendOrderAsync(
+        [FromRoute] Guid id, [FromBody] SendOrderModelDto dto, CancellationToken cancellationToken)
+    {
+        var model = _mapper.Map(dto);
+        await _ordersService.SendAsync(id, model, cancellationToken);
+
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Completes the order.
+    /// </summary>
+    /// <param name="id">Order identifier.</param>
     /// <param name="dto">Complete order model.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPost("{id}/complete")]

@@ -1,4 +1,6 @@
-﻿namespace Jasmine.FastenerDepartment.Messaging.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+
+namespace Jasmine.FastenerDepartment.Messaging.Models;
 
 /// <summary>
 /// Message request.

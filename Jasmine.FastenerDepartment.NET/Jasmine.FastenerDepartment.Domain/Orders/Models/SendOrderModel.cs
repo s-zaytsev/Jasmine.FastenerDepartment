@@ -1,4 +1,6 @@
-﻿namespace Jasmine.FastenerDepartment.Domain.Products.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+
+namespace Jasmine.FastenerDepartment.Domain.Products.Models;
 
 /// <summary>
 /// Send order model.
@@ -6,7 +8,12 @@
 public class SendOrderModel
 {
     /// <summary>
-    /// Recipient email.
+    /// Recipient contact.
     /// </summary>
-    public string RecipientEmail { get; set; }
+    public string RecipientContact { get; set; }
+
+    /// <summary>
+    /// Message type.
+    /// </summary>
+    public MessageType MessageType { get; set; }
 }

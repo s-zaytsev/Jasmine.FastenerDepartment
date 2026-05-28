@@ -408,6 +408,15 @@ public class WebApiMapper
         return new() { Comment = model.Comment };
     }
 
+    internal SendOrderModel Map(SendOrderModelDto dto)
+    {
+        return new() 
+        {
+            RecipientContact = dto.RecipientContact,
+            MessageType = dto.MessageType
+        };
+    }
+
     internal ProductTypeDto Map(ProductType model)
     {
         if (model == null) return null;

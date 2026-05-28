@@ -168,7 +168,7 @@ internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
               <thead>
                 <tr style=""box-sizing: border-box; height: 35px"">
                   <td style=""
-                    width: 20%;
+                    width: 150px;
                     font-family: sans-serif;
                     font-size: 14px;
                     color: #6B7280;
@@ -176,7 +176,7 @@ internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
                         {OrderConstants.NUMBER.GetText(LanguageCode)}
                   </td>
                   <td style=""
-                    width: 20%;
+                    width: 450px;
                     font-family: sans-serif;
                     font-size: 14px;
                     color: #6B7280;
@@ -184,7 +184,7 @@ internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
                         {OrderConstants.NAME.GetText(LanguageCode)}
                   </td>
                   <td style=""
-                    width: 20%;
+                    width: 100px;
                     font-family: sans-serif;
                     font-size: 14px;
                     color: #6B7280;

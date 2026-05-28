@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
     /// <param name="configuration">Configuration.</param>
     public static void AddMessagingServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IMessageFactory, MessageFactory>();
+        services.AddScoped<IMessageServicesFactory, MessageServicesFactory>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IMessageService, EmailService>();
 

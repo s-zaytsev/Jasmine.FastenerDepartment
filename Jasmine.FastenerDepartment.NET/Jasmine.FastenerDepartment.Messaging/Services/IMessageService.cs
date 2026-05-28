@@ -11,6 +11,7 @@ public interface IMessageService
     /// Sends a message.
     /// </summary>
     /// <param name="request">Message request.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Recepient address.</returns>
-    Task<string> SendAsync(MessageRequest request);
+    Task<string> SendAsync(MessageRequest request, CancellationToken cancellationToken = default);
 }

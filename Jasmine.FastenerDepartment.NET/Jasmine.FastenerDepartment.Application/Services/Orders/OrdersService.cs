@@ -1,5 +1,6 @@
 ﻿using Jasmine.FastenerDepartment.Documents.Orders.Services;
 using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Common.Services;
 using Jasmine.FastenerDepartment.Domain.MeasurementUnits.Models;
 using Jasmine.FastenerDepartment.Domain.Orders.Models;
 using Jasmine.FastenerDepartment.Domain.Orders.Repositories;
@@ -10,6 +11,10 @@ using Jasmine.FastenerDepartment.Domain.Products.Repositories;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Repositories;
 using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Messaging.Models;
+using Jasmine.FastenerDepartment.Messaging.Services;
+using Jasmine.FastenerDepartment.Templates.Models;
+using Jasmine.FastenerDepartment.Templates.Services;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Orders;
 
@@ -19,6 +24,9 @@ internal class OrdersService : IOrdersService
     private readonly IProductsRepository _productsRepository;
     private readonly ISupplierProductsRepository _supplierProductsRepository;
     private readonly IOrderDocumentsService _orderDocumentsService;
+    private readonly ITemplateService _templateService;
+    private readonly IMessageService _messageService;
+    private readonly ILanguageService _languageService;
     private readonly IUnitOfWork _unitOfWork;
 
     public OrdersService(
@@ -26,12 +34,18 @@ internal class OrdersService : IOrdersService
         IProductsRepository productsRepository,
         ISupplierProductsRepository supplierProductsRepository,
         IOrderDocumentsService orderDocumentsService,
+        ITemplateService templateService,
+        IMessageService messageService,
+        ILanguageService languageService,
         IUnitOfWork unitOfWork)
     {
         _ordersRepository = ordersRepository;
         _productsRepository = productsRepository;
         _supplierProductsRepository = supplierProductsRepository;
         _orderDocumentsService = orderDocumentsService;
+        _templateService = templateService;
+        _messageService = messageService;
+        _languageService = languageService;
         _unitOfWork = unitOfWork;
     }
 
@@ -86,11 +100,32 @@ internal class OrdersService : IOrdersService
 
     public async Task SendAsync(Guid id, SendOrderModel model, CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(model);
+
         var order = await GetByIdAsync(id, cancellationToken);
 
-        //TODO Sending logic
+        if (order.StatusCode == OrderStatusCode.Fulfilled)
+            throw new InvalidOperationException("Order is already fulfilled.");
 
-        order.ChangeStatus(OrderStatusCode.Sent, $"Order has been sent to {model.RecipientEmail}");
+        if (order.StatusCode == OrderStatusCode.Cancelled)
+            throw new InvalidOperationException("Order is already cancelled.");
+
+        var templateType = GetTemplateType(model.MessageType);
+        var template = _templateService.GetOrderRequestTemplate(templateType, order);
+        var messageTitle = GetOrderTitle(order);
+
+        var messageRequest = new MessageRequest
+        {
+            Content = template,
+            RecipientContact = model.RecipientContact,
+            Type = model.MessageType,
+            Title = messageTitle
+        };
+
+        await _messageService.SendAsync(messageRequest, cancellationToken);
+
+        var historyMessage = GetOrderHistoryMessage(model.RecipientContact);
+        order.ChangeStatus(OrderStatusCode.Sent, historyMessage);
 
         _ordersRepository.Update(order);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -284,5 +319,34 @@ internal class OrdersService : IOrdersService
     {
         supplierProduct.ChangeNumber(orderProduct.SupplierProductNumber);
         _supplierProductsRepository.Update(supplierProduct);
+    }
+
+    private TemplateType GetTemplateType(MessageType messageType)
+    {
+        return messageType switch
+        {
+            MessageType.Email => TemplateType.Html,
+            _ => throw new NotSupportedException($"Message type {messageType} not supported.")
+        };
+    }
+
+    private string GetOrderTitle(Order order)
+    {
+        return _languageService.LanguageCode switch
+        {
+            LanguageCode.Russian => $"Заказ #{order.GetNumberAsText()}",
+            LanguageCode.English => $"Order #{order.GetNumberAsText()}",
+            _ => throw new NotSupportedException($"Language {_languageService.LanguageCode} not supported.")
+        };
+    }
+
+    private string GetOrderHistoryMessage(string recipientContact)
+    {
+        return _languageService.LanguageCode switch
+        {
+            LanguageCode.Russian => $"Детали заказа отправлены на {recipientContact}",
+            LanguageCode.English => $"Order details have been sent to {recipientContact}",
+            _ => throw new NotSupportedException($"Language {_languageService.LanguageCode} not supported.")
+        };
     }
 }
