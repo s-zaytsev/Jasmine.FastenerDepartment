@@ -1,6 +1,14 @@
 import api from "../../core/api.ts";
 import type {Page} from "../../shared/models/models.ts";
-import type {CancelOrder, ChangeOrder, CompleteOrder, CreateOrder, Order, OrdersQuery} from "../models/orderModels.ts";
+import type {
+    CancelOrder,
+    ChangeOrder,
+    CompleteOrder,
+    CreateOrder,
+    Order,
+    OrdersQuery,
+    SendOrder
+} from "../models/orderModels.ts";
 
 class OrdersApi {
     getOrdersPage(query: OrdersQuery): Promise<Page<Order>> {
@@ -24,6 +32,10 @@ class OrdersApi {
 
     completeOrder(id: string, model: CompleteOrder): Promise<void> {
         return api.post(`/orders/${id}/complete`, model)
+    }
+
+    sendOrder(id: string, model: SendOrder): Promise<void> {
+        return api.post(`/orders/${id}/send`, model)
     }
 
     cancelOrder(id: string, model: CancelOrder): Promise<void> {

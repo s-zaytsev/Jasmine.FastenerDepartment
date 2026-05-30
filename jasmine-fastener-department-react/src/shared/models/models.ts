@@ -87,3 +87,7 @@ export enum LanguageCode {
     en = "English",
     ru = "Russian"
 }
+
+export enum MessageType {
+    email = 1
+}

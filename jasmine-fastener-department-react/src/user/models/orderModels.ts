@@ -1,4 +1,4 @@
-import type {Page, Quantity, QueryBase, StateBase} from "../../shared/models/models.ts";
+import {MessageType, type Page, type Quantity, type QueryBase, type StateBase} from "../../shared/models/models.ts";
 import type {Supplier} from "./supplierModels.ts";
 import type {ProductType} from "./productTypeModels.ts";
 import type {ProductToOrder} from "./productsToOrderModels.ts";
@@ -121,6 +121,11 @@ export enum OrderStatusCode {
 export interface CompleteOrder {
     comment: string;
     products: CompleteOrderProduct[];
+}
+
+export interface SendOrder {
+    recipientContact: string;
+    messageType: MessageType;
 }
 
 export interface CancelOrder {

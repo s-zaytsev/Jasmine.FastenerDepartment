@@ -17,6 +17,13 @@ export const getActiveOrdersPage = createAsyncThunkWithErrorHandler(
     }
 );
 
+export const sendOrder = createAsyncThunkWithErrorHandler(
+    "orders/sendOrder",
+    async ({id, model}: any) => {
+        return OrdersApi.sendOrder(id, model);
+    }
+);
+
 export const cancelOrder = createAsyncThunkWithErrorHandler(
     "orders/cancelOrder",
     async ({id, model}: any) => {
@@ -88,6 +95,18 @@ const ordersSlice = createSlice({
                 state.loading = false;
             })
             .addCase(getActiveOrdersPage.rejected, (state, action) => {
+                state.error = action.payload ?? action.error;
+                state.loading = false;
+            });
+
+        builder
+            .addCase(sendOrder.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(sendOrder.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(sendOrder.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
                 state.loading = false;
             });
