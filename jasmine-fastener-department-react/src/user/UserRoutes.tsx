@@ -13,6 +13,7 @@ import ChangeOrderPage from "./components/orders/change-order-page/ChangeOrderPa
 import CompleteOrderPage from "./components/orders/complete-order/CompleteOrderPage.tsx";
 import ProductTypesPage from "./components/productTypes/ProductTypesPage.tsx";
 import OrderDetailsPage from "./components/orders/order-details/OrderDetailsPage.tsx";
+import SettingsPage from "./components/settings/SettingsPage.tsx";
 
 export const userRoutes = [
     <Route path="products" element={<ProductsPage/>} key="products"/>,
@@ -29,6 +30,7 @@ export const userRoutes = [
     <Route path="suppliers" element={<SuppliersPage/>} key="suppliers"/>,
     <Route path="suppliers/:id" element={<SupplierProductsPage/>} key="supplier"/>,
     <Route path="product-types" element={<ProductTypesPage/>} key="product-types"/>,
+    <Route path="settings" element={<SettingsPage/>} key="settings"/>,
     <Route index element={<Navigate to="products"/>} key="index"/>,
     <Route path="*" element={<Navigate to=""/>} key="wildcard"/>,
 ];

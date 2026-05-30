@@ -13,6 +13,7 @@ import changeOrderSlice from "../user/slices/ChangeOrderSlice.ts";
 import completeOrderSlice from "../user/slices/CompleteOrderSlice.ts";
 import productTypesSlice from "../user/slices/ProductTypesSlice.ts";
 import orderDetailsSlice from "../user/slices/OrderDetailsSlice.ts";
+import settingsSlice from "../user/slices/SettingsSlice.ts";
 
 export const store = configureStore({
     reducer: {
@@ -29,7 +30,8 @@ export const store = configureStore({
         export: exportSlice,
         suppliers: suppliersSlice,
         supplierProducts: supplierProductsSlice,
-        productTypes: productTypesSlice
+        productTypes: productTypesSlice,
+        settings: settingsSlice
     }
 })
 

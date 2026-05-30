@@ -6,7 +6,8 @@ import {
     HistoryOutlined,
     ListAltOutlined,
     LocalShippingOutlined,
-    PrintOutlined
+    PrintOutlined,
+    SettingsOutlined
 } from "@mui/icons-material";
 
 const mainItems = [
@@ -19,8 +20,12 @@ const mainItems = [
     {title: "История", link: "/history", icon: <HistoryOutlined/>}
 ];
 
+const bottomItems = [
+    {title: 'Настройки', link: '/settings', icon: <SettingsOutlined/>},
+];
+
 const UserSidebar = () => {
-    return (<Sidebar mainItems={mainItems}/>)
+    return (<Sidebar mainItems={mainItems} bottomItems={bottomItems}/>)
 };
 
 export default UserSidebar;

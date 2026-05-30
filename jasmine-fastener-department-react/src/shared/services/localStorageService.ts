@@ -1,10 +1,14 @@
-const STORAGE_KEY = 'itemCounts';
+import {LanguageCode} from "../models/models.ts";
+
+const printItemCountsKey = 'itemCounts';
+const languageCodeKey = "languageCode";
+
 export type ItemCounts = Record<string, number>;
 
 export const localStorageService = {
     getItemCounts: (): ItemCounts => {
         try {
-            const counts = localStorage.getItem(STORAGE_KEY);
+            const counts = localStorage.getItem(printItemCountsKey);
             return counts ? JSON.parse(counts) : {};
         } catch (error) {
             console.error('Error reading from localStorage:', error);
@@ -20,16 +24,24 @@ export const localStorageService = {
     setItemCount: (productId: string, count: number): void => {
         const counts = localStorageService.getItemCounts();
         counts[productId] = count;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+        localStorage.setItem(printItemCountsKey, JSON.stringify(counts));
     },
 
     removeItemCount: (productId: string): void => {
         const counts = localStorageService.getItemCounts();
         delete counts[productId];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+        localStorage.setItem(printItemCountsKey, JSON.stringify(counts));
     },
 
     clearAllCounts: (): void => {
-        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(printItemCountsKey);
+    },
+
+    getLanguage: () => {
+        return localStorage.getItem(languageCodeKey) as LanguageCode ?? LanguageCode.en;
+    },
+
+    setLanguage: (code: LanguageCode) => {
+        localStorage.setItem(languageCodeKey, code);
     }
 };

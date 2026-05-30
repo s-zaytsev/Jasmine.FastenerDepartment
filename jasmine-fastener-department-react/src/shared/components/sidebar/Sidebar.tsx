@@ -9,16 +9,24 @@ export interface SidebarProps {
 
 const Sidebar = (props: SidebarProps) => {
     return (
-        <Box className={'w-[10rem]'}>
+        <Box className={'w-[10rem] h-[90vh]'}>
             <Box className={'mb-[2rem]'}>
                 <Typography variant={'headlineH2'} color={'primary'}>Жасмин</Typography>
                 <Typography variant={'bodySmallBold'} color={'tertiary'}>Отдел крепежа</Typography>
             </Box>
 
-            <Box className={'flex flex-col gap-[1rem]'}>
-                {props.mainItems?.map((item, i) => (
-                    <SidebarListItem key={i} {...item} />
-                ))}
+            <Box className={'flex flex-col h-[85vh]'}>
+                <Box className={'flex flex-col gap-[1rem] flex-1'}>
+                    {props.mainItems?.map((item, i) => (
+                        <SidebarListItem key={i} {...item} />
+                    ))}
+                </Box>
+
+                <Box className={'flex flex-col flex-shrink-0'}>
+                    {props.bottomItems?.map((item, i) => (
+                        <SidebarListItem key={i} {...item} />
+                    ))}
+                </Box>
             </Box>
         </Box>
         /* <Paper

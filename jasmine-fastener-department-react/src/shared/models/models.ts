@@ -34,9 +34,14 @@ export interface Checked<T> {
     isChecked: boolean;
 }
 
-export const enumToArray = <TEnum extends number>(obj: object): TEnum[] => {
+export const numberEnumToArray = <TEnum extends number>(obj: object): TEnum[] => {
     const values = Object.keys(obj).map(x => Number(x)).filter(x => !isNaN(x)).map(x => x as TEnum);
     return values;
+}
+
+export const stringEnumToArray = <TEnum extends string>(obj: object): TEnum[] => {
+    const values = Object.keys(obj);
+    return values as TEnum[];
 }
 
 export interface Quantity {
@@ -76,4 +81,9 @@ export interface GroupOptions<T> {
 export interface StepperItem<T> {
     id: T;
     label: string;
+}
+
+export enum LanguageCode {
+    en = "English",
+    ru = "Russian"
 }

@@ -1,4 +1,4 @@
-import {enumToArray} from "../../models/models.ts";
+import {numberEnumToArray} from "../../models/models.ts";
 import type {ControllerRenderProps} from "react-hook-form";
 import {Box, MenuItem, Select, TextField} from "@mui/material";
 import {longMeasurementUnitName, ProductMeasurementUnitCode} from "../../../user/models/productModel.ts";
@@ -54,7 +54,7 @@ const QuantityInput = (props: QuantityInputProps) => {
                 }}
             >
                 <MenuItem key={'none'} value={''}></MenuItem>
-                {enumToArray<ProductMeasurementUnitCode>(ProductMeasurementUnitCode).sort(x => x).map((unit) => (
+                {numberEnumToArray(ProductMeasurementUnitCode).sort(x => x).map((unit) => (
                         <MenuItem key={unit} value={unit}>
                             {longMeasurementUnitName(unit)}
                         </MenuItem>

@@ -1,7 +1,7 @@
-import {enumToArray} from "../../../../../shared/models/models.ts";
-import PriceTagGroupItem from "./PriceTagGroupItem.tsx";
+import {numberEnumToArray} from "../../../../../shared/models/models.ts";
 import {PriceTagCode} from "../../../../models/productModel.ts";
 import ElementsGroup from "../../../../../shared/components/elementsGroup/ElementsGroup.tsx";
+import PriceTagGroupItem from "./PriceTagGroupItem.tsx";
 
 type PriceTagGroupProps = {
     checkedCode: PriceTagCode;
@@ -11,7 +11,7 @@ type PriceTagGroupProps = {
 const PriceTagGroup = (props: PriceTagGroupProps) => {
     return (
         <ElementsGroup>
-            {enumToArray<PriceTagCode>(PriceTagCode)
+            {numberEnumToArray(PriceTagCode)
                 .map(x =>
                     <PriceTagGroupItem
                         key={x}

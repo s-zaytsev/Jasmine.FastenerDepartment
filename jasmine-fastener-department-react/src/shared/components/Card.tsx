@@ -1,5 +1,5 @@
 import type {ReactNode} from "react";
-import {Box} from "@mui/material";
+import {Box, type SxProps} from "@mui/material";
 import {primitives} from "../../assets/variables/primitives.ts";
 import {neutralColors} from "../../assets/variables/neutralColors.ts";
 
@@ -8,6 +8,7 @@ type CardProps = {
     backgroundColor?: string;
     onClick?: () => void;
     children: ReactNode;
+    sx?: SxProps;
 }
 
 const Card = (props: CardProps) => {
@@ -26,7 +27,8 @@ const Card = (props: CardProps) => {
                 cursor: props.onClick ? 'pointer' : 'default',
                 '&:hover': !props.hasHighlight ? {} : {
                     backgroundColor: primitives.colors.tonal
-                }
+                },
+                ...props.sx
             }}>
             {props.children}
         </Box>

@@ -1,10 +1,14 @@
-import {type ChangeProduct, longMeasurementUnitName, ProductMeasurementUnitCode} from "../../../../models/productModel.ts";
+import {
+    type ChangeProduct,
+    longMeasurementUnitName,
+    ProductMeasurementUnitCode
+} from "../../../../models/productModel.ts";
 import SettingsCard from "./SettingsCard.tsx";
 import {InfoOutlined} from "@mui/icons-material";
 import {type Control, Controller, type FieldErrors} from "react-hook-form";
 import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import {NumericFormat} from "react-number-format";
-import {enumToArray} from "../../../../../shared/models/models.ts";
+import {numberEnumToArray} from "../../../../../shared/models/models.ts";
 import type {ProductType} from "../../../../models/productTypeModels.ts";
 
 type DetailsCardSettingsProps = {
@@ -129,7 +133,7 @@ const DetailsSettingsCard = (props: DetailsCardSettingsProps) => {
                                         field.onBlur();
                                     }}
                                 >
-                                    {enumToArray<ProductMeasurementUnitCode>(ProductMeasurementUnitCode).sort(x => x).map((unit) => (
+                                    {numberEnumToArray(ProductMeasurementUnitCode).sort(x => x).map((unit) => (
                                         <MenuItem key={unit} value={unit}>
                                             {longMeasurementUnitName(unit)}
                                         </MenuItem>
