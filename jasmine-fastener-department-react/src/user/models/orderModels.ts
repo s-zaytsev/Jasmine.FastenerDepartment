@@ -85,7 +85,7 @@ export interface OrderHistoryEntry {
     id: string;
     createdDate: string;
     statusCode: OrderStatusCode;
-    message: string;
+    comment: string;
 }
 
 export interface OrderStepperModel {

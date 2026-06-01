@@ -1,6 +1,7 @@
 import type {Order} from "../../../../models/orderModels.ts";
 import {Box} from "@mui/material";
 import Typography from "../../../../../shared/components/Typography.tsx";
+import OrderProgressBar from "../../order-progress-bar/OrderProgressBar.tsx";
 
 type ActiveOrdersGridRowBodyProps = {
     order: Order;
@@ -17,6 +18,10 @@ const ActiveOrdersGridRowBody = (props: ActiveOrdersGridRowBodyProps) => {
             <Box className={'w-full flex justify-between mb-[1rem]'}>
                 <Typography variant={'bodyRegular'} color={'tertiary'}>Позиции</Typography>
                 <Typography variant={'bodyRegularBold'}>{props.order.products.length} позиций</Typography>
+            </Box>
+
+            <Box className={'w-full mb-[1rem]'}>
+                <OrderProgressBar order={props.order}/>
             </Box>
         </Box>
     )
