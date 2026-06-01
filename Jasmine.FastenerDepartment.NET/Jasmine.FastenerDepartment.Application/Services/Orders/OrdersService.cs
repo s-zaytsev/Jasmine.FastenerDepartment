@@ -124,8 +124,7 @@ internal class OrdersService : IOrdersService
 
         await _messageService.SendAsync(messageRequest, cancellationToken);
 
-        var historyMessage = GetOrderHistoryMessage(model.RecipientContact);
-        order.ChangeStatus(OrderStatusCode.Sent, historyMessage);
+        order.ChangeStatus(OrderStatusCode.Sent, model.RecipientContact);
 
         _ordersRepository.Update(order);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -336,16 +335,6 @@ internal class OrdersService : IOrdersService
         {
             LanguageCode.Russian => $"Заказ #{order.GetNumberAsText()}",
             LanguageCode.English => $"Order #{order.GetNumberAsText()}",
-            _ => throw new NotSupportedException($"Language {_languageService.LanguageCode} not supported.")
-        };
-    }
-
-    private string GetOrderHistoryMessage(string recipientContact)
-    {
-        return _languageService.LanguageCode switch
-        {
-            LanguageCode.Russian => $"Детали заказа отправлены на {recipientContact}",
-            LanguageCode.English => $"Order details have been sent to {recipientContact}",
             _ => throw new NotSupportedException($"Language {_languageService.LanguageCode} not supported.")
         };
     }
