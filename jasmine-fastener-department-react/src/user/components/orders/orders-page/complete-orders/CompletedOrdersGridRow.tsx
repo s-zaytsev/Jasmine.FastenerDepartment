@@ -11,8 +11,6 @@ type OrdersGridRowProps = {
 }
 
 const CompletedOrdersGridRow = (props: OrdersGridRowProps) => {
-
-    const orderNumber = "0".repeat(8 - props.order.number.toString().length) + props.order.number.toString();
     const icon = props.order.statusCode === OrderStatusCode.fulfilled ?
         <DoneOutlined/> :
         <CancelOutlined/>
@@ -30,7 +28,7 @@ const CompletedOrdersGridRow = (props: OrdersGridRowProps) => {
 
                 <Box className={'w-full'}>
                     <Box className={'flex justify-between'}>
-                        <Typography variant={'bodyRegularBold'}>Заказ #{orderNumber}</Typography>
+                        <Typography variant={'bodyRegularBold'}>Заказ #{props.order.number}</Typography>
                         <Typography variant={'bodyRegularBold'}>
                             {props.order.supplier?.name ?? 'Без поставщика'}
                         </Typography>

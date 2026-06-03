@@ -35,7 +35,17 @@ class OrdersApi {
     }
 
     sendOrder(id: string, model: SendOrder): Promise<void> {
-        return api.post(`/orders/${id}/send`, model)
+        const body = new FormData();
+        body.append('recipientContact', model.recipientContact);
+        body.append('messageType', String(model.messageType));
+
+        if (model.attachments) {
+            for (const file of model.attachments) {
+                body.append('attachments', file);
+            }
+        }
+
+        return api.post(`/orders/${id}/send`, body)
     }
 
     cancelOrder(id: string, model: CancelOrder): Promise<void> {

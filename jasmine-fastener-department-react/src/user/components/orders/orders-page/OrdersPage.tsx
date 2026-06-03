@@ -136,6 +136,7 @@ const OrdersPage = () => {
             />
 
             <SendOrderDialog
+                order={state.selectedOrder}
                 open={isSendDialogOpen}
                 onClose={handleSendDialogClose}
                 onSubmit={handleSendOrder}

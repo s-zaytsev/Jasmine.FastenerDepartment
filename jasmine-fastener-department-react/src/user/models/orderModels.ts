@@ -126,6 +126,7 @@ export interface CompleteOrder {
 export interface SendOrder {
     recipientContact: string;
     messageType: MessageType;
+    attachments?: File[];
 }
 
 export interface CancelOrder {

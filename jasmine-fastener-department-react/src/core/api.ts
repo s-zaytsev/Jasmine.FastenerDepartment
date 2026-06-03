@@ -6,7 +6,6 @@ import languageService from "../shared/services/languageService.ts";
 
 const api = Axios.create({
     baseURL: (window as any).app.config.apiBaseUrl,
-    headers: {'Content-Type': 'application/json'},
     paramsSerializer: params => qs.stringify(params, {arrayFormat: 'repeat'})
 });
 

@@ -1,12 +1,14 @@
-import type {SendOrder} from "../../../models/orderModels.ts";
+import type {Order, SendOrder} from "../../../models/orderModels.ts";
 import {type ChangeEvent, useEffect, useState} from "react";
 import {Box, Dialog, TextField} from "@mui/material";
 import Typography from "../../../../shared/components/Typography.tsx";
 import FilledButton from "../../../../shared/components/buttons/FilledButton.tsx";
 import {MessageType} from "../../../../shared/models/models.ts";
 import {emailRegex} from "../../../../shared/models/regularExpressions.ts";
+import FileUploader from "../../../../shared/components/files/FileUploader.tsx";
 
 type SendOrderDialogProps = {
+    order?: Order;
     open: boolean;
     onClose: () => void;
     onSubmit: (model: SendOrder) => void;
@@ -15,7 +17,7 @@ type SendOrderDialogProps = {
 const SendOrderDialog = (props: SendOrderDialogProps) => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
-
+    const [files, setFiles] = useState<File[]>([]);
 
     const validateEmail = (value: string): boolean => {
         if (!value) {
@@ -45,10 +47,15 @@ const SendOrderDialog = (props: SendOrderDialogProps) => {
         }
     }
 
+    const handleChangeFiles = (files: File[]) => {
+        setFiles(files);
+    }
+
     const handleSubmit = () => {
         const model: SendOrder = {
             recipientContact: email,
-            messageType: MessageType.email
+            messageType: MessageType.email,
+            attachments: files
         }
 
         props.onSubmit(model);
@@ -59,7 +66,7 @@ const SendOrderDialog = (props: SendOrderDialogProps) => {
         setEmailError('');
     }, []);
 
-    return(
+    return (
         <Dialog
             open={props.open}
             onClose={props.onClose}
@@ -72,6 +79,16 @@ const SendOrderDialog = (props: SendOrderDialogProps) => {
                 </Box>
 
                 <Box>
+                    <Typography variant={'bodyRegular'}>
+                        Для отправки заказа <strong>#{props.order?.number ?? ''}</strong> введите электронную почту
+                        получателя и затем нажмите кнопку "Отправить"
+                    </Typography>
+                    <Typography variant={'bodyRegular'}>
+                        Также ниже вы можете прикрепить дополнительные файлы.
+                    </Typography>
+                </Box>
+
+                <Box className={'my-[1rem]'}>
                     <TextField
                         fullWidth
                         placeholder={"Электронная почта получателя"}
@@ -84,8 +101,10 @@ const SendOrderDialog = (props: SendOrderDialogProps) => {
                     />
                 </Box>
 
+                <FileUploader onChange={handleChangeFiles}/>
+
                 <Box className={'mt-[1rem] flex justify-end'}>
-                    <FilledButton variant="contained" onClick={handleSubmit}>
+                    <FilledButton variant="contained" onClick={handleSubmit} disabled={!!emailError || !email}>
                         Отправить
                     </FilledButton>
                 </Box>
