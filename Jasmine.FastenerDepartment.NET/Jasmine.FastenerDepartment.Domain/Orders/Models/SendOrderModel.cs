@@ -16,4 +16,9 @@ public class SendOrderModel
     /// Message type.
     /// </summary>
     public MessageType MessageType { get; set; }
+
+    /// <summary>
+    /// Attachments.
+    /// </summary>
+    public ICollection<FileModel> Attachments { get; set; } 
 }

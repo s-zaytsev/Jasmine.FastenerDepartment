@@ -324,7 +324,7 @@ public class WebApiMapper
         return new(
             order.Id,
             order.CreatedDate,
-            order.Number,
+            order.GetNumberAsText(),
             order.StatusCode,
             Map(order.Supplier),
             [.. order.Products.Select(Map)],
@@ -413,7 +413,8 @@ public class WebApiMapper
         return new() 
         {
             RecipientContact = dto.RecipientContact,
-            MessageType = dto.MessageType
+            MessageType = dto.MessageType,
+            Attachments = [.. dto.Attachments.Select(Map)]
         };
     }
 
@@ -501,6 +502,16 @@ public class WebApiMapper
             UserName = dto.UserName,
             Password = dto.Password,
             DisplayName = dto.DisplayName
+        };
+    }
+
+    internal FileModel Map(IFormFile file)
+    {
+        return new()
+        {
+            Name = file.FileName,
+            ContentType = file.ContentType,
+            Content = file.OpenReadStream()
         };
     }
 }

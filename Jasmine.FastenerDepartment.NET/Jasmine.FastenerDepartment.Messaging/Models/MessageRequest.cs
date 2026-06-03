@@ -26,4 +26,9 @@ public class MessageRequest
     /// Content.
     /// </summary>
     public string Content { get; set; }
+
+    /// <summary>
+    /// Attachments.
+    /// </summary>
+    public ICollection<FileModel> Attachments { get; set; }
 }

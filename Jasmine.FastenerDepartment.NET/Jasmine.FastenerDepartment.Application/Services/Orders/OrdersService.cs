@@ -119,7 +119,8 @@ internal class OrdersService : IOrdersService
             Content = template,
             RecipientContact = model.RecipientContact,
             Type = model.MessageType,
-            Title = messageTitle
+            Title = messageTitle,
+            Attachments = model.Attachments
         };
 
         await _messageService.SendAsync(messageRequest, cancellationToken);

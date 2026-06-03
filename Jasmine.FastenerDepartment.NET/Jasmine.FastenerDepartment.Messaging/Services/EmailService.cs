@@ -1,4 +1,5 @@
-﻿using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Messaging.Models;
 using Microsoft.Extensions.Options;
 using System.Net;
@@ -48,6 +49,11 @@ internal class EmailService : IEmailService
         };
 
         mailMessage.To.Add(request.RecipientContact);
+
+        foreach (var file in request.Attachments)
+        {
+            mailMessage.Attachments.Add(new(file.Content, file.Name, file.ContentType));
+        }
 
         return mailMessage;
     }

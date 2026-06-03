@@ -7,4 +7,8 @@ namespace Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 /// </summary>
 /// <param name="RecipientContact">Recipient contact.</param>
 /// <param name="MessageType">Message type.</param>
-public record SendOrderModelDto(string RecipientContact, MessageType MessageType);
+/// <param name="Attachments">Attachments.</param>
+public record SendOrderModelDto(
+    string RecipientContact,
+    MessageType MessageType,
+    List<IFormFile> Attachments);

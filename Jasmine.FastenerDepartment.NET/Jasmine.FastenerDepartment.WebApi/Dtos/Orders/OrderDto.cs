@@ -17,7 +17,7 @@ namespace Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 public record OrderDto(
     Guid Id,
     DateTime CreatedDate,
-    int Number,
+    string Number,
     OrderStatusCode StatusCode,
     SupplierDto Supplier,
     ICollection<OrderProductDto> Products,

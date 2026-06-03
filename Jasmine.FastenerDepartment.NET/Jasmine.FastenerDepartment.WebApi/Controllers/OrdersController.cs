@@ -106,7 +106,7 @@ public class OrdersController : ControllerBase
     [HttpPost("{id}/send")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> SendOrderAsync(
-        [FromRoute] Guid id, [FromBody] SendOrderModelDto dto, CancellationToken cancellationToken)
+        [FromRoute] Guid id, [FromForm] SendOrderModelDto dto, CancellationToken cancellationToken)
     {
         var model = _mapper.Map(dto);
         await _ordersService.SendAsync(id, model, cancellationToken);
