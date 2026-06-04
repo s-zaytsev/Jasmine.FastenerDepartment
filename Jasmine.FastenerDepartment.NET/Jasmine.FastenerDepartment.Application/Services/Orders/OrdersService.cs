@@ -111,7 +111,7 @@ internal class OrdersService : IOrdersService
             throw new InvalidOperationException("Order is already cancelled.");
 
         var templateType = GetTemplateType(model.MessageType);
-        var template = _templateService.GetOrderRequestTemplate(templateType, order);
+        var template = _templateService.GetOrderRequestTemplate(templateType, order, model.Attachments?.Count > 0);
         var messageTitle = GetOrderTitle(order);
 
         var messageRequest = new MessageRequest

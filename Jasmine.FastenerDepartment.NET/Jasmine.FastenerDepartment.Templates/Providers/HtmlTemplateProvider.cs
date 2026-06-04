@@ -10,9 +10,9 @@ internal class HtmlTemplateProvider : TemplateProviderBase, IHtmlTemplateProvide
         : base(languageService)
     { }
 
-    public string GetOrderRequestTemplate(Order order)
+    public string GetOrderRequestTemplate(Order order, bool hasAttachments)
     {
-        var template = new HtmlOrderRequestTemplateBuilder(order)
+        var template = new HtmlOrderRequestTemplateBuilder(order, hasAttachments)
             .SetLanguage(LanguageService.LanguageCode)
             .AddBody()
             .Build();

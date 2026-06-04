@@ -4,6 +4,8 @@ internal abstract class HtmlTemplateBuilderBase : TemplateBuilderBase
 {
     public override string Build()
     {
+        var invisibleSpace = string.Join("", Enumerable.Repeat("&#8204;&nbsp;&zwnj;&nbsp;&thinsp;&zwnj;&nbsp;", 200));
+
         return $@"
             <!DOCTYPE html>
             <html class=""wrapper"">
@@ -60,6 +62,9 @@ internal abstract class HtmlTemplateBuilderBase : TemplateBuilderBase
                 </head>
 
                 <body>
+                    <div style=""display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff;"">
+                        {invisibleSpace}
+                    </div>
                     <div class=""body-wrapper"">
                        {Body}
                     </div>

@@ -16,10 +16,10 @@ internal class TemplateService : ITemplateService
         _templateServiceFactory = templateServiceFactory;
     }
 
-    public string GetOrderRequestTemplate(TemplateType type, Order order)
+    public string GetOrderRequestTemplate(TemplateType type, Order order, bool hasAttachments)
     {
         var provider = _templateServiceFactory.GetProvider(type);
-        var template = provider.GetOrderRequestTemplate(order);
+        var template = provider.GetOrderRequestTemplate(order, hasAttachments);
         return template;
     }
 }

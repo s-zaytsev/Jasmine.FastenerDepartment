@@ -1,5 +1,4 @@
-﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
-using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
+﻿using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Messaging.Models;
 using Microsoft.Extensions.Options;
 using System.Net;

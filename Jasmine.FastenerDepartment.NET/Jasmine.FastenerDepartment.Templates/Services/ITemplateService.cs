@@ -13,6 +13,7 @@ public interface ITemplateService
     /// </summary>
     /// <param name="type">Template type.</param>
     /// <param name="order">Order.</param>
+    /// <param name="hasAttachments">Shows if the order has attachments.</param>
     /// <returns>Order request template.</returns>
-    string GetOrderRequestTemplate(TemplateType type, Order order);
+    string GetOrderRequestTemplate(TemplateType type, Order order, bool hasAttachments);
 }

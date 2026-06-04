@@ -8,6 +8,9 @@ internal static class OrderConstants
     internal readonly static LocalizedString NUMBER = new("Number", "Артикул");
     internal readonly static LocalizedString NAME = new("Name", "Наименование");
     internal readonly static LocalizedString AMOUNT = new("Amount", "Количество");
+    internal readonly static LocalizedString ATTACHMENTS_BLOCK = new(
+        "You will find more detailed information on the order in the attached files",
+        "Более подробную информацию по заказу вы найдёте в прикрепленных файлах");
 
     internal readonly static IDictionary<int, LocalizedString> POSITIONS = new Dictionary<int, LocalizedString>
     {

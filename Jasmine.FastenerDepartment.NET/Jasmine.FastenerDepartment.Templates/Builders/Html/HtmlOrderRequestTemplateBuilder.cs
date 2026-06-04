@@ -6,6 +6,7 @@ namespace Jasmine.FastenerDepartment.Templates.Builders.Html;
 internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
 {
     private readonly Order _order;
+    private readonly bool _hasAttachments;
 
     protected override string Title { get; set; }
     protected override string Body { get; set; }
@@ -13,9 +14,10 @@ internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
     /// <summary>
     /// Creates template.
     /// </summary>
-    public HtmlOrderRequestTemplateBuilder(Order order)
+    public HtmlOrderRequestTemplateBuilder(Order order, bool hasAttachments)
     {
         _order = order;
+        _hasAttachments = hasAttachments;
     }
 
     internal override TemplateBuilderBase AddBody()
@@ -23,9 +25,10 @@ internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
         var header = GetHeader();
         var title = GetTitle();
         var productList = GetProductList();
+        var attachmentBlock = GetAttachmentInfoBlock();
 
         Title = $"{OrderConstants.ORDER.GetText(LanguageCode)} #{_order.Number}";
-        Body = string.Join("\n", header, title, productList);
+        Body = string.Join("\n", header, title, productList, attachmentBlock);
         return this;
     }
 
@@ -143,6 +146,7 @@ internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
                   <td>
                     <p style=""
                         font-family: sans-serif;
+                        font-size: 16px;
                         margin: 0 5px"">
                             {name}
                     </p>
@@ -324,5 +328,20 @@ internal class HtmlOrderRequestTemplateBuilder : HtmlTemplateBuilderBase
                       {product.Ordered.Value} {product.Ordered.MeasurementUnit.ShortName.GetText(LanguageCode)}
                 </td>
               </tr>";
+    }
+
+    private string GetAttachmentInfoBlock()
+    {
+        if (!_hasAttachments) return string.Empty;
+
+        return $@"
+            <div style=""margin-top: 20px; text-align: center"">
+                <p style=""
+                    font-family: sans-serif;
+                    font-size: 12px;
+                    color: #6b7280;"">
+                        {OrderConstants.ATTACHMENTS_BLOCK.GetText(LanguageCode)}
+                </p>
+            </div>        ";
     }
 }
