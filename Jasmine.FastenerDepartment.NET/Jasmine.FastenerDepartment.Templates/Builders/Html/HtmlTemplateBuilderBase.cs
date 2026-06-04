@@ -5,26 +5,63 @@ internal abstract class HtmlTemplateBuilderBase : TemplateBuilderBase
     public override string Build()
     {
         return $@"
-            <!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Strict//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"">
-            <html class=""sg-campaigns"" xmlns=""http://www.w3.org/1999/xhtml""
-                  style=""padding: 20px; width: 100%; height: 100%"">
-
+            <!DOCTYPE html>
+            <html class=""wrapper"">
                 <head>
-                  <meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8""/>
-                  <meta name=""viewport"" content=""width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1""/>
-                  <meta http-equiv=""X-UA-Compatible"" content=""IE=Edge""/>
+                  <meta charset=""utf-8"">
+                  <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
                   <title>{Title}</title>
-                </head>
 
-                <body>
-                    <div style=""
+                  <style type=""text/css"">
+                    .wrapper {{
+                        padding: 20px;
+                        width: 100%;
+                        height: 100%
+                    }}
+
+                    .body-wrapper {{
                         padding: 20px;
                         background-color: #F5F7FA;
                         height: 100%;
                         max-width: 700px;
                         margin: 0 auto;
-                        border-radius: 4px;"">
-                            {Body}
+                        border-radius: 4px 
+                    }}
+
+                    @media only screen and (max-width: 600px) {{
+                      .wrapper {{
+                        padding: 5px;
+                        width: 100%;
+                        height: 100%
+                       }}
+
+                      .body-wrapper {{
+                        padding: 5px;
+                        background-color: #F5F7FA;
+                        height: 100%;
+                        max-width: 100%;
+                        margin: 0 auto;
+                        border-radius: 4px 
+                    }}
+
+                      .mobile-only {{
+                        display: block !important;
+                        max-height: none !important;
+                        overflow: visible !important;
+                        visibility: visible !important;
+                      }}
+
+                      .desktop-only {{
+                        display: none !important;
+                      }}
+                    }}
+
+                </style>
+                </head>
+
+                <body>
+                    <div class=""body-wrapper"">
+                       {Body}
                     </div>
                 </body>
             </html>";
