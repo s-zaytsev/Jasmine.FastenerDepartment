@@ -16,7 +16,6 @@ import type {ChangeSupplierProduct, SupplierProductsPageState} from "../../model
 import {changeQuery, changeSupplierProduct, getPage, selectProduct} from "../../slices/SupplierProductsSlice.ts";
 import SupplierProductsGrid from "./SupplierProductsGrid.tsx";
 import SupplierProductDialog from "./SupplierProductDialog.tsx";
-import {getExtendedSuppliers} from "../../slices/SuppliersSlice.ts";
 
 const SupplierProductsPage = () => {
 
@@ -63,7 +62,7 @@ const SupplierProductsPage = () => {
 
         handleClose();
         await dispatch(changeSupplierProduct({id, model}));
-        await dispatch(getExtendedSuppliers());
+        await dispatch(getPage(state.query));
     }
 
     const handleSort = (parameter: number) => {
@@ -74,20 +73,20 @@ const SupplierProductsPage = () => {
         dispatch(getPage(newQuery));
     };
 
-    const handlePageSizeChange = async (size: number) => {
+    const handlePageSizeChange = (size: number) => {
         const newQuery = {...state.query, pageNo: 1, pageSize: size};
         dispatch(changeQuery(newQuery));
         dispatch(getPage(newQuery));
     };
 
-    const handlePageNoChange = async (pageNo: number) => {
+    const handlePageNoChange = (pageNo: number) => {
         const newQuery = {...state.query, pageNo: pageNo};
         dispatch(changeQuery(newQuery));
         dispatch(getPage(newQuery));
     };
 
     const handleSearch = (value: string) => {
-        const newQuery = {...state.query, search: value, pageNo: 1};
+        const newQuery = {...state.query, search: value, pageNo: 1, supplierId: params.id!};
         dispatch(changeQuery(newQuery));
         dispatch(getPage(newQuery));
     };
@@ -98,14 +97,16 @@ const SupplierProductsPage = () => {
         }
         const newQuery = {...state.query, supplierId: params.id!};
         dispatch((changeQuery(newQuery)));
-
         dispatch(getPage(newQuery));
     }, []);
 
     return (
         <Page>
             <Box className={"flex justify-between w-full"}>
-                <ProductsSearch value={state.query.search} onSearch={handleSearch}/>
+                <Box className={'flex items-center w-[50%]'}>
+                    <ProductsSearch value={state.query.search} onSearch={handleSearch}/>
+                </Box>
+
                 <FilledButton onClick={handleNavigateToCreate} variant="contained">
                     Добавить
                 </FilledButton>
