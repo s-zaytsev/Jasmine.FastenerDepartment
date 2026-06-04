@@ -414,7 +414,7 @@ public class WebApiMapper
         {
             RecipientContact = dto.RecipientContact,
             MessageType = dto.MessageType,
-            Attachments = [.. dto.Attachments.Select(Map)]
+            Attachments = [.. dto.Attachments?.Select(Map) ?? []]
         };
     }
 
@@ -507,6 +507,7 @@ public class WebApiMapper
 
     internal FileModel Map(IFormFile file)
     {
+        if (file == null) return null;
         return new()
         {
             Name = file.FileName,
