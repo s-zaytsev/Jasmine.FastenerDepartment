@@ -6,7 +6,7 @@ import type {ChangeOrderProduct} from "../../../../../models/orderModels.ts";
 
 type ProductsInOrderGridSectionTableProps = {
     products: ChangeOrderProduct[];
-    onRemoveFromOrder: (product: ChangeOrderProduct) => void;
+    onDeleteFromOrder: (id?: string) => void;
 }
 
 const ProductsInOrderGridSectionTable = (props: ProductsInOrderGridSectionTableProps) => {
@@ -24,7 +24,7 @@ const ProductsInOrderGridSectionTable = (props: ProductsInOrderGridSectionTableP
                         key={product.productId}
                         product={product}
                         columns={columns}
-                        onRemoveFromOrder={props.onRemoveFromOrder}
+                        onDeleteFromOrder={props.onDeleteFromOrder}
                     />
                 ))}
         </Box>

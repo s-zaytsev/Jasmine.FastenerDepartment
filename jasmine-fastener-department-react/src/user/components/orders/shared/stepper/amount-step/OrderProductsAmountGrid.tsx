@@ -9,6 +9,7 @@ import OrderProductsAmountGridSectionTable from "./OrderProductsAmountGridSectio
 type OrderListProps = {
     changeModel: ChangeOrder | CreateOrder;
     onUpdate: (products: ChangeOrderProduct[]) => void;
+    onRemove: (id?: string) => void;
 }
 
 const OrderProductsAmountGrid = (props: OrderListProps) => {
@@ -24,7 +25,7 @@ const OrderProductsAmountGrid = (props: OrderListProps) => {
     const {
         fields,
         //     append,
-        //     remove,
+        remove,
     } = useFieldArray({
         control,
         name: 'products'
@@ -47,6 +48,11 @@ const OrderProductsAmountGrid = (props: OrderListProps) => {
     const onChange = (data: ChangeOrderForm) => {
         props.onUpdate(data.products);
     };
+
+    const handleRemove = (id?: string, index?: number) => {
+        props.onRemove(id);
+        remove(index);
+    }
 
     /*    const addField = () => {
             const model: ChangeOrderProduct = {
@@ -77,7 +83,9 @@ const OrderProductsAmountGrid = (props: OrderListProps) => {
                                 field,
                                 productIndex: fields.findIndex(f => f.id === field.id),
                             }))}
-                            control={control}/>
+                            control={control}
+                            onRemove={handleRemove}
+                        />
                     </Section>
                 ))}
             </Box>

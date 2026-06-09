@@ -1,17 +1,12 @@
-import {useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
 import Loader from "../../../shared/components/Loader.tsx";
 import Page from "../../../shared/components/layout/Page.tsx";
 import {Box} from "@mui/material";
 import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
-import type {ProductTypesState} from "../../models/productTypeModels.ts";
 import ProductTypeGrid from "./ProductTypeGrid.tsx";
 import ProductTypeDialog from "./ProductTypeDialog.tsx";
 import useProductTypesPage from "./useProductTypesPage.ts";
 
 const ProductTypesPage = () => {
-    const state = useAppSelector<ProductTypesState>(
-        (state) => state.productTypes
-    );
 
     const {
         open,
@@ -20,9 +15,12 @@ const ProductTypesPage = () => {
         handleChange,
         handleCreate,
         handleClose,
+        loading,
+        productTypes,
+        selectedProductType
     } = useProductTypesPage();
 
-    if (state.loading) {
+    if (loading) {
         return <Loader text={'Загрузка данных о типах товаров'}/>;
     }
 
@@ -35,14 +33,14 @@ const ProductTypesPage = () => {
             </Box>
 
             <ProductTypeGrid
-                productTypes={state.productTypes}
+                productTypes={productTypes}
                 onEdit={handleOpenDialogToChange}/>
 
             <ProductTypeDialog
-                productType={state.selectedProductType}
+                productType={selectedProductType}
                 open={open}
                 onClose={handleClose}
-                onSubmit={!state.selectedProductType ? handleCreate : handleChange}
+                onSubmit={!selectedProductType ? handleCreate : handleChange}
             />
         </Page>
     )

@@ -14,6 +14,7 @@ const LanguageSettingsCard = (props: LanguageSettingsCardProps) => {
         <SettingsCard title={'Язык'} icon={<LanguageOutlined/>}>
             <ElementsGroup>
                 {stringEnumToArray<LanguageCode>(LanguageCode).map(key => {
+                    // @ts-ignore
                     const language = LanguageCode[key] as LanguageCode;
                     return (
                         <ElementsGroupItem

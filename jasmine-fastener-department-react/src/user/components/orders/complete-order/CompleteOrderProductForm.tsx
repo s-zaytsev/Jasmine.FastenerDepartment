@@ -9,7 +9,7 @@ import Section from "../../../../shared/components/section/Section.tsx";
 import CompleteOrderProductFormSectionTable from "./CompleteOrderProductFormSectionTable.tsx";
 
 type CompleteOrderGridProps = {
-    completeOrderModel: CompleteOrder;
+    model: CompleteOrder;
     productTypes: ProductType[];
     onSubmit: (formData: CompleteOrderForm) => void;
 }
@@ -21,7 +21,7 @@ const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
         reset,
     } = useForm<CompleteOrderForm>({
         defaultValues: {
-            products: props.completeOrderModel.products
+            products: props.model.products
         },
         mode: 'onBlur'
     });
@@ -71,12 +71,12 @@ const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
     */
 
     useEffect(() => {
-        if (props.completeOrderModel.products.length > 0 && fields.length === 0) {
+        if (props.model.products.length > 0 && fields.length === 0) {
             reset({
-                products: props.completeOrderModel.products
+                products: props.model.products
             });
         }
-    }, [props.completeOrderModel.products, reset, fields.length]);
+    }, [props.model.products, reset, fields.length]);
 
     return (
         <Box className={'w-[90%] m-auto'}>

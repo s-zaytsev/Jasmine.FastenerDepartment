@@ -28,7 +28,7 @@ export interface ChangeOrderState extends StateBase {
 
 export interface CompleteOrderState extends StateBase {
     order?: Order;
-    completeOrderModel: CompleteOrder;
+    model: CompleteOrder;
     productTypes: ProductType[];
 }
 

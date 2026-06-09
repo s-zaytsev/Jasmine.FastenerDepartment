@@ -11,6 +11,7 @@ type OrderProductsAmountGridSectionTableProps = {
         productIndex: number;
     }>;
     control: Control<ChangeOrderForm>;
+    onRemove: (id?: string, index?: number) => void;
 }
 
 const OrderProductsAmountGridSectionTable = (props: OrderProductsAmountGridSectionTableProps) => {
@@ -32,6 +33,7 @@ const OrderProductsAmountGridSectionTable = (props: OrderProductsAmountGridSecti
                     productIndex={productIndex}
                     columns={columns}
                     control={props.control}
+                    onRemove={props.onRemove}
                 />
             ))}
         </Box>

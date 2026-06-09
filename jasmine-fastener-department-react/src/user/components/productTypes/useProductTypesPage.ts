@@ -67,6 +67,9 @@ const useProductTypesPage = () => {
         handleChange,
         handleCreate,
         handleClose,
+        loading: state.loading,
+        productTypes: state.productTypes,
+        selectedProductType: state.selectedProductType
     }
 }
 

@@ -10,7 +10,7 @@ type ConfirmOrderSectionTableProps = {
 
 const ConfirmOrderSectionTable = (props: ConfirmOrderSectionTableProps) => {
     const columns: TableColumnDefinition[] = [
-        {title: "Артикул", width: '35%'},
+        {title: "Артикул", width: '35%', columnAlign: 'center'},
         {title: "Наименование"},
         {title: "Количество", width: '35%', columnAlign: 'center'}
     ];

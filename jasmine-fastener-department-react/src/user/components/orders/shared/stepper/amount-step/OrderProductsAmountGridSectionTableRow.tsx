@@ -4,14 +4,16 @@ import type {TableColumnDefinition} from "../../../../../../shared/models/models
 import {Box, TextField} from "@mui/material";
 import TableRow from "../../../../../../shared/components/tables/TableRow.tsx";
 import Typography from "../../../../../../shared/components/Typography.tsx";
-import {CancelOutlined} from "@mui/icons-material";
+import {CloseOutlined} from "@mui/icons-material";
 import QuantityInput from "../../../../../../shared/components/quantity/QuantityInput.tsx";
+import IconButton from "../../../../../../shared/components/buttons/IconButton.tsx";
 
 type OrderProductsAmountGridSectionTableRowProps = {
     columns: TableColumnDefinition[];
     field: FieldArrayWithId<ChangeOrderForm, "products", "id">;
     productIndex: number;
     control: Control<ChangeOrderForm>;
+    onRemove: (id?: string, index?: number) => void;
 }
 
 const OrderProductsAmountGridSectionTableRow = (props: OrderProductsAmountGridSectionTableRowProps) => {
@@ -58,7 +60,13 @@ const OrderProductsAmountGridSectionTableRow = (props: OrderProductsAmountGridSe
 
                 <Box width={getWidth(3)} onClick={() => {
                 }}>
-                    <CancelOutlined/>
+                    <IconButton
+                        description={'Убрать из заказа'}
+                        hasBackground={true}
+                        onClick={() => props.onRemove(props.field.productId, props.productIndex)}
+                    >
+                        <CloseOutlined/>
+                    </IconButton>
                 </Box>
 
             </TableRow>

@@ -120,20 +120,19 @@ export interface ProductsPageState extends StateBase {
 
 export interface ChangeProductPageState extends StateBase {
     product?: Product;
-    changeModel: ChangeProduct;
+    model: ChangeProduct;
     units: MeasurementUnit[];
     suppliers: Supplier[];
     productTypes: ProductType[];
 }
 
 export interface CreateProductPageState extends StateBase {
-    changeModel: ChangeProduct;
+    model: ChangeProduct;
     lastId: string;
     units: MeasurementUnit[];
     suppliers: Supplier[];
     productTypes: ProductType[];
 }
-
 
 export const shortMeasurementUnitName = (code: ProductMeasurementUnitCode) => {
     switch (code) {

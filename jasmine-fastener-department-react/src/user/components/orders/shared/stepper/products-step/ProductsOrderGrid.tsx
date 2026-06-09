@@ -2,13 +2,13 @@ import {Box} from "@mui/material";
 import ProductsToOrderGrid from "./ProductsToOrderGrid.tsx";
 import ProductsInOrderGrid from "./ProductsInOrderGrid.tsx";
 import type {ProductToOrder} from "../../../../../models/productsToOrderModels.ts";
-import type {ChangeOrderProduct, OrderStepperModel} from "../../../../../models/orderModels.ts";
+import type {OrderStepperModel} from "../../../../../models/orderModels.ts";
 
 type ProductsOrderGridProps = {
     model: OrderStepperModel;
     productsToOrder: ProductToOrder[];
     onMoveToOrder: (product: ProductToOrder) => void;
-    onDeleteFromOrder: (product: ChangeOrderProduct) => void;
+    onDeleteFromOrder: (id?: string) => void;
 }
 
 const ProductsOrderGrid = (props: ProductsOrderGridProps) => {
@@ -23,7 +23,7 @@ const ProductsOrderGrid = (props: ProductsOrderGridProps) => {
             </Box>
             <Box className={"w-[50%] h-[85vh] overflow-y-auto"}>
                 <ProductsInOrderGrid
-                    onRemoveFromOrder={props.onDeleteFromOrder}
+                    onDeleteFromOrder={props.onDeleteFromOrder}
                     products={props.model.products}
                 />
             </Box>

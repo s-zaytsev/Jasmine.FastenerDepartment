@@ -63,7 +63,7 @@ class OrdersControllerTests
 
         orderDto.Should().NotBeNull();
         orderDto.Products.Count.Should().Be(1);
-        orderDto.Number.Should().NotBe(0);
+        orderDto.Number.Should().NotBe("0");
     }
 
     [Test]

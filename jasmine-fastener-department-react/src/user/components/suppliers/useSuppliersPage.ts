@@ -76,6 +76,9 @@ const useSuppliersPage = () => {
         handleChange,
         handleClose,
         handleNavigateToSupplierProducts,
+        loading: state.loading,
+        suppliers: state.suppliers,
+        selectedSupplier: state.selectedSupplier
     };
 }
 

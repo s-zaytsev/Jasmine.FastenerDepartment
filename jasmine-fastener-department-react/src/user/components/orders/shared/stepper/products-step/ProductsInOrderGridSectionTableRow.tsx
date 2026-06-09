@@ -9,7 +9,7 @@ import {CloseOutlined} from "@mui/icons-material";
 type ProductsInOrderGridSectionTableRowProps = {
     product: ChangeOrderProduct;
     columns: TableColumnDefinition[];
-    onRemoveFromOrder: (product: ChangeOrderProduct) => void;
+    onDeleteFromOrder: (id?: string) => void;
 }
 
 const ProductsInOrderGridSectionTableRow = (props: ProductsInOrderGridSectionTableRowProps) => {
@@ -28,7 +28,7 @@ const ProductsInOrderGridSectionTableRow = (props: ProductsInOrderGridSectionTab
                     <IconButton
                         description={'Убрать из заказа'}
                         hasBackground={true}
-                        onClick={() => props.onRemoveFromOrder(props.product)}
+                        onClick={() => props.onDeleteFromOrder(props.product.productId)}
                     >
                         <CloseOutlined/>
                     </IconButton>

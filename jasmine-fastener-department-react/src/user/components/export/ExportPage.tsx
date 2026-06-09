@@ -1,5 +1,4 @@
-import {useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
-import {DocumentType, type ExportPageState} from "../../models/exportModels.ts";
+import {DocumentType} from "../../models/exportModels.ts";
 import Page from "../../../shared/components/layout/Page.tsx";
 import ExportDocumentCard from "./ExportDocumentCard.tsx";
 import MicrosoftWordIcon from "../../../assets/MicrosoftWordIcon.tsx";
@@ -7,15 +6,13 @@ import Loader from "../../../shared/components/Loader.tsx";
 import useExportPage from "./useExportPage.ts";
 
 const ExportPage = () => {
-    const state = useAppSelector<ExportPageState>(
-        (state) => state.export
-    );
     
     const {
-        handleDownload
+        handleDownload,
+        loading
     } = useExportPage();
 
-    if (state.loading) {
+    if (loading) {
         return <Loader />;
     }
 

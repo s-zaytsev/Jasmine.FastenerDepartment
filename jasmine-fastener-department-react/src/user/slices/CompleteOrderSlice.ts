@@ -26,7 +26,7 @@ export const getProductTypes = createAsyncThunkWithErrorHandler(
 );
 
 const initialState: CompleteOrderState = {
-    completeOrderModel: {
+    model: {
         comment: '',
         products: []
     },
@@ -42,7 +42,7 @@ const completeOrderSlice = createSlice({
     initialState: initialState,
     reducers: {
         updateProducts: (state, action) => {
-            state.completeOrderModel.products = action.payload;
+            state.model.products = action.payload;
         },
         setSuccess: (state, action) => {
             state.success = action.payload;
@@ -55,7 +55,7 @@ const completeOrderSlice = createSlice({
             })
             .addCase(getOrder.fulfilled, (state, {payload}) => {
                 state.order = payload;
-                state.completeOrderModel.products = payload.products.map(x => <CompleteOrderProduct>{
+                state.model.products = payload.products.map(x => <CompleteOrderProduct>{
                     orderProductId: x.id,
                     productId: x.productId,
                     productName: x.productName,

@@ -5,14 +5,8 @@ import Loader from "../../../shared/components/Loader.tsx";
 import SupplierDialog from "./SupplierDialog.tsx";
 import SuppliersGrid from "./SuppliersGrid.tsx";
 import useSuppliersPage from "./useSuppliersPage.ts";
-import {useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
-import type {SuppliersPageState} from "../../models/supplierModels.ts";
 
 const SuppliersPage = () => {
-
-    const state = useAppSelector<SuppliersPageState>(
-        (state) => state.suppliers
-    );
 
     const {
         open,
@@ -22,9 +16,12 @@ const SuppliersPage = () => {
         handleChange,
         handleClose,
         handleNavigateToSupplierProducts,
+        loading,
+        suppliers,
+        selectedSupplier
     } = useSuppliersPage();
 
-    if (state.loading) {
+    if (loading) {
         return <Loader text={'Загрузка данных о поставщиках'}/>;
     }
 
@@ -38,15 +35,15 @@ const SuppliersPage = () => {
             </Box>
 
             <SuppliersGrid
-                suppliers={state.suppliers}
+                suppliers={suppliers}
                 onEdit={handleOpenDialogToChange}
                 onNavigateToSupplierProducts={handleNavigateToSupplierProducts}/>
 
             <SupplierDialog
-                supplier={state.selectedSupplier}
+                supplier={selectedSupplier}
                 open={open}
                 onClose={handleClose}
-                onSubmit={!state.selectedSupplier ? handleCreate : handleChange}
+                onSubmit={!selectedSupplier ? handleCreate : handleChange}
             />
         </Page>
     )

@@ -16,7 +16,7 @@ type OrderStepperProps = {
     productsToOrder: ProductToOrder[];
     onSelectSupplier: (supplier?: Supplier) => void;
     onMoveToOrder: (product: ProductToOrder) => void;
-    onDeleteFromOrder: (product: ChangeOrderProduct) => void;
+    onDeleteFromOrder: (id?: string) => void;
     onUpdate: (products: ChangeOrderProduct[]) => void;
     onSubmit: () => void;
     isLoading: boolean;

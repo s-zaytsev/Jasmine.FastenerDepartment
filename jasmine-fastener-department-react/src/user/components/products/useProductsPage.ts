@@ -98,6 +98,11 @@ const useProductsPage = () => {
     }, [dispatch, state.query]);
 
     return {
+        page: state.page,
+        query: state.query,
+        filters: state.filters,
+        productTypes: state.productTypes,
+        loading: state.loading,
         handleNavigateToCreate,
         handleNavigateToProduct,
         handleChangePrintStatus,

@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import type {ChangeOrderProduct, ChangeOrderState} from "../models/orderModels.ts";
 import OrdersApi from "../api/ordersApi.ts";
 import {ProductMeasurementUnitCode} from "../models/productModel.ts";
@@ -83,9 +83,8 @@ const changeOrderSlice = createSlice({
         updateProducts: (state, action) => {
             state.model.products = action.payload;
         },
-        deleteProduct: (state, action) => {
-            state.model.products = state.model.products.filter(
-                x => x.productId != action.payload.productId);
+        deleteProduct: (state, action: PayloadAction<{ id?: string }>) => {
+            state.model.products = state.model.products.filter(x => x.productId != action.payload.id);
         },
         setSuccess: (state, action) => {
             state.success = action.payload;

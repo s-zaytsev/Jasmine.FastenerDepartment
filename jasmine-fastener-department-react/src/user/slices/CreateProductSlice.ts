@@ -39,7 +39,7 @@ export const getProductTypes = createAsyncThunkWithErrorHandler(
 );
 
 const initialState: CreateProductPageState = {
-    changeModel: {
+    model: {
         number: 0,
         name: '',
         price: 0,
@@ -64,7 +64,7 @@ const createProductSlice = createSlice({
     initialState: initialState,
     reducers: {
         changeProduct: (state, action) => {
-            state.changeModel = {
+            state.model = {
                 ...action.payload,
                 price: Number(action.payload.price)
             };
@@ -82,7 +82,7 @@ const createProductSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getLastId.fulfilled, (state, {payload}) => {
-                state.changeModel.number = payload + 1;
+                state.model.number = payload + 1;
                 state.loading = false;
             })
             .addCase(getLastId.rejected, (state, action) => {
@@ -99,7 +99,7 @@ const createProductSlice = createSlice({
             .addCase(saveProduct.fulfilled, (state) => {
                 state.loading = false;
                 state.success = "Продукт успешно создан";
-                state.changeModel = {
+                state.model = {
                     number: 0,
                     name: '',
                     price: 0,

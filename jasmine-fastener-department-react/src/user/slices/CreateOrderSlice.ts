@@ -72,7 +72,7 @@ const createOrderSlice = createSlice({
         updateProducts: (state, action) => {
             state.model.products = action.payload;
         },
-        deleteProduct: (state, action: PayloadAction<{ id: string }>) => {
+        deleteProduct: (state, action: PayloadAction<{ id?: string }>) => {
             state.model.products = state.model.products.filter(x => x.productId != action.payload.id);
         },
         changeSupplier: (state, action: PayloadAction<{ supplier?: Supplier }>) => {

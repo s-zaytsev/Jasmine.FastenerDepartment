@@ -9,7 +9,7 @@ import IconBox from "../../../../../../shared/components/IconBox.tsx";
 
 type ProductsInOrderFormProps = {
     products?: ChangeOrderProduct[];
-    onRemoveFromOrder: (product: ChangeOrderProduct) => void;
+    onDeleteFromOrder: (id?: string) => void;
 }
 
 const ProductsInOrderGrid = (props: ProductsInOrderFormProps) => {
@@ -42,7 +42,7 @@ const ProductsInOrderGrid = (props: ProductsInOrderFormProps) => {
                     <Section title={key}>
                         <ProductsInOrderGridSectionTable
                             products={value}
-                            onRemoveFromOrder={props.onRemoveFromOrder}
+                            onDeleteFromOrder={props.onDeleteFromOrder}
                         />
                     </Section>
                 </Box>

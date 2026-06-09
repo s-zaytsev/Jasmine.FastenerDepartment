@@ -1,21 +1,19 @@
 import Page from "../../../shared/components/layout/Page.tsx";
 import {Box} from "@mui/material";
-import {useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
-import type {HistoryPageState} from "../../models/historyModels.ts";
 import HistoryGrid from "./HistoryGrid.tsx";
 import Loader from "../../../shared/components/Loader.tsx";
 import useHistoryPage from "./useHistoryPage.ts";
 
 const HistoryPage = () => {
-    const state = useAppSelector<HistoryPageState>(
-        (state) => state.history
-    );
 
     const {
-        navigateToProduct
+        navigateToProduct,
+        loading,
+        items,
+        productTypes
     } = useHistoryPage();
 
-    if (state.loading) {
+    if (loading) {
         return <Loader text={'Загрузка истории изменения товаров'}/>;
     }
 
@@ -27,13 +25,13 @@ const HistoryPage = () => {
             </Box>
 
             <Box className={'w-full flex justify-center'}>
-                <Box className={'flex flex-col gap-[2rem]'}>
-                    {state.items && state.items.map((x, index) =>
+                <Box className={'flex flex-col w-[50%] gap-[2rem]'}>
+                    {items && items.map((x, index) =>
                         <HistoryGrid
                             key={index}
                             date={x.date}
                             items={x.historyEntries}
-                            productTypes={state.productTypes}
+                            productTypes={productTypes}
                             onNavigate={navigateToProduct}/>)}
                 </Box>
             </Box>

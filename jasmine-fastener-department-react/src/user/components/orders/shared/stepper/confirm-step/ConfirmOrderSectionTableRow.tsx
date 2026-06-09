@@ -20,7 +20,7 @@ const ConfirmOrderSectionTableRow = (props: ConfirmOrderSectionTableRowProps) =>
         <Box className={'w-full flex'}>
             <TableRow>
                 <Box width={getWidth(0)}>
-                    <Box>
+                    <Box className={'text-center'}>
                         <Typography variant={'bodyRegular'} color={'tertiary'}>
                             {props.product.supplierProductNumber ?? 'Не указан'}
                         </Typography>

@@ -16,7 +16,7 @@ type OrderStepperBodyProps = {
     productsToOrder: ProductToOrder[];
     onSelectSupplier: (supplier?: Supplier) => void;
     onMoveToOrder: (product: ProductToOrder) => void;
-    onDeleteFromOrder: (product: ChangeOrderProduct) => void;
+    onDeleteFromOrder: (id?: string) => void;
     onUpdate: (products: ChangeOrderProduct[]) => void;
     onSubmit: () => void;
 }
@@ -49,7 +49,9 @@ const OrderStepperBody = (props: OrderStepperBodyProps) => {
             {currentStep === OrderStepperStep.amount &&
                 <OrderProductsAmountGrid
                     changeModel={props.model}
-                    onUpdate={props.onUpdate}/>
+                    onUpdate={props.onUpdate}
+                    onRemove={props.onDeleteFromOrder}
+                />
             }
 
             {currentStep === OrderStepperStep.confirm &&

@@ -3,7 +3,7 @@ import {PriceTagCode, type Product} from "../../models/productModel.ts";
 import {PrintOutlined, ReorderOutlined} from "@mui/icons-material";
 import type {TableColumnDefinition} from "../../../shared/models/models.ts";
 import ProductPrice from "../../../shared/components/ProductPrice.tsx";
-import SuppliersTableCell from "./SuppliersTableCell.tsx";
+import SuppliersTableCell from "../shared/SuppliersTableCell.tsx";
 import type {ProductType} from "../../models/productTypeModels.ts";
 import Typography from "../../../shared/components/Typography.tsx";
 import TableRow from "../../../shared/components/tables/TableRow.tsx";

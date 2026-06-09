@@ -35,7 +35,7 @@ export const getProductTypes = createAsyncThunkWithErrorHandler(
 
 const initialState: ChangeProductPageState = {
     product: undefined,
-    changeModel: {
+    model: {
         number: 0,
         name: '',
         price: 0,
@@ -59,7 +59,7 @@ const changeProductSlice = createSlice({
     initialState: initialState,
     reducers: {
         changeProduct: (state, action) => {
-            state.changeModel = {
+            state.model = {
                 ...action.payload,
                 price: Number(action.payload.price)
             };
@@ -75,7 +75,7 @@ const changeProductSlice = createSlice({
             })
             .addCase(getProduct.fulfilled, (state, {payload}) => {
                 state.product = payload;
-                state.changeModel = {
+                state.model = {
                     number: payload.number,
                     price: payload.price,
                     isHardwareSizeEnabled: payload.isHardwareSizeEnabled,

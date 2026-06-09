@@ -1,19 +1,19 @@
 import {Box} from "@mui/material";
 import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 import Page from "../../../shared/components/layout/Page";
-import ProductsGrid from "../shared/ProductsGrid.tsx";
+import ProductsGrid from "./ProductsGrid.tsx";
 import Loader from "../../../shared/components/Loader.tsx";
 import ProductPageFiltersComponent from "./productFilters/ProductPageFiltersComponent.tsx";
-import {useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
-import type {ProductsPageState} from "../../models/productModel.ts";
 import useProductsPage from "./useProductsPage.ts";
 
 const ProductsPage = () => {
-    const state = useAppSelector<ProductsPageState>(
-        (state) => state.products
-    );
 
     const {
+        page,
+        query,
+        filters,
+        productTypes,
+        loading,
         handleNavigateToCreate,
         handleNavigateToProduct,
         handleChangePrintStatus,
@@ -36,7 +36,7 @@ const ProductsPage = () => {
         handleResetPriceTagFilters
     } = useProductsPage();
 
-    if (state.loading) {
+    if (loading) {
         setTimeout(() => {
             return <Loader text={'Загрузка списка товаров'}/>
         }, 300);
@@ -55,8 +55,8 @@ const ProductsPage = () => {
 
             <Box>
                 <ProductPageFiltersComponent
-                    searchValue={state.query.search}
-                    filters={state.filters}
+                    searchValue={query.search}
+                    filters={filters}
                     onSearch={handleSearch}
                     onSuppliersChange={handleSupplierFilterChange}
                     onPriceTagsChange={handlePriceTagFilterChange}
@@ -74,9 +74,9 @@ const ProductsPage = () => {
             </Box>
 
             <ProductsGrid
-                page={state.page}
-                query={state.query}
-                productTypes={state.productTypes}
+                page={page}
+                query={query}
+                productTypes={productTypes}
                 onSort={handleSort}
                 onPageNoChanged={handlePageNoChange}
                 onPageSizeChanged={handlePageSizeChange}
