@@ -35,13 +35,18 @@ const CreateProductPage = () => {
     }
 
     return (
-        <Page>
+        <Page
+            title={'Создание товара'}
+            description={'Настройка характеристик нового товара'}
+            button={{
+                label: 'Сохранить',
+                onClick: handleCreate
+            }}>
             <Box className={"flex"}>
                 <ProductForm
                     changeModel={model!}
                     suppliers={suppliers}
                     productTypes={productTypes}
-                    onSubmit={handleCreate}
                     onChanged={handleFormChanged}/>
 
                 <PriceTagPreview product={product}/>

@@ -1,9 +1,10 @@
-import {Box, Button} from "@mui/material";
+import {Box} from "@mui/material";
 import PrintForm from "./PrintForm.tsx";
 import PrintPreview from "./PrintPreview.tsx";
-import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 import Loader from "../../../shared/components/Loader.tsx";
 import usePrintPage from "./usePrintPage.ts";
+import Page from "../../../shared/components/layout/Page.tsx";
+import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 
 const PrintPage = () => {
 
@@ -27,26 +28,40 @@ const PrintPage = () => {
     const rows = template(products);
 
     return (
-        <Box className={"h-full w-full flex justify-between"}>
-            <Box className={'w-full h-full flex flex-col px-[1rem]'}>
-                {!!products?.length &&
-                    <Box className={'flex justify-between'}>
-                        <Button onClick={handleClearList}>Очистить очередь печати</Button>
-                        <FilledButton onClick={handlePrint} variant={'contained'}>Печать</FilledButton>
-                    </Box>}
-                <PrintForm
-                    products={products}
-                    onIncrement={handleIncrement}
-                    onDecrement={handleDecrement}
-                    onChangeCount={handleChangeCount}
-                    onDelete={handleDelete}
-                />
+        <Page
+            title={'Печать'}
+            description={'Настройка количества ценников и печать'}
+            button={{
+                label: 'Печать',
+                onClick: handlePrint
+            }}>
+            <Box className={'h-full'}>
+                <Box className={"h-full w-full flex justify-between"}>
+                    <Box className={'w-full h-full flex flex-col px-[1rem]'}>
+                        {!!products?.length &&
+                            <Box className={'flex justify-end'}>
+                                <FilledButton
+                                    variant={'text'}
+                                    onClick={handleClearList}
+                                >
+                                    Очистить очередь печати
+                                </FilledButton>
+                            </Box>}
+                        <PrintForm
+                            products={products}
+                            onIncrement={handleIncrement}
+                            onDecrement={handleDecrement}
+                            onChangeCount={handleChangeCount}
+                            onDelete={handleDelete}
+                        />
+                    </Box>
+                    <div className={'w-full h-full'} ref={printRef}>
+                        <PrintPreview products={products} template={rows}/>
+                    </div>
+                </Box>
             </Box>
-            <div className={'w-full h-full'} ref={printRef}>
-                <PrintPreview products={products} template={rows}/>
-            </div>
-        </Box>
-    )
+        </Page>
+    );
 }
 
 export default PrintPage;

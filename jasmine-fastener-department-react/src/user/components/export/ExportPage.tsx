@@ -17,7 +17,10 @@ const ExportPage = () => {
     }
 
     return (
-        <Page>
+        <Page
+            title={'Экспорт документов'}
+            description={'Выбор необходимого формата для экспорта документа'}
+        >
             <ExportDocumentCard
                 title={'Microsoft Word'}
                 description={'Скачать базу товаров в формате .docx'}

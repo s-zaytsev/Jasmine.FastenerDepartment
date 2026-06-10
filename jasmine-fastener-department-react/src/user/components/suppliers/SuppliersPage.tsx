@@ -1,6 +1,4 @@
 import Page from "../../../shared/components/layout/Page.tsx";
-import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
-import {Box} from "@mui/material";
 import Loader from "../../../shared/components/Loader.tsx";
 import SupplierDialog from "./SupplierDialog.tsx";
 import SuppliersGrid from "./SuppliersGrid.tsx";
@@ -26,14 +24,14 @@ const SuppliersPage = () => {
     }
 
     return (
-        <Page>
-            <Box className={"flex justify-between w-full mb-[1rem]"}>
-                <Box></Box>
-                <FilledButton onClick={handleOpenDialogToCreate} variant="contained">
-                    Добавить
-                </FilledButton>
-            </Box>
-
+        <Page
+            title={'Поставщики'}
+            description={'Список доступных поставщиков'}
+            button={{
+                label: 'Создать',
+                onClick: handleOpenDialogToCreate
+            }}
+        >
             <SuppliersGrid
                 suppliers={suppliers}
                 onEdit={handleOpenDialogToChange}

@@ -18,7 +18,10 @@ const HistoryPage = () => {
     }
 
     return (
-        <Page>
+        <Page
+            title={'История'}
+            description={'История изменений характеристик товаров'}
+        >
             <Box className={'flex justify-center w-full items-center'}>
                 {//date pickers
                 }

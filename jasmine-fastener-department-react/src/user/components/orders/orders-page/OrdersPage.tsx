@@ -1,7 +1,6 @@
 import {Box} from "@mui/material";
 import Loader from "../../../../shared/components/Loader.tsx";
 import Page from "../../../../shared/components/layout/Page.tsx";
-import FilledButton from "../../../../shared/components/buttons/FilledButton.tsx";
 import CompletedOrdersGrid from "./complete-orders/CompletedOrdersGrid.tsx";
 import CancelOrderDialog from "../dialogs/CancelOrderDialog.tsx";
 import ActiveOrdersGrid from "./active-orders/ActiveOrdersGrid.tsx";
@@ -33,12 +32,13 @@ const OrdersPage = () => {
         return <Loader text={'Загрузка списка заказа'}/>;
     }
     return (
-        <Page>
-            <Box className={"flex justify-end w-full mb-[1rem]"}>
-                <FilledButton onClick={handleNavigateToCreate} variant="contained">
-                    Создать
-                </FilledButton>
-            </Box>
+        <Page
+            title={'Заказы'}
+            description={'Список заказов'}
+            button={{
+                label: 'Создать',
+                onClick: handleNavigateToCreate
+            }}>
 
             <Box className={'flex flex-col'}>
 

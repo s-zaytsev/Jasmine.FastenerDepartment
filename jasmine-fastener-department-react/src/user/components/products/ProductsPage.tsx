@@ -1,5 +1,4 @@
 import {Box} from "@mui/material";
-import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 import Page from "../../../shared/components/layout/Page";
 import ProductsGrid from "./ProductsGrid.tsx";
 import Loader from "../../../shared/components/Loader.tsx";
@@ -43,17 +42,15 @@ const ProductsPage = () => {
     }
 
     return (
-        <Page>
-            <Box className={"flex justify-between w-full"}>
-                <Box className={'flex items-center'}>
-                    {/*<ProductsSearch value={state.query.search} />*/}
-                </Box>
-                <FilledButton onClick={handleNavigateToCreate} variant="contained">
-                    Добавить
-                </FilledButton>
-            </Box>
+        <Page
+            title={'Товары'}
+            description={'Список доступных товаров'}
+            button={{
+                label: 'Создать',
+                onClick: handleNavigateToCreate
+            }}>
 
-            <Box>
+            <Box className={'mb-[1rem]'}>
                 <ProductPageFiltersComponent
                     searchValue={query.search}
                     filters={filters}

@@ -49,10 +49,10 @@ const useSettingsPage = () => {
         companySettings: state.companySettings,
         emailSettings: state.emailSettings,
         language: languageCode,
-        changeLanguage: handleChangeLanguage,
-        changeCompanySettings: handleChangeCompanySettings,
-        changeEmailSettings: handleChangeEmailSettings,
-        submit: handleSubmit
+        handleChangeLanguage,
+        handleChangeCompanySettings,
+        handleChangeEmailSettings,
+        handleSubmit
     }
 }
 

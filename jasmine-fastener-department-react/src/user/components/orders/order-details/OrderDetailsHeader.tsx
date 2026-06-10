@@ -10,7 +10,6 @@ type OrderDetailsHeaderProps = {
 }
 
 const OrderDetailsHeader = (props: OrderDetailsHeaderProps) => {
-    const orderNumber = "0".repeat(8 - (props.order?.number.toString().length || 0)) + props.order?.number.toString();
     const notFulfilledCount = props.order?.products?.filter(x => !x.isFulfilled)?.length ?? 1;
     const percent = notFulfilledCount === 0 ? 100 : notFulfilledCount / (props.order?.products?.length || 1) * 100;
 
@@ -20,7 +19,7 @@ const OrderDetailsHeader = (props: OrderDetailsHeaderProps) => {
                 <Card>
                     <Box>
                         <Typography variant="labelRegular">Номер заказа</Typography>
-                        <Typography variant={'headlineH3'}>#{orderNumber}</Typography>
+                        <Typography variant={'headlineH3'}>#{props.order?.number}</Typography>
                     </Box>
                 </Card>
 

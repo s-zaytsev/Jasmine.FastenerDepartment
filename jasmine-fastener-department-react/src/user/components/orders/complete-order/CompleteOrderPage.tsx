@@ -16,7 +16,13 @@ const CompleteOrderPage = () => {
     }
 
     return (
-        <Page>
+        <Page
+            title={'Завершение заказа'}
+            description={'Проверка деталей заказа и его завершение'}
+            button={{
+                label: 'Завершить',
+                onClick: handleSubmit
+        }}>
             <CompleteOrderProductForm
                 model={model}
                 productTypes={productTypes}

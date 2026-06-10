@@ -19,7 +19,10 @@ const OrderDetailsPage = () => {
     }
 
     return (
-        <Page>
+        <Page
+            title={'Детали заказа'}
+            description={'Информация о товарах в заказе'}
+        >
             <Box className={'w-full flex justify-center'}>
                 <Box className={'w-[70%]'}>
                     <OrderDetailsHeader

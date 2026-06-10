@@ -1,7 +1,5 @@
 import Loader from "../../../shared/components/Loader.tsx";
 import Page from "../../../shared/components/layout/Page.tsx";
-import {Box} from "@mui/material";
-import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 import ProductTypeGrid from "./ProductTypeGrid.tsx";
 import ProductTypeDialog from "./ProductTypeDialog.tsx";
 import useProductTypesPage from "./useProductTypesPage.ts";
@@ -25,13 +23,14 @@ const ProductTypesPage = () => {
     }
 
     return (
-        <Page>
-            <Box className={"flex justify-end w-full mb-[1rem]"}>
-                <FilledButton onClick={handleOpenDialogToCreate} variant="contained">
-                    Добавить
-                </FilledButton>
-            </Box>
-
+        <Page
+            title={'Типы товаров'}
+            description={'Список доступных типов товаров'}
+            button={{
+                label: 'Создать',
+                onClick: handleOpenDialogToCreate
+            }}
+        >
             <ProductTypeGrid
                 productTypes={productTypes}
                 onEdit={handleOpenDialogToChange}/>

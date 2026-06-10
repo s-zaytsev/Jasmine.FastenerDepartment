@@ -4,7 +4,6 @@ import {Box, Tab, Tabs} from "@mui/material";
 import PriceTagPreview from "../shared/PriceTagPreview.tsx";
 import ProductHistory from "../history/ProductHistory.tsx";
 import Loader from "../../../../shared/components/Loader.tsx";
-import ProductHeader from "../shared/ProductHeader.tsx";
 import useChangeProductPage from "./useChangeProductPage.ts";
 
 const ChangeProductPage = () => {
@@ -26,8 +25,13 @@ const ChangeProductPage = () => {
     }
 
     return (
-        <Page>
-            <ProductHeader model={product}/>
+        <Page
+            title={'Редактирование товара'}
+            description={'Изменение характеристик существующего товара'}
+            button={{
+                label: 'Сохранить',
+                onClick: handleSubmit
+            }}>
 
             <Tabs value={tabIndex} onChange={handleChangeTabIndex} centered>
                 <Tab label="Параметры"/>
@@ -40,7 +44,6 @@ const ChangeProductPage = () => {
                         changeModel={model}
                         suppliers={suppliers}
                         productTypes={productTypes}
-                        onSubmit={handleSubmit}
                         onChanged={handleFormChanged}/>
 
                     <PriceTagPreview product={product}/>

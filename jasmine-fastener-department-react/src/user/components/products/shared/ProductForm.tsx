@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {Box, Button} from "@mui/material";
+import {Box} from "@mui/material";
 import {type ChangeProduct} from "../../../models/productModel.ts";
 import type {Supplier} from "../../../models/supplierModels.ts";
 import {useEffect} from "react";
@@ -14,14 +14,12 @@ interface ChangeProductFormProps {
     suppliers: Supplier[];
     productTypes: ProductType[];
     onChanged: (model: ChangeProduct) => void;
-    onSubmit: () => void;
 }
 
 const ProductForm = (props: ChangeProductFormProps) => {
     const {
         formState: {
-            errors,
-            isValid
+            errors
         },
         control,
         reset,
@@ -50,10 +48,6 @@ const ProductForm = (props: ChangeProductFormProps) => {
             <SupplierSettingsCard control={control} errors={errors} suppliers={props.suppliers}/>
             <PrintSettingsCard control={control}/>
             <OrderSettingsCard control={control}/>
-
-            <Button onClick={props.onSubmit} variant="contained" disabled={!isValid} sx={{mt: 2}}>
-                Сохранить
-            </Button>
         </Box>
     );
 };
