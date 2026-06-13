@@ -2,7 +2,7 @@ import type {Page} from "../../../../../shared/models/models.ts";
 import type {Order} from "../../../../models/orderModels.ts";
 import {Box} from "@mui/material";
 import Typography from "../../../../../shared/components/Typography.tsx";
-import CompletedOrdersGridRow from "./CompletedOrdersGridRow.tsx";
+import CompletedOrdersCard from "./CompletedOrdersCard.tsx";
 
 type CompletedOrdersGridProps = {
     page?: Page<Order>;
@@ -22,7 +22,7 @@ const CompletedOrdersGrid = (props: CompletedOrdersGridProps) => {
     return (
         <Box className={'grid grid-cols-4 gap-[1rem]'}>
             {props.page?.items.map(x =>
-                <CompletedOrdersGridRow
+                <CompletedOrdersCard
                     key={x.id}
                     order={x}
                     onNavigateToDetails={props.onNavigateToDetails}

@@ -4,13 +4,14 @@ import {CancelOutlined, DoneOutlined} from "@mui/icons-material";
 import Card from "../../../../../shared/components/Card.tsx";
 import IconBox from "../../../../../shared/components/IconBox.tsx";
 import Typography from "../../../../../shared/components/Typography.tsx";
+import {memo} from "react";
 
 type OrdersGridRowProps = {
     order: Order;
     onNavigateToDetails: (id: string) => void;
 }
 
-const CompletedOrdersGridRow = (props: OrdersGridRowProps) => {
+const CompletedOrdersCard = (props: OrdersGridRowProps) => {
     const icon = props.order.statusCode === OrderStatusCode.fulfilled ?
         <DoneOutlined/> :
         <CancelOutlined/>
@@ -45,20 +46,8 @@ const CompletedOrdersGridRow = (props: OrdersGridRowProps) => {
                     </Box>
                 </Box>
             </Box>
-
-            {/*            <Box>
-                <Typography variant={'bodyRegularBold'} color={'primary'}>
-                    Заказ №{orderNumber}
-                </Typography>
-                <Typography variant={'bodyRegular'}>
-                    от {new Date(props.order.createdDate).toLocaleDateString('ru-Ru')}
-                </Typography>
-            </Box>
-            <Box>
-
-            </Box>*/}
         </Card>
     )
 }
 
-export default CompletedOrdersGridRow;
+export default memo(CompletedOrdersCard);

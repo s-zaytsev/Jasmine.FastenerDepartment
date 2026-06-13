@@ -8,7 +8,7 @@ type ActiveOrdersGridRowFooterProps = {
     onCancel: (id: string) => void;
 }
 
-const ActiveOrdersGridRowFooter = (props: ActiveOrdersGridRowFooterProps) => {
+const ActiveOrdersCardFooter = (props: ActiveOrdersGridRowFooterProps) => {
     return (
         <Box className={'w-full flex justify-between'}>
 
@@ -36,4 +36,4 @@ const ActiveOrdersGridRowFooter = (props: ActiveOrdersGridRowFooterProps) => {
     )
 }
 
-export default ActiveOrdersGridRowFooter;
+export default ActiveOrdersCardFooter;

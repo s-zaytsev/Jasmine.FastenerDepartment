@@ -10,7 +10,7 @@ type ActiveOrdersGridRowHeaderProps = {
     onComplete: (id: string) => void;
 }
 
-const ActiveOrdersGridRowHeader = (props: ActiveOrdersGridRowHeaderProps) => {
+const ActiveOrdersCardHeader = (props: ActiveOrdersGridRowHeaderProps) => {
     return (
         <Box className={'w-full flex items-center justify-between'}>
             <Box>
@@ -45,4 +45,4 @@ const ActiveOrdersGridRowHeader = (props: ActiveOrdersGridRowHeaderProps) => {
     )
 }
 
-export default ActiveOrdersGridRowHeader;
+export default ActiveOrdersCardHeader;

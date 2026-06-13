@@ -1,9 +1,10 @@
 import type {Order} from "../../../../models/orderModels.ts";
 import {Box} from "@mui/material";
 import Card from "../../../../../shared/components/Card.tsx";
-import ActiveOrdersGridRowHeader from "./ActiveOrdersGridRowHeader.tsx";
-import ActiveOrdersGridRowBody from "./ActiveOrdersGridRowBody.tsx";
-import ActiveOrdersGridRowFooter from "./ActiveOrdersGridRowFooter.tsx";
+import ActiveOrdersCardHeader from "./ActiveOrdersCardHeader.tsx";
+import ActiveOrdersCardBody from "./ActiveOrdersCardBody.tsx";
+import ActiveOrdersCardFooter from "./ActiveOrdersCardFooter.tsx";
+import {memo} from "react";
 
 type ActiveOrdersGridRowProps = {
     order: Order;
@@ -14,20 +15,19 @@ type ActiveOrdersGridRowProps = {
     onNavigateToDetails: (id: string) => void;
 }
 
-const ActiveOrdersGridRow = (props: ActiveOrdersGridRowProps) => {
-
+const ActiveOrdersCard = (props: ActiveOrdersGridRowProps) => {
     return (
         <Card onClick={() => props.onNavigateToDetails(props.order.id)}>
             <Box className={'w-full'}>
-                <ActiveOrdersGridRowHeader
+                <ActiveOrdersCardHeader
                     order={props.order}
                     onSend={props.onSend}
                     onComplete={props.onComplete}
                 />
 
-                <ActiveOrdersGridRowBody order={props.order}/>
+                <ActiveOrdersCardBody order={props.order}/>
 
-                <ActiveOrdersGridRowFooter
+                <ActiveOrdersCardFooter
                     order={props.order}
                     onChange={props.onChange}
                     onCancel={props.onCancel}
@@ -37,4 +37,4 @@ const ActiveOrdersGridRow = (props: ActiveOrdersGridRowProps) => {
     )
 }
 
-export default ActiveOrdersGridRow;
+export default memo(ActiveOrdersCard);

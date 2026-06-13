@@ -7,7 +7,7 @@ type ActiveOrdersGridRowBodyProps = {
     order: Order;
 }
 
-const ActiveOrdersGridRowBody = (props: ActiveOrdersGridRowBodyProps) => {
+const ActiveOrdersCardBody = (props: ActiveOrdersGridRowBodyProps) => {
     return (
         <Box className={'w-full'}>
             <Box className={'w-full flex justify-between my-[1rem]'}>
@@ -27,4 +27,4 @@ const ActiveOrdersGridRowBody = (props: ActiveOrdersGridRowBodyProps) => {
     )
 }
 
-export default ActiveOrdersGridRowBody;
+export default ActiveOrdersCardBody;
