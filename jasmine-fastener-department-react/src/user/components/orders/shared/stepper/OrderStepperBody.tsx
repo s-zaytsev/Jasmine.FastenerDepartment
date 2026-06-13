@@ -7,6 +7,7 @@ import {type ChangeOrderProduct, type OrderStepperModel, OrderStepperStep} from 
 import ConfirmOrder from "./confirm-step/ConfirmOrder.tsx";
 import type {StepperItem} from "../../../../../shared/models/models.ts";
 import ProductsOrderGrid from "./products-step/ProductsOrderGrid.tsx";
+import {memo} from "react";
 
 type OrderStepperBodyProps = {
     model: OrderStepperModel;
@@ -63,4 +64,4 @@ const OrderStepperBody = (props: OrderStepperBodyProps) => {
     )
 }
 
-export default OrderStepperBody;
+export default memo(OrderStepperBody);

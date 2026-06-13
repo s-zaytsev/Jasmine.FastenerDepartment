@@ -12,7 +12,7 @@ import {
     updateProducts
 } from "../../../slices/ChangeOrderSlice.ts";
 import type {ProductToOrder} from "../../../models/productsToOrderModels.ts";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import type {StepperItem} from "../../../../shared/models/models.ts";
 
 const steps: StepperItem<OrderStepperStep>[] = [
@@ -36,17 +36,17 @@ const useChangeOrderPage = () => {
         navigate("/orders");
     }
 
-    const handleMoveToOrder = (product: ProductToOrder) => {
+    const handleMoveToOrder = useCallback((product: ProductToOrder) => {
         dispatch(addExistedProduct(product));
-    }
+    }, [dispatch]);
 
-    const handleDeleteProduct = (id?: string) => {
+    const handleDeleteProduct = useCallback((id?: string) => {
         dispatch(deleteProduct({id: id}));
-    }
+    }, [dispatch]);
 
-    const handleUpdateProducts = (products: ChangeOrderProduct[]) => {
+    const handleUpdateProducts = useCallback((products: ChangeOrderProduct[]) => {
         dispatch(updateProducts(products));
-    }
+    }, [dispatch]);
 
     useEffect(() => {
         if (state.error) {

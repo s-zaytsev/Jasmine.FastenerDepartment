@@ -3,18 +3,19 @@ import {Box} from "@mui/material";
 import SortTableHead from "../../../../../../shared/components/tables/SortTableHead.tsx";
 import ProductsInOrderGridSectionTableRow from "./ProductsInOrderGridSectionTableRow.tsx";
 import type {ChangeOrderProduct} from "../../../../../models/orderModels.ts";
+import {memo} from "react";
 
 type ProductsInOrderGridSectionTableProps = {
     products: ChangeOrderProduct[];
     onDeleteFromOrder: (id?: string) => void;
 }
 
-const ProductsInOrderGridSectionTable = (props: ProductsInOrderGridSectionTableProps) => {
-    const columns: TableColumnDefinition[] = [
-        {title: "Наименование"},
-        {title: "", width: '10%'}
-    ];
+const columns: TableColumnDefinition[] = [
+    {title: "Наименование"},
+    {title: "", width: '10%'}
+];
 
+const ProductsInOrderGridSectionTable = (props: ProductsInOrderGridSectionTableProps) => {
     return (
         <Box className={'w-full'}>
             <SortTableHead columns={columns}/>
@@ -31,4 +32,4 @@ const ProductsInOrderGridSectionTable = (props: ProductsInOrderGridSectionTableP
     )
 }
 
-export default ProductsInOrderGridSectionTable;
+export default memo(ProductsInOrderGridSectionTable);

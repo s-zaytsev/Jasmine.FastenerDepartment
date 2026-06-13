@@ -2,7 +2,7 @@ import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHoo
 import {type ChangeOrderProduct, type CreateOrderState, OrderStepperStep} from "../../../models/orderModels.ts";
 import {useNotify} from "../../../../shared/providers/NotificationProvider.tsx";
 import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import {
     addExistedProduct,
     changeSupplier,
@@ -42,11 +42,11 @@ const useCreateOrderPage = () => {
     useEffect(() => {
         dispatch(getSuppliers());
         dispatch(getProductTypes());
-        dispatch(getProductsToOrder({}))
+        dispatch(getProductsToOrder({supplierId: state.model.supplier?.id}))
     }, [dispatch]);
 
 
-    const handleSubmit = async () => {
+    const handleSubmit = useCallback( async () => {
         try {
             await dispatch(createOrder({
                 supplierId: state.model.supplier?.id,
@@ -56,24 +56,24 @@ const useCreateOrderPage = () => {
         } catch {
             notification.notifyError('Ошибка создания заказа')
         }
-    }
+    }, [dispatch]);
 
-    const handleMoveToOrder = (product: ProductToOrder) => {
-        dispatch(addExistedProduct(product));
-    }
+    const handleMoveToOrder = useCallback((product: ProductToOrder) => {
+        return dispatch(addExistedProduct(product));
+    }, [dispatch]);
 
-    const handleUpdateProducts = (products: ChangeOrderProduct[]) => {
-        dispatch(updateProducts(products));
-    }
+    const handleUpdateProducts = useCallback((products: ChangeOrderProduct[]) => {
+        return dispatch(updateProducts(products));
+    }, [dispatch]);
 
-    const handleDeleteProduct = (id?: string) => {
+    const handleDeleteProduct = useCallback((id?: string) => {
         dispatch(deleteProduct({id: id}));
-    }
+    }, [dispatch]);
 
-    const handleChangeSupplier = (supplier?: Supplier) => {
+    const handleChangeSupplier = useCallback((supplier?: Supplier) => {
         dispatch(changeSupplier({supplier}));
         dispatch(getProductsToOrder({supplierId: supplier?.id}));
-    };
+    }, [dispatch]);
 
     return {
         steps: steps,

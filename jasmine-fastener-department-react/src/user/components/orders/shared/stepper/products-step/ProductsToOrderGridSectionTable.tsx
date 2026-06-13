@@ -4,6 +4,7 @@ import SortTableHead from "../../../../../../shared/components/tables/SortTableH
 import type {ProductToOrder} from "../../../../../models/productsToOrderModels.ts";
 import ProductsToOrderGridSectionTableRow from "./ProductsToOrderGridSectionTableRow.tsx";
 import type {ChangeOrderProduct} from "../../../../../models/orderModels.ts";
+import {memo, useMemo} from "react";
 
 type ProductsToOrderGridSectionTableProps = {
     products: ProductToOrder[];
@@ -11,11 +12,18 @@ type ProductsToOrderGridSectionTableProps = {
     onMoveToOrder: (product: ProductToOrder) => void;
 }
 
+const columns: TableColumnDefinition[] = [
+    {title: "Наименование"},
+    {title: "", width: '10%'}
+];
+
 const ProductsToOrderGridSectionTable = (props: ProductsToOrderGridSectionTableProps) => {
-    const columns: TableColumnDefinition[] = [
-        {title: "Наименование"},
-        {title: "", width: '10%'}
-    ];
+    const productsInOrderSet = useMemo(
+        () => new Set(
+            props.productsInOrder?.map(x => x.productId)
+        ),
+        [props.productsInOrder]
+    );
 
     return (
         <Box className={'w-full'}>
@@ -26,7 +34,7 @@ const ProductsToOrderGridSectionTable = (props: ProductsToOrderGridSectionTableP
                         key={product.product.id}
                         product={product}
                         columns={columns}
-                        inOrder={!!props.productsInOrder?.find(x => x.productId === product.product.id)}
+                        inOrder={productsInOrderSet.has(product.product.id)}
                         onMoveToOrder={props.onMoveToOrder}
                     />
                 ))}
@@ -34,4 +42,4 @@ const ProductsToOrderGridSectionTable = (props: ProductsToOrderGridSectionTableP
     )
 }
 
-export default ProductsToOrderGridSectionTable;
+export default memo(ProductsToOrderGridSectionTable);

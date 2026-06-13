@@ -1,5 +1,5 @@
 import {Box} from "@mui/material";
-import {useState} from "react";
+import {memo, useCallback, useState} from "react";
 import type {Supplier} from "../../../../models/supplierModels.ts";
 import type {ProductToOrder} from "../../../../models/productsToOrderModels.ts";
 import {type ChangeOrderProduct, type OrderStepperModel, OrderStepperStep} from "../../../../models/orderModels.ts";
@@ -25,13 +25,13 @@ type OrderStepperProps = {
 const OrderStepper = (props: OrderStepperProps) => {
     const [activeStep, setActiveStep] = useState(0);
 
-    const handleNext = () => {
+    const handleNext = useCallback(() => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+    }, []);
 
-    const handleBack = () => {
+    const handleBack = useCallback( () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    }, []);
 
     return (
         <Box className={'flex flex-col h-full'}>
@@ -71,4 +71,4 @@ const OrderStepper = (props: OrderStepperProps) => {
     )
 }
 
-export default OrderStepper;
+export default memo(OrderStepper);

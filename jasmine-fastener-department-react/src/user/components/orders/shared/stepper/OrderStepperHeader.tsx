@@ -1,5 +1,5 @@
 import {Step, StepLabel, Stepper} from "@mui/material";
-import type {ReactNode} from "react";
+import {memo, type ReactNode} from "react";
 import type {StepperItem} from "../../../../../shared/models/models.ts";
 import {OrderStepperStep} from "../../../../models/orderModels.ts";
 
@@ -26,4 +26,4 @@ const OrderStepperHeader = (props: OrderStepperHeaderProps) => {
     )
 }
 
-export default OrderStepperHeader;
+export default memo(OrderStepperHeader);

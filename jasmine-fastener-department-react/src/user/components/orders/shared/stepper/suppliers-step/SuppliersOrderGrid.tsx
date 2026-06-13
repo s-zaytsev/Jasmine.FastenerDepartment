@@ -1,6 +1,7 @@
 import type {Supplier} from "../../../../../models/supplierModels.ts";
 import {Box} from "@mui/material";
 import SuppliersOrderGridRow from "./SuppliersOrderGridRow.tsx";
+import {memo} from "react";
 
 type SuppliersOrderGridProps = {
     selectedSupplierId?: string;
@@ -14,17 +15,17 @@ const SuppliersOrderGrid = (props: SuppliersOrderGridProps) => {
             {props.suppliers.map((supplier: Supplier) =>
                 <SuppliersOrderGridRow
                     key={supplier.id}
-                    selectedSupplierId={props.selectedSupplierId}
                     supplier={supplier}
+                    isSelected={props.selectedSupplierId === supplier.id}
                     onSelect={props.onSelect}/>
             )}
 
             <SuppliersOrderGridRow
-                selectedSupplierId={props.selectedSupplierId}
+                isSelected={!props.selectedSupplierId}
                 onSelect={props.onSelect}/>
         </Box>
     )
 }
 
-export default SuppliersOrderGrid;
+export default memo(SuppliersOrderGrid);
 

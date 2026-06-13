@@ -4,6 +4,7 @@ import FilledButton from "../../../../../shared/components/buttons/FilledButton.
 import type {Supplier} from "../../../../models/supplierModels.ts";
 import type {StepperItem} from "../../../../../shared/models/models.ts";
 import {OrderStepperStep} from "../../../../models/orderModels.ts";
+import {memo} from "react";
 
 type OrderStepperFooterProps = {
     activeStep: number;
@@ -54,4 +55,4 @@ const OrderStepperFooter = (props: OrderStepperFooterProps) => {
     );
 }
 
-export default OrderStepperFooter;
+export default memo(OrderStepperFooter);

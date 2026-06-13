@@ -5,19 +5,18 @@ import Typography from "../../../../../../shared/components/Typography.tsx";
 import {ApartmentOutlined} from "@mui/icons-material";
 import {primitives} from "../../../../../../assets/variables/primitives.ts";
 import {semanticColors} from "../../../../../../assets/variables/semanticColors.ts";
+import {memo} from "react";
 
 type SuppliersOrderGridRowProps = {
-    selectedSupplierId?: string;
     supplier?: Supplier;
+    isSelected: boolean;
     onSelect: (supplier?: Supplier) => void;
 }
 
 const SuppliersOrderGridRow = (props: SuppliersOrderGridRowProps) => {
-    const isSelected = props.selectedSupplierId === props.supplier?.id;
-
     return (
         <Card
-            backgroundColor={isSelected ? primitives.colors.tonal : undefined}
+            backgroundColor={props.isSelected ? primitives.colors.tonal : undefined}
             hasHighlight={true}
             onClick={() => props.onSelect(props.supplier)}
         >
@@ -41,8 +40,8 @@ const SuppliersOrderGridRow = (props: SuppliersOrderGridRowProps) => {
                 <Box className={'flex flex-col items-center'}>
                     <Box sx={{
                         borderRadius: '50%',
-                        border: `2px solid ${isSelected ? primitives.colors.primary : semanticColors.surface.medium}`,
-                        backgroundColor: `${isSelected ? primitives.colors.primary : undefined}`,
+                        border: `2px solid ${props.isSelected ? primitives.colors.primary : semanticColors.surface.medium}`,
+                        backgroundColor: `${props.isSelected ? primitives.colors.primary : undefined}`,
                         width: '1rem',
                         height: '1rem'
                     }}/>
@@ -53,4 +52,4 @@ const SuppliersOrderGridRow = (props: SuppliersOrderGridRowProps) => {
     )
 }
 
-export default SuppliersOrderGridRow;
+export default memo(SuppliersOrderGridRow);

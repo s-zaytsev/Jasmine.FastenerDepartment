@@ -1,7 +1,8 @@
 import type {GroupOptions} from "../models/models.ts";
+import {useCallback} from "react";
 
 const useGroup = () => {
-    function groupBy<T, K extends keyof any>(
+    const groupBy = useCallback(function groupBy<T, K extends keyof any>(
         array: T[],
         keySelector: (item: T) => K,
         options: GroupOptions<T> = {}
@@ -30,7 +31,7 @@ const useGroup = () => {
         }
 
         return grouped;
-    }
+    }, [])
 
     return {
         groupBy

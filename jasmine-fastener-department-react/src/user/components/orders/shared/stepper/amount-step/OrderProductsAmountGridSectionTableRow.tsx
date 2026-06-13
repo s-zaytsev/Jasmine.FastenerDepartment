@@ -7,6 +7,7 @@ import Typography from "../../../../../../shared/components/Typography.tsx";
 import {CloseOutlined} from "@mui/icons-material";
 import QuantityInput from "../../../../../../shared/components/quantity/QuantityInput.tsx";
 import IconButton from "../../../../../../shared/components/buttons/IconButton.tsx";
+import {memo, useCallback} from "react";
 
 type OrderProductsAmountGridSectionTableRowProps = {
     columns: TableColumnDefinition[];
@@ -17,9 +18,10 @@ type OrderProductsAmountGridSectionTableRowProps = {
 }
 
 const OrderProductsAmountGridSectionTableRow = (props: OrderProductsAmountGridSectionTableRowProps) => {
-    function getWidth(columnNumber: number) {
+
+    const getWidth = useCallback((columnNumber: number) => {
         return props.columns?.at(columnNumber)?.width || '100%'
-    }
+    }, [props.columns]);
 
     return (
         <Box className={'w-full flex'}>
@@ -74,4 +76,4 @@ const OrderProductsAmountGridSectionTableRow = (props: OrderProductsAmountGridSe
     )
 }
 
-export default OrderProductsAmountGridSectionTableRow;
+export default memo(OrderProductsAmountGridSectionTableRow);

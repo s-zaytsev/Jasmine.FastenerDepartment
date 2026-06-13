@@ -4,6 +4,7 @@ import SortTableHead from "../../../../../../shared/components/tables/SortTableH
 import {Box} from "@mui/material";
 import type {Control, FieldArrayWithId} from "react-hook-form";
 import OrderProductsAmountGridSectionTableRow from "./OrderProductsAmountGridSectionTableRow.tsx";
+import {memo} from "react";
 
 type OrderProductsAmountGridSectionTableProps = {
     rows: Array<{
@@ -14,13 +15,14 @@ type OrderProductsAmountGridSectionTableProps = {
     onRemove: (id?: string, index?: number) => void;
 }
 
+const columns: TableColumnDefinition[] = [
+    {title: "Наименование"},
+    {title: "Артикул", width: '35%'},
+    {title: "Количество", width: '35%'},
+    {title: "", width: '5%'}
+];
+
 const OrderProductsAmountGridSectionTable = (props: OrderProductsAmountGridSectionTableProps) => {
-    const columns: TableColumnDefinition[] = [
-        {title: "Наименование"},
-        {title: "Артикул", width: '35%'},
-        {title: "Количество", width: '35%'},
-        {title: "", width: '5%'}
-    ];
 
     return (
         <Box className={'w-full mt-[0.5rem]'}>
@@ -40,4 +42,4 @@ const OrderProductsAmountGridSectionTable = (props: OrderProductsAmountGridSecti
     )
 }
 
-export default OrderProductsAmountGridSectionTable;
+export default memo(OrderProductsAmountGridSectionTable);

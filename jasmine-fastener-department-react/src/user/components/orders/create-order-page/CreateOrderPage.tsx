@@ -19,7 +19,7 @@ const CreateOrderPage = () => {
     } = useCreateOrderPage();
 
     return (
-        <Page>
+        <Page title={''} description={''}>
             <OrderStepper
                 steps={steps}
                 model={model}

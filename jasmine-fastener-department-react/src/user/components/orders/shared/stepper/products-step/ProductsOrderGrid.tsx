@@ -3,6 +3,7 @@ import ProductsToOrderGrid from "./ProductsToOrderGrid.tsx";
 import ProductsInOrderGrid from "./ProductsInOrderGrid.tsx";
 import type {ProductToOrder} from "../../../../../models/productsToOrderModels.ts";
 import type {OrderStepperModel} from "../../../../../models/orderModels.ts";
+import {memo} from "react";
 
 type ProductsOrderGridProps = {
     model: OrderStepperModel;
@@ -31,4 +32,4 @@ const ProductsOrderGrid = (props: ProductsOrderGridProps) => {
     )
 }
 
-export default ProductsOrderGrid;
+export default memo(ProductsOrderGrid);

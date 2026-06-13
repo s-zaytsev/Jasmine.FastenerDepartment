@@ -1,7 +1,7 @@
 import type {ChangeOrder, ChangeOrderForm, ChangeOrderProduct, CreateOrder} from "../../../../../models/orderModels.ts";
 import {Box} from "@mui/material";
-import {useFieldArray, useForm, useWatch} from "react-hook-form";
-import {useEffect} from "react";
+import {type Control, useFieldArray, useForm, useWatch} from "react-hook-form";
+import {memo, useCallback, useEffect, useMemo} from "react";
 import useGroup from "../../../../../../shared/hooks/useGroup.ts";
 import Section from "../../../../../../shared/components/section/Section.tsx";
 import OrderProductsAmountGridSectionTable from "./OrderProductsAmountGridSectionTable.tsx";
@@ -11,6 +11,21 @@ type OrderListProps = {
     onUpdate: (products: ChangeOrderProduct[]) => void;
     onRemove: (id?: string) => void;
 }
+
+const FormObserver = ({control, onChange}: { control: Control<ChangeOrderForm>; onChange: (data: any) => void }) => {
+    const watchedProducts = useWatch({
+        control,
+        name: 'products'
+    });
+
+    useEffect(() => {
+        if (watchedProducts) {
+            onChange(watchedProducts);
+        }
+    }, [watchedProducts, onChange]);
+
+    return null;
+};
 
 const OrderProductsAmountGrid = (props: OrderListProps) => {
     const {
@@ -31,28 +46,35 @@ const OrderProductsAmountGrid = (props: OrderListProps) => {
         name: 'products'
     });
 
-    const watchedProducts = useWatch({
-        control,
-        name: 'products'
-    });
-
     const {groupBy} = useGroup();
-    const groupedByType = groupBy(
-        fields,
-        x => x.productType?.name ?? 'Остальное',
-        {
-            sortFn: (a, b) => a.productName.localeCompare(b.productName),
-            sortGroups: true
-        });
 
-    const onChange = (data: ChangeOrderForm) => {
-        props.onUpdate(data.products);
-    };
+    const groupedTablesData = useMemo(() => {
+        const groupedByType = groupBy(
+            fields,
+            x => x.productType?.name ?? 'Остальное',
+            {
+                sortFn: (a, b) => a.productName.localeCompare(b.productName),
+                sortGroups: true
+            }
+        );
 
-    const handleRemove = (id?: string, index?: number) => {
+        return Object.entries(groupedByType).map(([key, groupFields]) => ({
+            key,
+            rows: groupFields.map(field => ({
+                field,
+                productIndex: fields.findIndex(f => f.id === field.id),
+            }))
+        }));
+    }, [fields, groupBy]);
+
+    const handleUpdate = useCallback((products: any) => {
+        props.onUpdate(products);
+    }, [props.onUpdate]);
+
+    const handleRemove = useCallback((id?: string, index?: number) => {
         props.onRemove(id);
         remove(index);
-    }
+    }, [props.onRemove, remove]);
 
     /*    const addField = () => {
             const model: ChangeOrderProduct = {
@@ -67,22 +89,14 @@ const OrderProductsAmountGrid = (props: OrderListProps) => {
             append(model);
         }*/
 
-    useEffect(() => {
-        if (watchedProducts) {
-            onChange({products: watchedProducts});
-        }
-    }, [watchedProducts]);
-
     return (
         <Box className={"w-[80%] m-auto p-[20px]"}>
             <Box component={"form"} className={'flex flex-col gap-[2rem]'}>
-                {Object.entries(groupedByType).map(([key, groupFields]) => (
+                <FormObserver control={control} onChange={handleUpdate}/>
+                {groupedTablesData.map(({key, rows}) => (
                     <Section key={key} title={key}>
                         <OrderProductsAmountGridSectionTable
-                            rows={groupFields.map(field => ({
-                                field,
-                                productIndex: fields.findIndex(f => f.id === field.id),
-                            }))}
+                            rows={rows}
                             control={control}
                             onRemove={handleRemove}
                         />
@@ -92,4 +106,4 @@ const OrderProductsAmountGrid = (props: OrderListProps) => {
         </Box>);
 }
 
-export default OrderProductsAmountGrid;
+export default memo(OrderProductsAmountGrid);

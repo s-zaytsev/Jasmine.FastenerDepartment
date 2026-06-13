@@ -6,6 +6,7 @@ import type {TableColumnDefinition} from "../../../../../../shared/models/models
 import {AddOutlined, DoneOutlined} from "@mui/icons-material";
 import IconButton from "../../../../../../shared/components/buttons/IconButton.tsx";
 import IconBox from "../../../../../../shared/components/IconBox.tsx";
+import {memo, useCallback} from "react";
 
 type ProductsToOrderGridSectionTableRowProps = {
     product: ProductToOrder;
@@ -15,9 +16,10 @@ type ProductsToOrderGridSectionTableRowProps = {
 }
 
 const ProductsToOrderGridSectionTableRow = (props: ProductsToOrderGridSectionTableRowProps) => {
-    function getWidth(columnNumber: number) {
+
+    const getWidth = useCallback((columnNumber: number) => {
         return props.columns?.at(columnNumber)?.width || '100%'
-    }
+    }, [props.columns]);
 
     return (
         <Box className={'w-full flex'}>
@@ -46,4 +48,4 @@ const ProductsToOrderGridSectionTableRow = (props: ProductsToOrderGridSectionTab
     )
 }
 
-export default ProductsToOrderGridSectionTableRow;
+export default memo(ProductsToOrderGridSectionTableRow);

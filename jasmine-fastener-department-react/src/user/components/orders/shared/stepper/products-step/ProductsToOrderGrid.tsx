@@ -6,6 +6,7 @@ import useGroup from "../../../../../../shared/hooks/useGroup.ts";
 import Section from "../../../../../../shared/components/section/Section.tsx";
 import ProductsToOrderGridSectionTable from "./ProductsToOrderGridSectionTable.tsx";
 import type {ChangeOrderProduct} from "../../../../../models/orderModels.ts";
+import {memo, useMemo} from "react";
 
 type ProductsToOrderFormProps = {
     products?: ProductToOrder[];
@@ -14,14 +15,20 @@ type ProductsToOrderFormProps = {
 }
 
 const ProductsToOrderGrid = (props: ProductsToOrderFormProps) => {
-    const {groupBy} = useGroup();
-    const groupedByType = groupBy(
-        props.products || [],
-        x => x.product.type?.name ?? 'Остальное',
-        {
-            sortFn: (a, b) => a.product.name.localeCompare(b.product.name),
-            sortGroups: true
-        });
+    const {
+        groupBy
+    } = useGroup();
+    
+    const groupedByType = useMemo(() => {
+        return groupBy(
+            props.products || [],
+            x => x.product.type?.name ?? 'Остальное',
+            {
+                sortFn: (a, b) => a.product.name.localeCompare(b.product.name),
+                sortGroups: true
+            });
+        
+    }, [groupBy, props.products]);
 
     if (Object.keys(groupedByType).length === 0) {
         return (
@@ -50,4 +57,4 @@ const ProductsToOrderGrid = (props: ProductsToOrderFormProps) => {
     );
 }
 
-export default ProductsToOrderGrid;
+export default memo(ProductsToOrderGrid);

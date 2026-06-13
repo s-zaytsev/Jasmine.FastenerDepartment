@@ -6,6 +6,7 @@ import type {ChangeOrderProduct} from "../../../../../models/orderModels.ts";
 import Section from "../../../../../../shared/components/section/Section.tsx";
 import ProductsInOrderGridSectionTable from "./ProductsInOrderGridSectionTable.tsx";
 import IconBox from "../../../../../../shared/components/IconBox.tsx";
+import {memo, useMemo} from "react";
 
 type ProductsInOrderFormProps = {
     products?: ChangeOrderProduct[];
@@ -14,13 +15,15 @@ type ProductsInOrderFormProps = {
 
 const ProductsInOrderGrid = (props: ProductsInOrderFormProps) => {
     const {groupBy} = useGroup();
-    const groupedByType = groupBy(
-        props.products || [],
-        x => x.productType?.name ?? 'Остальное',
-        {
-            sortFn: (a, b) => a.productName.localeCompare(b.productName),
-            sortGroups: true
-        });
+    const groupedByType = useMemo(() => {
+        return groupBy(
+            props.products || [],
+            x => x.productType?.name ?? 'Остальное',
+            {
+                sortFn: (a, b) => a.productName.localeCompare(b.productName),
+                sortGroups: true
+            });
+    }, [groupBy, props.products]);
 
     if (Object.keys(groupedByType).length === 0) {
         return (
@@ -51,4 +54,4 @@ const ProductsInOrderGrid = (props: ProductsInOrderFormProps) => {
     );
 }
 
-export default ProductsInOrderGrid;
+export default memo(ProductsInOrderGrid);
