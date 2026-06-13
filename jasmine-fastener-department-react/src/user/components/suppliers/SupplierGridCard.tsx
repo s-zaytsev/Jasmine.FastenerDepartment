@@ -7,6 +7,7 @@ import IconButton from "../../../shared/components/buttons/IconButton.tsx";
 import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 import {semanticColors} from "../../../assets/variables/semanticColors.ts";
 import IconBox from "../../../shared/components/IconBox.tsx";
+import {memo} from "react";
 
 type SupplierGridCardProps = {
     supplier: ExtendedSupplier;
@@ -78,4 +79,4 @@ const SupplierGridCard = (props: SupplierGridCardProps) => {
     );
 }
 
-export default SupplierGridCard;
+export default memo(SupplierGridCard);

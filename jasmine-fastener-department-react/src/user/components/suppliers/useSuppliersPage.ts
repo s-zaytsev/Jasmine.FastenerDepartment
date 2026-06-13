@@ -1,7 +1,7 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
 import {useNavigate} from "react-router-dom";
 import {useNotify} from "../../../shared/providers/NotificationProvider.tsx";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {
     changeSupplier,
     clearSelectedSupplier,
@@ -25,23 +25,23 @@ const useSuppliersPage = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    function handleOpenDialogToCreate() {
+    const handleOpenDialogToCreate = useCallback(() => {
         dispatch(clearSelectedSupplier());
         handleOpen();
-    }
+    }, [dispatch]);
 
-    function handleOpenDialogToChange(id: string) {
+    const handleOpenDialogToChange = useCallback((id: string) => {
         dispatch(selectSupplier({id}));
         handleOpen();
-    }
+    }, [dispatch]);
 
-    const handleCreate = async (model: ChangeSupplierModel) => {
+    const handleCreate = useCallback(async (model: ChangeSupplierModel) => {
         handleClose();
         await dispatch(createSupplier(model));
         await dispatch(getExtendedSuppliers());
-    }
+    }, [dispatch]);
 
-    const handleChange = async (model: ChangeSupplierModel) => {
+    const handleChange = useCallback(async (model: ChangeSupplierModel) => {
         const id = state.selectedSupplier?.id;
 
         if (!id) {
@@ -51,11 +51,11 @@ const useSuppliersPage = () => {
         handleClose();
         await dispatch(changeSupplier({id, model}));
         await dispatch(getExtendedSuppliers());
-    }
+    }, [dispatch]);
 
-    const handleNavigateToSupplierProducts = (id: string) => {
+    const handleNavigateToSupplierProducts = useCallback((id: string) => {
         navigate(id);
-    }
+    }, [navigate]);
 
     useEffect(() => {
         if (state.error) {
