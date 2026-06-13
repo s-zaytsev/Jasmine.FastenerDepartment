@@ -5,6 +5,7 @@ import {Edit, HandymanOutlined} from "@mui/icons-material";
 import Card from "../../../shared/components/Card.tsx";
 import IconButton from "../../../shared/components/buttons/IconButton.tsx";
 import IconBox from "../../../shared/components/IconBox.tsx";
+import {memo} from "react";
 
 type ProductTypeGridCardProps = {
     productType: ExtendedProductType;
@@ -54,4 +55,4 @@ const ProductTypeGridCard = (props: ProductTypeGridCardProps) => {
     );
 }
 
-export default ProductTypeGridCard;
+export default memo(ProductTypeGridCard);

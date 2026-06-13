@@ -1,6 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
 import {useNotify} from "../../../shared/providers/NotificationProvider.tsx";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {
     changeProductType,
     clearSelectedProductType,
@@ -22,23 +22,23 @@ const useProductTypesPage = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const handleOpenDialogToCreate = () => {
+    const handleOpenDialogToCreate = useCallback(() => {
         dispatch(clearSelectedProductType());
         handleOpen();
-    }
+    }, [dispatch]);
 
-    const handleOpenDialogToChange = (id: string) => {
+    const handleOpenDialogToChange = useCallback((id: string) => {
         dispatch(selectProductType({id}));
         handleOpen();
-    }
+    }, [dispatch]);
 
-    const handleCreate = async (model: ChangeProductType) => {
+    const handleCreate = useCallback(async (model: ChangeProductType) => {
         handleClose();
         await dispatch(createProductType(model));
         await dispatch(getExtendedProductTypes());
-    }
+    }, [dispatch]);
 
-    const handleChange = async (model: ChangeProductType) => {
+    const handleChange = useCallback(async (model: ChangeProductType) => {
         const id = state.selectedProductType?.id;
 
         if (!id) {
@@ -48,7 +48,7 @@ const useProductTypesPage = () => {
         handleClose();
         await dispatch(changeProductType({id, model}));
         await dispatch(getExtendedProductTypes());
-    }
+    }, [dispatch, state.selectedProductType?.id]);
 
     useEffect(() => {
         if (state.error) {
