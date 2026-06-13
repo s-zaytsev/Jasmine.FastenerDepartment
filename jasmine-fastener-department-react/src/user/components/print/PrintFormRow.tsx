@@ -2,7 +2,7 @@ import {Box, TextField} from "@mui/material";
 import MinusIcon from "../../../assets/icons/MinusIcon.tsx";
 import PlusIcon from "../../../assets/icons/PlusIcon.tsx";
 import type {Product} from "../../models/productModel.ts";
-import {type BaseSyntheticEvent, useEffect, useState} from "react";
+import {type BaseSyntheticEvent, memo, useCallback} from "react";
 import Typography from "../../../shared/components/Typography.tsx";
 import {Close} from "@mui/icons-material";
 import TableRow from "../../../shared/components/tables/TableRow.tsx";
@@ -18,16 +18,10 @@ type PrintFormRowProps = {
 }
 
 const PrintFormRow = (props: PrintFormRowProps) => {
-    const [count, setCount] = useState(1);
 
-    function handleChangeCount(event: BaseSyntheticEvent) {
-        setCount(event.target.value);
+    const handleChangeCount = useCallback((event: BaseSyntheticEvent) => {
         props.onChangeCount(props.product.id, event.target.value);
-    }
-
-    useEffect(() => {
-        setCount(props.count);
-    }, [props.count]);
+    }, []);
 
     return (
         <TableRow hasHighlight={true}>
@@ -55,7 +49,7 @@ const PrintFormRow = (props: PrintFormRowProps) => {
                         className={'w-[40%]'}
                         autoComplete={'false'}
                         type={'number'}
-                        value={count}
+                        value={props.count}
                         onChange={handleChangeCount}
                     />
 
@@ -70,4 +64,4 @@ const PrintFormRow = (props: PrintFormRowProps) => {
     );
 }
 
-export default PrintFormRow;
+export default memo(PrintFormRow);

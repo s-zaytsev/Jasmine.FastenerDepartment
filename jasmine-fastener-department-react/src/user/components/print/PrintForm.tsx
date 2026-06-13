@@ -2,6 +2,7 @@ import {Box} from "@mui/material";
 import PrintFormRow from "./PrintFormRow.tsx";
 import {PrintOutlined} from "@mui/icons-material";
 import type {ProductToPrint} from "../../models/printModels.ts";
+import {memo} from "react";
 
 type PrintFormProps = {
     products: ProductToPrint[];
@@ -34,4 +35,4 @@ const PrintForm = (props: PrintFormProps) => {
     )
 }
 
-export default PrintForm;
+export default memo(PrintForm);
