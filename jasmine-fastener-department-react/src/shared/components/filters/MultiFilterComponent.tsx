@@ -1,6 +1,7 @@
 import type {MultiFilter} from "../../models/models.ts";
 import {Box, Checkbox, FormControl, MenuItem, OutlinedInput, Select} from "@mui/material";
 import Typography from "../Typography.tsx";
+import {memo, useMemo} from "react";
 
 type MultiFilterComponentProps<T> = {
     title: string;
@@ -9,7 +10,9 @@ type MultiFilterComponentProps<T> = {
 }
 
 function MultiFilterComponent<T>(props: MultiFilterComponentProps<T>) {
-    const values = props.filter?.items.filter(x => x.isEnabled).map(x => x.title) ?? [];
+    const values = useMemo(() => {
+        return props.filter?.items.filter(x => x.isEnabled).map(x => x.title) ?? [];
+    }, [props.filter?.items]);
 
     return (
         <Box className={'w-full'}>
@@ -53,4 +56,4 @@ function MultiFilterComponent<T>(props: MultiFilterComponentProps<T>) {
     )
 }
 
-export default MultiFilterComponent;
+export default memo(MultiFilterComponent) as typeof MultiFilterComponent;

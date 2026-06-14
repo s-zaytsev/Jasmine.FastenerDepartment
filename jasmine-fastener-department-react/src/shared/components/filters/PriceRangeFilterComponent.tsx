@@ -1,6 +1,6 @@
 import type {RangeFilter} from "../../models/models.ts";
 import {Box, TextField} from "@mui/material";
-import {useEffect, useState} from "react";
+import {memo, useEffect, useState} from "react";
 
 type PriceRangeFilterProps = {
     title: string;
@@ -48,7 +48,9 @@ function PriceRangeFilterComponent(props: PriceRangeFilterProps) {
                     value={value[0]}
                     onChange={e => handleChangePriceFrom(+e.target.value)}
                 />
+
                 <span className={'mx-[0.5rem]'}>-</span>
+
                 <TextField
                     className={'w-full'}
                     value={value[1]}
@@ -59,4 +61,4 @@ function PriceRangeFilterComponent(props: PriceRangeFilterProps) {
     );
 }
 
-export default PriceRangeFilterComponent;
+export default memo(PriceRangeFilterComponent);

@@ -1,7 +1,7 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
 import {useNavigate} from "react-router-dom";
 import {useNotify} from "../../../shared/providers/NotificationProvider.tsx";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import {
     changeNeededOrderStatus,
     changeNeededPrintStatus,
@@ -12,7 +12,7 @@ import {
     getProducts,
     getProductTypes
 } from "../../slices/ProductsSlice.ts";
-import {type ProductsPageState} from "../../models/productModel.ts";
+import {type ProductsPageState, type ProductsQuery} from "../../models/productModel.ts";
 import {NotificationMessage} from "../../../shared/models/notificationModel.ts";
 import useProductFilters from "./productFilters/useProductFilters.ts";
 
@@ -34,52 +34,55 @@ const useProductsPage = () => {
         handleResetTypeFilters,
         handleResetSupplierFilters,
         handleResetOnlyToPrintFilter,
-        handleResetPriceTagFilters
+        handleResetPriceTagFilters,
+        handleSearch
     } = useProductFilters(state.query, state.filters);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const notification = useNotify();
 
-    function handleNavigateToCreate() {
+    const handleNavigateToCreate = useCallback(() => {
         navigate('create');
-    }
+    }, [navigate]);
 
-    function handleNavigateToProduct(id: string) {
+    const handleNavigateToProduct = useCallback((id: string) => {
         navigate(id)
-    }
+    }, [navigate]);
 
-    function handleChangePrintStatus(id: string) {
+    const handleChangePrintStatus = useCallback((id: string) => {
         dispatch(changeNeededPrintStatus({id}));
         dispatch(changePrintStatus(id));
-    }
+    }, [dispatch]);
 
-    function handleChangeOrderStatus(id: string) {
+    const handleChangeOrderStatus = useCallback((id: string) => {
         dispatch(changeNeededOrderStatus({id}));
         dispatch(changeOrderStatus(id));
-    }
+    }, [dispatch]);
 
-    const handleSort = (parameter: number) => {
+    const handleSort = useCallback((parameter: number) => {
         const sortDesc = state.query.sortBy !== parameter ? false : !state.query.sortDesc;
         const newQuery = {...state.query, sortBy: parameter, sortDesc: sortDesc, pageNo: 1};
 
-        dispatch(changeQuery(newQuery))
-    };
+        dispatch(changeQuery(newQuery));
+        handleReload(newQuery);
+    }, [dispatch, state.query.sortBy, state.query.sortDesc]);
 
-    const handlePageSizeChange = async (size: number) => {
+    const handlePageSizeChange = useCallback((size: number) => {
         const newQuery = {...state.query, pageNo: 1, pageSize: size};
         dispatch(changeQuery(newQuery));
-    };
+        handleReload(newQuery);
+    }, [dispatch, state.query.pageSize]);
 
-    const handlePageNoChange = async (pageNo: number) => {
+    const handlePageNoChange = useCallback((pageNo: number) => {
         const newQuery = {...state.query, pageNo: pageNo};
         dispatch(changeQuery(newQuery));
-    };
+        handleReload(newQuery);
+    }, [dispatch, state.query.pageNo]);
 
-    const handleSearch = (value: string) => {
-        const newQuery = {...state.query, search: value, pageNo: 1};
-        dispatch(changeQuery(newQuery));
-    };
+    const handleReload = useCallback((query: ProductsQuery) => {
+        dispatch(getProducts(query));
+    }, [dispatch]);
 
     useEffect(() => {
         if (state.error) {
@@ -90,12 +93,8 @@ const useProductsPage = () => {
 
     useEffect(() => {
         dispatch(getProductTypes());
-    }, [dispatch]);
-
-    useEffect(() => {
         dispatch(getPageFilters(state.query));
-        dispatch(getProducts(state.query));
-    }, [dispatch, state.query]);
+    }, [dispatch]);
 
     return {
         page: state.page,

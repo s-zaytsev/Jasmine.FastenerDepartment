@@ -5,6 +5,7 @@ import SortTableHead from "../../../shared/components/tables/SortTableHead.tsx";
 import type {Page, TableColumnDefinition} from "../../../shared/models/models.ts";
 import TablePagination from "../../../shared/components/tables/TablePagination.tsx";
 import type {ProductType} from "../../models/productTypeModels.ts";
+import {memo} from "react";
 
 type ProductGridProps = {
     page?: Page<Product>;
@@ -18,17 +19,17 @@ type ProductGridProps = {
     onChangeOrderStatus: (parameter: string) => void;
 }
 
-const ProductsGrid = (props: ProductGridProps) => {
-    const columns: TableColumnDefinition[] = [
-        {title: "Артикул", parameter: ProductsQueryParameter.productNumber, width: '15%'},
-        {title: "Наименование", parameter: ProductsQueryParameter.name},
-        {title: "Цена", parameter: ProductsQueryParameter.price, width: '25%'},
-        {title: "Ценник", parameter: ProductsQueryParameter.priceTagCode, width: '15%', columnAlign: 'center'},
-        {title: "Тип", parameter: ProductsQueryParameter.type, width: '30%'},
-        {title: "Поставщики", width: '30%'},
-        {title: '', width: '20%'},
-    ];
+const columns: TableColumnDefinition[] = [
+    {title: "Артикул", parameter: ProductsQueryParameter.productNumber, width: '15%'},
+    {title: "Наименование", parameter: ProductsQueryParameter.name},
+    {title: "Цена", parameter: ProductsQueryParameter.price, width: '25%'},
+    {title: "Ценник", parameter: ProductsQueryParameter.priceTagCode, width: '15%', columnAlign: 'center'},
+    {title: "Тип", parameter: ProductsQueryParameter.type, width: '30%'},
+    {title: "Поставщики", width: '30%'},
+    {title: '', width: '20%'},
+];
 
+const ProductsGrid = (props: ProductGridProps) => {
     return (
         <Box sx={{p: '10px 0'}}>
             <SortTableHead
@@ -37,11 +38,10 @@ const ProductsGrid = (props: ProductGridProps) => {
                 sortBy={props.query.sortBy}
                 sortDesc={props.query.sortDesc}
             />
-            {props?.page?.items?.map((row: Product) => (
+            {props?.page?.items?.map((product: Product) => (
                 <ProductGridRow
-                    key={row.id}
-                    product={row}
-                    productTypes={props.productTypes}
+                    key={product.id}
+                    product={product}
                     headColumns={columns}
                     onNavigateToProduct={props.onNavigateToProduct}
                     onChangeOrderStatus={props.onChangeOrderStatus}
@@ -64,4 +64,4 @@ const ProductsGrid = (props: ProductGridProps) => {
     );
 }
 
-export default ProductsGrid;
+export default memo(ProductsGrid);

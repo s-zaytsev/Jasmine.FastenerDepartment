@@ -1,4 +1,4 @@
-import type {ReactNode} from "react";
+import {memo, type ReactNode} from "react";
 import {Box} from "@mui/material";
 import {neutralColors} from "../../../assets/variables/neutralColors.ts";
 
@@ -29,4 +29,4 @@ const TableRow = (props: TableRowProps) => {
     )
 }
 
-export default TableRow;
+export default memo(TableRow);

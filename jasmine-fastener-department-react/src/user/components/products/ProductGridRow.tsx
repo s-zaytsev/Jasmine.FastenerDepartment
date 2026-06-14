@@ -4,15 +4,14 @@ import {PrintOutlined, ReorderOutlined} from "@mui/icons-material";
 import type {TableColumnDefinition} from "../../../shared/models/models.ts";
 import ProductPrice from "../../../shared/components/ProductPrice.tsx";
 import SuppliersTableCell from "../shared/SuppliersTableCell.tsx";
-import type {ProductType} from "../../models/productTypeModels.ts";
 import Typography from "../../../shared/components/Typography.tsx";
 import TableRow from "../../../shared/components/tables/TableRow.tsx";
 import Chip from "../../../shared/components/Chip.tsx";
 import IconButton from "../../../shared/components/buttons/IconButton.tsx";
+import {memo, useCallback} from "react";
 
 type ProductGridRowProps = {
     product: Product;
-    productTypes: ProductType[];
     headColumns?: TableColumnDefinition[];
     onNavigateToProduct: (parameter: string) => void;
     onChangePrintStatus: (parameter: string) => void;
@@ -21,12 +20,26 @@ type ProductGridRowProps = {
 
 const ProductGridRow = (props: ProductGridRowProps) => {
 
-    function getWidth(columnNumber: number) {
+    const getWidth = useCallback((columnNumber: number) => {
         return props.headColumns?.at(columnNumber)?.width || '100%'
-    }
+    }, [props.headColumns]);
+
+    const handleNavigateToProduct = useCallback(() => {
+        props.onNavigateToProduct(props.product.id);
+    }, []);
+
+    const handleChangePrintStatus = useCallback((event: any) => {
+        event.stopPropagation();
+        props.onChangePrintStatus(props.product.id);
+    }, [props.product.id]);
+
+    const handleChangeOrderStatus = useCallback((event: any) => {
+        event.stopPropagation();
+        props.onChangeOrderStatus(props.product.id);
+    }, [props.product.id]);
 
     return (
-        <TableRow hasHighlight={true} onClick={() => props.onNavigateToProduct(props.product.id)}>
+        <TableRow hasHighlight={true} onClick={handleNavigateToProduct}>
 
             <Box width={getWidth(0)}>
                 <Typography variant={'bodyRegular'} color={'primary'}>{props.product.number}</Typography>
@@ -47,7 +60,7 @@ const ProductGridRow = (props: ProductGridRowProps) => {
             </Box>
 
             <Box width={getWidth(4)}>
-                {props.productTypes.find(x => x.id === props.product.type?.id)?.name}
+                {props.product.type?.name}
             </Box>
 
             <Box width={getWidth(5)}>
@@ -58,10 +71,7 @@ const ProductGridRow = (props: ProductGridRowProps) => {
                 <IconButton
                     isActive={props.product.isNeededToPrint}
                     description={!props.product.isNeededToPrint ? 'Добавить в список печати' : 'Убрать из списка печати'}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        props.onChangePrintStatus(props.product.id)
-                    }}
+                    onClick={handleChangePrintStatus}
                 >
                     <PrintOutlined/>
                 </IconButton>
@@ -69,10 +79,7 @@ const ProductGridRow = (props: ProductGridRowProps) => {
                 <IconButton
                     isActive={props.product.isNeededToOrder}
                     description={!props.product.isNeededToOrder ? 'Добавить в список заказа' : 'Убрать из списка заказа'}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        props.onChangeOrderStatus(props.product.id)
-                    }}
+                    onClick={handleChangeOrderStatus}
                 >
                     <ReorderOutlined/>
                 </IconButton>
@@ -81,4 +88,4 @@ const ProductGridRow = (props: ProductGridRowProps) => {
     );
 }
 
-export default ProductGridRow;
+export default memo(ProductGridRow);

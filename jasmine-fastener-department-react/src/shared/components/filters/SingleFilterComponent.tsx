@@ -1,5 +1,5 @@
 import type {SingleFilter} from "../../models/models.ts";
-import {type ChangeEvent, useState} from "react";
+import {type ChangeEvent, memo, useCallback, useState} from "react";
 import {Box, Switch} from "@mui/material";
 import Typography from "../Typography.tsx";
 
@@ -12,10 +12,10 @@ type SingleFilterComponentProps = {
 const SingleFilterComponent = (props: SingleFilterComponentProps) => {
     const [isEnabled, setIsEnabled] = useState(props.filter?.isEnabled ?? false);
 
-    function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setIsEnabled(e.target.checked);
         props.onChange(e.target.checked);
-    }
+    }, []);
 
     return (
         <Box className={'flex justify-between items-center mx-[1rem] w-full'}>
@@ -25,4 +25,4 @@ const SingleFilterComponent = (props: SingleFilterComponentProps) => {
     );
 }
 
-export default SingleFilterComponent;
+export default memo(SingleFilterComponent);

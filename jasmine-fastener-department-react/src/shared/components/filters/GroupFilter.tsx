@@ -1,6 +1,7 @@
 import type {MultiFilter} from "../../models/models.ts";
 import ElementsGroup from "../elementsGroup/ElementsGroup.tsx";
 import ElementsGroupItem from "../elementsGroup/ElementsGroupItem.tsx";
+import {memo} from "react";
 
 type GroupFilterProps<T> = {
     filter?: MultiFilter<T>;
@@ -24,4 +25,4 @@ function GroupFilter<T>(props: GroupFilterProps<T>) {
     )
 }
 
-export default GroupFilter;
+export default memo(GroupFilter) as typeof GroupFilter;

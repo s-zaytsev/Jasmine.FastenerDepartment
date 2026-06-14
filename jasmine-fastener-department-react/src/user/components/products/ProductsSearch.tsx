@@ -1,4 +1,4 @@
-import {type BaseSyntheticEvent, useEffect, useState} from "react";
+import {type BaseSyntheticEvent, memo, useEffect, useState} from "react";
 import {Box, TextField} from "@mui/material";
 
 export interface ProductsSearchProps {
@@ -18,7 +18,7 @@ const ProductsSearch = (props: ProductsSearchProps) => {
     useEffect(() => {
         const timerId = setTimeout(() => {
             props.onSearch(searchText);
-        },500);
+        }, 500);
         return () => {
             clearTimeout(timerId);
         };
@@ -37,4 +37,4 @@ const ProductsSearch = (props: ProductsSearchProps) => {
     );
 };
 
-export default ProductsSearch;
+export default memo(ProductsSearch);

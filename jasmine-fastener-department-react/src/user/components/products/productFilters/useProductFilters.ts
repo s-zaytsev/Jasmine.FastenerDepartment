@@ -1,12 +1,13 @@
-import {changeQuery} from "../../../slices/ProductsSlice.ts";
+import {changeQuery, getPageFilters, getProducts} from "../../../slices/ProductsSlice.ts";
 import {PriceTagCode, type ProductPageFilters, type ProductsQuery} from "../../../models/productModel.ts";
 import {useAppDispatch} from "../../../../shared/hooks/sharedHooks.ts";
+import {useCallback} from "react";
 
 const useProductFilters = (query: ProductsQuery, filters: ProductPageFilters) => {
 
     const dispatch = useAppDispatch();
 
-    const handleResetPriceRange = () => {
+    const handleResetPriceRange = useCallback(() => {
         const newQuery = {
             ...query,
             priceFrom: filters.priceRange?.min || 0,
@@ -14,9 +15,10 @@ const useProductFilters = (query: ProductsQuery, filters: ProductPageFilters) =>
             pageNo: 1
         };
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleSupplierFilterChange = (id: string, isEnabled: boolean) => {
+    const handleSupplierFilterChange = useCallback((id: string, isEnabled: boolean) => {
         let suppliers = query.suppliers || [];
         if (suppliers.find(x => x === id)) {
             suppliers = suppliers.filter(x => x !== id);
@@ -28,9 +30,10 @@ const useProductFilters = (query: ProductsQuery, filters: ProductPageFilters) =>
 
         const newQuery = {...query, suppliers, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    };
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleTypeFilterChange = (id: string, isEnabled: boolean) => {
+    const handleTypeFilterChange = useCallback((id: string, isEnabled: boolean) => {
         let types = query.types || [];
         if (types.find(x => x === id)) {
             types = types.filter(x => x !== id);
@@ -42,9 +45,10 @@ const useProductFilters = (query: ProductsQuery, filters: ProductPageFilters) =>
 
         const newQuery = {...query, types, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    };
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handlePriceTagFilterChange = (id: PriceTagCode, isEnabled: boolean) => {
+    const handlePriceTagFilterChange = useCallback((id: PriceTagCode, isEnabled: boolean) => {
         let priceTags = query.priceTags || [];
         if (priceTags.find(x => x === id)) {
             priceTags = priceTags.filter(x => x !== id);
@@ -54,47 +58,67 @@ const useProductFilters = (query: ProductsQuery, filters: ProductPageFilters) =>
 
         const newQuery = {...query, priceTags, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    };
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleOnlyToPrintFilterChange = (isEnabled: boolean) => {
+    const handleOnlyToPrintFilterChange = useCallback((isEnabled: boolean) => {
         const newQuery = {...query, onlyToPrint: isEnabled, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleOnlyToOrderFilterChange = (isEnabled: boolean) => {
+    const handleOnlyToOrderFilterChange = useCallback((isEnabled: boolean) => {
         const newQuery = {...query, onlyToOrder: isEnabled, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch])
 
-    const handlePriceRangeChange = (from: number, to: number) => {
+    const handlePriceRangeChange = useCallback((from: number, to: number) => {
         const newQuery = {...query, priceFrom: from, priceTo: to, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleResetTypeFilters = () => {
+    const handleResetTypeFilters = useCallback(() => {
         const newQuery = {...query, types: [], pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleResetSupplierFilters = () => {
+    const handleResetSupplierFilters = useCallback(() => {
         const newQuery = {...query, suppliers: [], pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleResetPriceTagFilters = () => {
+    const handleResetPriceTagFilters = useCallback(() => {
         const newQuery = {...query, priceTags: [], pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleResetOnlyToPrintFilter = () => {
+    const handleResetOnlyToPrintFilter = useCallback(() => {
         const newQuery = {...query, onlyToPrint: false, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
 
-    const handleResetOnlyToOrderFilter = () => {
+    const handleResetOnlyToOrderFilter = useCallback(() => {
         const newQuery = {...query, onlyToOrder: false, pageNo: 1};
         dispatch(changeQuery(newQuery));
-    }
+        handleReload(newQuery);
+    }, [dispatch]);
+
+    const handleSearch = useCallback((value: string) => {
+        const newQuery = {...query, search: value, pageNo: 1};
+        dispatch(changeQuery(newQuery));
+        handleReload(newQuery);
+    }, [dispatch, query.search]);
+
+    const handleReload = useCallback((query: ProductsQuery) => {
+        dispatch(getPageFilters(query));
+        dispatch(getProducts(query));
+    }, [dispatch]);
 
     return {
         handleSupplierFilterChange,
@@ -108,7 +132,8 @@ const useProductFilters = (query: ProductsQuery, filters: ProductPageFilters) =>
         handleResetTypeFilters,
         handleResetSupplierFilters,
         handleResetOnlyToPrintFilter,
-        handleResetPriceTagFilters
+        handleResetPriceTagFilters,
+        handleSearch
     };
 }
 

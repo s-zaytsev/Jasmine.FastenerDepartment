@@ -6,6 +6,7 @@ import PriceRangeFilterComponent from "../../../../shared/components/filters/Pri
 import Card from "../../../../shared/components/Card.tsx";
 import ProductsSearch from "../ProductsSearch.tsx";
 import GroupFilter from "../../../../shared/components/filters/GroupFilter.tsx";
+import {memo} from "react";
 
 type ProductPageFiltersProps = {
     searchValue: string;
@@ -75,4 +76,4 @@ const ProductPageFiltersComponent = (props: ProductPageFiltersProps) => {
     )
 }
 
-export default ProductPageFiltersComponent;
+export default memo(ProductPageFiltersComponent);

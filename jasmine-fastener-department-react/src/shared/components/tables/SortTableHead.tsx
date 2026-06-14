@@ -1,6 +1,7 @@
 import {Box} from "@mui/material";
 import type {TableColumnDefinition} from "../../models/models.ts";
 import SortTableHeadLabel from "./SortTableHeadLabel.tsx";
+import {memo, useCallback} from "react";
 
 type SortTableHeadProps = {
     columns: TableColumnDefinition[];
@@ -10,11 +11,11 @@ type SortTableHeadProps = {
 }
 
 const SortTableHead = (props: SortTableHeadProps) => {
-    const getDirection = (parameter?: number): "asc" | "desc" | undefined => {
+    const getDirection = useCallback((parameter?: number): "asc" | "desc" | undefined => {
         return parameter !== props.sortBy ? "asc" :
             props.sortDesc ? "desc" :
                 "asc";
-    }
+    }, [props.sortBy, props.sortDesc]);
 
     return (
         <Box className={'flex product-table-head-row'}>
@@ -40,4 +41,4 @@ const SortTableHead = (props: SortTableHeadProps) => {
     );
 };
 
-export default SortTableHead;
+export default memo(SortTableHead);
