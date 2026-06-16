@@ -3,6 +3,7 @@ import ElementsGroupItem from "../../../shared/components/elementsGroup/Elements
 import SettingsCard from "./SettingsCard.tsx";
 import {LanguageCode, stringEnumToArray} from "../../../shared/models/models.ts";
 import {LanguageOutlined} from "@mui/icons-material";
+import {memo} from "react";
 
 type LanguageSettingsCardProps = {
     currentLanguage: LanguageCode;
@@ -32,4 +33,4 @@ const LanguageSettingsCard = (props: LanguageSettingsCardProps) => {
     )
 }
 
-export default LanguageSettingsCard;
+export default memo(LanguageSettingsCard);

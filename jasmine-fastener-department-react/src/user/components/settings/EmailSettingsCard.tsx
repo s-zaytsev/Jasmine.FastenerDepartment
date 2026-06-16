@@ -1,48 +1,26 @@
 import SettingsCard from "./SettingsCard.tsx";
 import {Box, TextField} from "@mui/material";
-import {Controller, useForm} from "react-hook-form";
-import type {ChangeEmailSettings} from "../../models/settingsModels.ts";
-import {useEffect} from "react";
+import {Controller, useFormContext} from "react-hook-form";
 import Typography from "../../../shared/components/Typography.tsx";
 import {EmailOutlined} from "@mui/icons-material";
+import {memo} from "react";
 
-type EmailSettingsCardProps = {
-    settings: ChangeEmailSettings;
-    onChange: (data: ChangeEmailSettings) => void;
-}
+const EmailSettingsCard = () => {
 
-const EmailSettingsCard = (props: EmailSettingsCardProps) => {
     const {
+        control,
         formState: {
             errors
-        },
-        control,
-        reset,
-        watch
-    } = useForm<ChangeEmailSettings>({
-        defaultValues: props.settings,
-        mode: "onBlur"
-    });
-
-    useEffect(() => {
-        reset(props.settings);
-    }, [props.settings, reset]);
-
-    useEffect(() => {
-        const subscription = watch((data) => {
-            props.onChange(data as ChangeEmailSettings);
-        });
-
-        return () => subscription.unsubscribe();
-    }, [watch, props.onChange]);
+        }
+    } = useFormContext();
 
     return (
         <SettingsCard title={'Электронная почта'} icon={<EmailOutlined/>}>
-            <Box component="form" className={'w-full flex flex-col gap-[0.5rem]'}>
+            <Box className={'w-full flex flex-col gap-[0.5rem]'}>
                 <Box>
                     <Typography variant={'labelRegularBold'}>Отображаемое имя</Typography>
                     <Controller
-                        name="displayName"
+                        name="emailSettings.displayName"
                         control={control}
                         render={({field}) => (
                             <TextField
@@ -52,7 +30,7 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                                 margin="normal"
                                 autoComplete={'off'}
                                 error={!!errors.displayName}
-                                helperText={errors.displayName?.message}
+                                helperText={errors.root?.message}
                             />
                         )}
                     />
@@ -61,7 +39,7 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                 <Box>
                     <Typography variant={'labelRegularBold'}>Адрес электронной почты</Typography>
                     <Controller
-                        name="userName"
+                        name="emailSettings.userName"
                         control={control}
                         render={({field}) => (
                             <TextField
@@ -71,7 +49,6 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                                 margin="normal"
                                 autoComplete={'off'}
                                 error={!!errors.userName}
-                                helperText={errors.userName?.message}
                             />
                         )}
                     />
@@ -80,7 +57,7 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                 <Box>
                     <Typography variant={'labelRegularBold'}>Пароль</Typography>
                     <Controller
-                        name="password"
+                        name="emailSettings.password"
                         control={control}
                         render={({field}) => (
                             <TextField
@@ -91,7 +68,6 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                                 type={'password'}
                                 autoComplete={'off'}
                                 error={!!errors.password}
-                                helperText={errors.password?.message}
                             />
                         )}
                     />
@@ -100,7 +76,7 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                 <Box>
                     <Typography variant={'labelRegularBold'}>SMTP-адрес</Typography>
                     <Controller
-                        name="smtpUrl"
+                        name="emailSettings.smtpUrl"
                         control={control}
                         render={({field}) => (
                             <TextField
@@ -110,7 +86,6 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                                 margin="normal"
                                 autoComplete={'off'}
                                 error={!!errors.smtpUrl}
-                                helperText={errors.smtpUrl?.message}
                             />
                         )}
                     />
@@ -119,7 +94,7 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                 <Box>
                     <Typography variant={'labelRegularBold'}>SMTP-порт</Typography>
                     <Controller
-                        name="smtpPort"
+                        name="emailSettings.smtpPort"
                         control={control}
                         render={({field}) => (
                             <TextField
@@ -130,7 +105,6 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
                                 autoComplete={'off'}
                                 type={'number'}
                                 error={!!errors.smtpPort}
-                                helperText={errors.smtpPort?.message}
                             />
                         )}
                     />
@@ -140,4 +114,4 @@ const EmailSettingsCard = (props: EmailSettingsCardProps) => {
     )
 }
 
-export default EmailSettingsCard;
+export default memo(EmailSettingsCard);

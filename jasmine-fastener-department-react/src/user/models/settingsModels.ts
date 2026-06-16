@@ -30,3 +30,8 @@ export interface ChangeEmailSettings {
     password: string;
     displayName: string;
 }
+
+export interface SettingsForm {
+    companySettings: ChangeCompanySettings;
+    emailSettings: EmailSettings;
+}

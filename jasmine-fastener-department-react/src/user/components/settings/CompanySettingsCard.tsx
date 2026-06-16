@@ -1,49 +1,26 @@
 import {Box, TextField} from "@mui/material";
 import SettingsCard from "./SettingsCard.tsx";
-import {Controller, useForm} from "react-hook-form";
-import type {ChangeCompanySettings} from "../../models/settingsModels.ts";
+import {Controller, useFormContext} from "react-hook-form";
 import Typography from "../../../shared/components/Typography.tsx";
-import {useEffect} from "react";
+import {memo} from "react";
 import {ListAltOutlined} from "@mui/icons-material";
 
-type CompanySettingsCardProps = {
-    settings: ChangeCompanySettings;
-    onChange: (data: ChangeCompanySettings) => void;
-}
+const CompanySettingsCard = () => {
 
-const CompanySettingsCard = (props: CompanySettingsCardProps) => {
     const {
+        control,
         formState: {
             errors
-        },
-        control,
-        reset,
-        watch
-    } = useForm<ChangeCompanySettings>({
-        defaultValues: props.settings,
-        mode: "onBlur"
-    });
-
-    useEffect(() => {
-        reset(props.settings);
-    }, [props.settings, reset]);
-
-    useEffect(() => {
-        const subscription = watch((data) => {
-            props.onChange(data as ChangeCompanySettings);
-        });
-
-        return () => subscription.unsubscribe();
-    }, [watch, props.onChange]);
+        }
+    } = useFormContext();
 
     return (
         <SettingsCard title={'Данные компании'} icon={<ListAltOutlined/>}>
-            <Box component="form" className={'w-full flex flex-col gap-[0.5rem]'}>
+            <Box className={'w-full flex flex-col gap-[0.5rem]'}>
                 <Box>
                     <Typography variant={'labelRegularBold'}>Название компании</Typography>
-
                     <Controller
-                        name="title"
+                        name="companySettings.title"
                         control={control}
                         render={({field}) => (
                             <TextField
@@ -52,8 +29,6 @@ const CompanySettingsCard = (props: CompanySettingsCardProps) => {
                                 fullWidth
                                 margin="normal"
                                 autoComplete={'off'}
-                                error={!!errors.title}
-                                helperText={errors.title?.message}
                             />
                         )}
                     />
@@ -63,7 +38,7 @@ const CompanySettingsCard = (props: CompanySettingsCardProps) => {
                     <Typography variant={'labelRegularBold'}>Подзаголовок</Typography>
 
                     <Controller
-                        name="subTitle"
+                        name="companySettings.subTitle"
                         control={control}
                         render={({field}) => (
                             <TextField
@@ -73,7 +48,6 @@ const CompanySettingsCard = (props: CompanySettingsCardProps) => {
                                 margin="normal"
                                 autoComplete={'off'}
                                 error={!!errors.subTitle}
-                                helperText={errors.subTitle?.message}
                             />
                         )}
                     />
@@ -83,4 +57,4 @@ const CompanySettingsCard = (props: CompanySettingsCardProps) => {
     )
 }
 
-export default CompanySettingsCard;
+export default memo(CompanySettingsCard);

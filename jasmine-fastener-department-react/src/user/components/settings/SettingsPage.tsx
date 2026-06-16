@@ -4,37 +4,40 @@ import LanguageSettingsCard from "./LanguageSettingsCard.tsx";
 import CompanySettingsCard from "./CompanySettingsCard.tsx";
 import EmailSettingsCard from "./EmailSettingsCard.tsx";
 import useSettingsPage from "./useSettingsPage.ts";
+import {FormProvider} from "react-hook-form";
+import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 
 const SettingsPage = () => {
     const {
-        companySettings,
-        emailSettings,
+        forms,
         language,
         handleChangeLanguage,
-        handleChangeCompanySettings,
-        handleChangeEmailSettings,
         handleSubmit
     } = useSettingsPage();
 
     return (
         <Page
             title={'Настройки'}
-            description={'Изменение настроек приложения'}
-            button={{
-                label: 'Сохранить',
-                onClick: handleSubmit
-            }}>
+            description={'Изменение настроек приложения'}>
             <Box className={'flex flex-col justify-center w-full items-center gap-[1rem]'}>
-                <Box className={'flex gap-[1rem] w-[70%]'}>
-                    <Box className={'w-full flex flex-col'}>
-                        <CompanySettingsCard settings={companySettings} onChange={handleChangeCompanySettings}/>
-                        <LanguageSettingsCard currentLanguage={language} onChange={handleChangeLanguage}/>
-                    </Box>
+                <FormProvider {...forms}>
+                    <form className={'w-[60%]'} onSubmit={forms.handleSubmit(handleSubmit)}>
+                        <Box className={'flex gap-[1rem] w-full'}>
+                            <Box className={'w-full flex flex-col'}>
+                                <CompanySettingsCard/>
+                                <LanguageSettingsCard currentLanguage={language} onChange={handleChangeLanguage}/>
+                            </Box>
 
-                    <Box className={'w-full'}>
-                        <EmailSettingsCard settings={emailSettings} onChange={handleChangeEmailSettings}/>
-                    </Box>
-                </Box>
+                            <Box className={'w-full'}>
+                                <EmailSettingsCard/>
+                            </Box>
+                        </Box>
+
+                        <Box className={'flex justify-end mt-[1rem]'}>
+                            <FilledButton variant={'contained'} type="submit">Сохранить</FilledButton>
+                        </Box>
+                    </form>
+                </FormProvider>
             </Box>
         </Page>
     )
