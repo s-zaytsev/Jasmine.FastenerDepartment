@@ -5,7 +5,6 @@ import CompanySettingsCard from "./CompanySettingsCard.tsx";
 import EmailSettingsCard from "./EmailSettingsCard.tsx";
 import useSettingsPage from "./useSettingsPage.ts";
 import {FormProvider} from "react-hook-form";
-import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 
 const SettingsPage = () => {
     const {
@@ -18,10 +17,16 @@ const SettingsPage = () => {
     return (
         <Page
             title={'Настройки'}
-            description={'Изменение настроек приложения'}>
+            description={'Изменение настроек приложения'}
+            button={{
+                label: 'Сохранить',
+                type: 'submit',
+                formId: 'settings-edit-form'
+            }}
+        >
             <Box className={'flex flex-col justify-center w-full items-center gap-[1rem]'}>
                 <FormProvider {...forms}>
-                    <form className={'w-[60%]'} onSubmit={forms.handleSubmit(handleSubmit)}>
+                    <form id={'settings-edit-form'} className={'w-[60%]'} onSubmit={forms.handleSubmit(handleSubmit)}>
                         <Box className={'flex gap-[1rem] w-full'}>
                             <Box className={'w-full flex flex-col'}>
                                 <CompanySettingsCard/>
@@ -33,9 +38,7 @@ const SettingsPage = () => {
                             </Box>
                         </Box>
 
-                        <Box className={'flex justify-end mt-[1rem]'}>
-                            <FilledButton variant={'contained'} type="submit">Сохранить</FilledButton>
-                        </Box>
+                        <button type="submit" style={{display: 'none'}}/>
                     </form>
                 </FormProvider>
             </Box>
