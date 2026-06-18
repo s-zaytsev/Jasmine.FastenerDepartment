@@ -40,6 +40,7 @@ export const getProductTypes = createAsyncThunkWithErrorHandler(
 
 const initialState: CreateProductPageState = {
     model: {
+        id: '',
         number: 0,
         name: '',
         price: 0,
@@ -63,12 +64,6 @@ const createProductSlice = createSlice({
     name: "createProduct",
     initialState: initialState,
     reducers: {
-        changeProduct: (state, action) => {
-            state.model = {
-                ...action.payload,
-                price: Number(action.payload.price)
-            };
-        },
         setSuccess: (state, action) => {
             state.success = action.payload;
         },
@@ -100,6 +95,7 @@ const createProductSlice = createSlice({
                 state.loading = false;
                 state.success = "Продукт успешно создан";
                 state.model = {
+                    id: '',
                     number: 0,
                     name: '',
                     price: 0,
@@ -147,7 +143,6 @@ const createProductSlice = createSlice({
 });
 
 export const {
-    changeProduct,
     setSuccess,
     setError
 } = createProductSlice.actions;
