@@ -3,7 +3,6 @@ import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHoo
 import {useNotify} from "../../../../shared/providers/NotificationProvider.tsx";
 import type {ChangeProduct, CreateProductPageState} from "../../../models/productModel.ts";
 import {
-    changeProduct,
     getLastId,
     getProductTypes,
     getSuppliers,
@@ -11,7 +10,7 @@ import {
     setError,
     setSuccess
 } from "../../../slices/CreateProductSlice.ts";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 import type {AxiosError} from "axios";
 
 const useCreateProductPage = () => {
@@ -23,13 +22,10 @@ const useCreateProductPage = () => {
         (state) => state.createProduct
     );
 
-    function handleFormChanged(model: ChangeProduct) {
-        dispatch(changeProduct(model));
-    }
-
-    function handleCreate() {
-        dispatch(saveProduct(state.model));
-    }
+    const handleSubmit = useCallback(async (model: ChangeProduct) => {
+        await dispatch(saveProduct(model)).unwrap();
+        navigate('/');
+    }, [dispatch, navigate]);
 
     useEffect(() => {
         if (state.success) {
@@ -57,8 +53,7 @@ const useCreateProductPage = () => {
         suppliers: state.suppliers,
         productTypes: state.productTypes,
         loading: state.loading,
-        handleFormChanged,
-        handleCreate
+        handleSubmit
     };
 }
 

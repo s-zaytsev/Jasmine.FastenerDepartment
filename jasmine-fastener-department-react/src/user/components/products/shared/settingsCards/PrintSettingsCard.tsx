@@ -6,6 +6,7 @@ import Typography from "../../../../../shared/components/Typography";
 import ApplicationRegexes from "../../../../../shared/expressions/applicationRegexes";
 import SettingsCard from "./SettingsCard.tsx";
 import PriceTagGroup from "../priceTagGroup/PriceTagGroup.tsx";
+import {memo, useMemo} from "react";
 
 type PrintSettingsCardProps = {
     control: Control<ChangeProduct, unknown, ChangeProduct>;
@@ -17,7 +18,9 @@ const PrintSettingsCard = (props: PrintSettingsCardProps) => {
         name: "name"
     });
 
-    const hasHardwareSize = ApplicationRegexes.hasHardwareSize(productName || "");
+    const hasHardwareSize = useMemo(() => {
+        return ApplicationRegexes.hasHardwareSize(productName || "");
+    }, [productName]);
 
     return (
         <SettingsCard title={'Настройки печати'} icon={<PrintOutlined/>}>
@@ -29,15 +32,12 @@ const PrintSettingsCard = (props: PrintSettingsCardProps) => {
                     render={({field}) => (
                         <PriceTagGroup
                             checkedCode={field.value}
-                            onChange={(value) => {
-                                field.onChange(value);
-                                field.onBlur();
-                            }}
+                            onChange={field.onChange}
                         />
                     )}
                 />
 
-                <Box className={'flex flex-col items-center'}>
+                <Box className={'flex flex-col items-center gap-[0.5rem]'}>
                     <Controller
                         name="isHardwareSizeEnabled"
                         control={props.control}
@@ -75,4 +75,4 @@ const PrintSettingsCard = (props: PrintSettingsCardProps) => {
     )
 }
 
-export default PrintSettingsCard;
+export default memo(PrintSettingsCard);

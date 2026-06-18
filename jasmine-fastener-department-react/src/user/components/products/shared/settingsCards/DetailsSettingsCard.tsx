@@ -10,6 +10,7 @@ import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/ma
 import {NumericFormat} from "react-number-format";
 import {numberEnumToArray} from "../../../../../shared/models/models.ts";
 import type {ProductType} from "../../../../models/productTypeModels.ts";
+import {memo} from "react";
 
 type DetailsCardSettingsProps = {
     control: Control<ChangeProduct, unknown, ChangeProduct>;
@@ -18,8 +19,8 @@ type DetailsCardSettingsProps = {
 }
 
 const DetailsSettingsCard = (props: DetailsCardSettingsProps) => {
-    return(
-        <SettingsCard title={'Детали'} icon={<InfoOutlined />}>
+    return (
+        <SettingsCard title={'Детали'} icon={<InfoOutlined/>}>
             <Box className={'w-full'}>
                 <Controller
                     name="name"
@@ -149,4 +150,4 @@ const DetailsSettingsCard = (props: DetailsCardSettingsProps) => {
     )
 }
 
-export default DetailsSettingsCard;
+export default memo(DetailsSettingsCard);

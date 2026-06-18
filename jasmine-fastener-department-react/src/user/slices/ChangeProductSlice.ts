@@ -34,8 +34,8 @@ export const getProductTypes = createAsyncThunkWithErrorHandler(
 );
 
 const initialState: ChangeProductPageState = {
-    product: undefined,
     model: {
+        id: '',
         number: 0,
         name: '',
         price: 0,
@@ -46,6 +46,7 @@ const initialState: ChangeProductPageState = {
         priceTagCode: PriceTagCode.m,
         supplierIds: []
     },
+    historyEntries: [],
     loading: false,
     units: [],
     suppliers: [],
@@ -58,12 +59,6 @@ const changeProductSlice = createSlice({
     name: "changeProduct",
     initialState: initialState,
     reducers: {
-        changeProduct: (state, action) => {
-            state.model = {
-                ...action.payload,
-                price: Number(action.payload.price)
-            };
-        },
         setSuccess: (state, action) => {
             state.success = action.payload;
         }
@@ -74,8 +69,8 @@ const changeProductSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getProduct.fulfilled, (state, {payload}) => {
-                state.product = payload;
                 state.model = {
+                    id: payload.id,
                     number: payload.number,
                     price: payload.price,
                     isHardwareSizeEnabled: payload.isHardwareSizeEnabled,
@@ -86,7 +81,10 @@ const changeProductSlice = createSlice({
                     isNeededToOrder: payload.isNeededToOrder,
                     isNeededToPrint: payload.isNeededToPrint,
                     supplierIds: payload.suppliers.map(x => x.id)
-                }
+                };
+
+                state.historyEntries = payload.historyEntries
+
                 state.loading = false;
             })
             .addCase(getProduct.rejected, (state, action) => {
@@ -135,7 +133,6 @@ const changeProductSlice = createSlice({
 });
 
 export const {
-    changeProduct,
     setSuccess
 } = changeProductSlice.actions;
 

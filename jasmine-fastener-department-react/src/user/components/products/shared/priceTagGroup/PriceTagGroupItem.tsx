@@ -1,5 +1,6 @@
 import {PriceTagCode} from "../../../../models/productModel.ts";
 import ElementsGroupItem from "../../../../../shared/components/elementsGroup/ElementsGroupItem.tsx";
+import {memo} from "react";
 
 type PriceTagGroupItemProps = {
     code: PriceTagCode;
@@ -17,4 +18,4 @@ const PriceTagGroupItem = (props: PriceTagGroupItemProps) => {
     )
 }
 
-export default PriceTagGroupItem;
+export default memo(PriceTagGroupItem);

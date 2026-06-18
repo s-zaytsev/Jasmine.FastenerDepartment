@@ -69,6 +69,7 @@ export interface MeasurementUnit {
 }
 
 export interface ChangeProduct {
+    id: string;
     number: number;
     name: string;
     price: number;
@@ -119,8 +120,8 @@ export interface ProductsPageState extends StateBase {
 }
 
 export interface ChangeProductPageState extends StateBase {
-    product?: Product;
     model: ChangeProduct;
+    historyEntries: ProductHistoryEntry[];
     units: MeasurementUnit[];
     suppliers: Supplier[];
     productTypes: ProductType[];

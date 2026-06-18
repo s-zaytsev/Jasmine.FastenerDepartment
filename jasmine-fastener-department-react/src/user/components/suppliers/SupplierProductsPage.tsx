@@ -1,7 +1,6 @@
 import Page from "../../../shared/components/layout/Page.tsx";
 import {Box} from "@mui/material";
 import ProductsSearch from "../products/ProductsSearch.tsx";
-import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 import Loader from "../../../shared/components/Loader.tsx";
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
 import {useNavigate, useParams} from "react-router-dom";
@@ -101,15 +100,18 @@ const SupplierProductsPage = () => {
     }, []);
 
     return (
-        <Page>
+        <Page
+            title={'Товары поставщика'}
+            description={'Управление товарами поставщика'}
+            button={{
+                label: 'Добавить',
+                onClick: handleNavigateToCreate
+            }}
+        >
             <Box className={"flex justify-between w-full"}>
                 <Box className={'flex items-center w-[50%]'}>
                     <ProductsSearch value={state.query.search} onSearch={handleSearch}/>
                 </Box>
-
-                <FilledButton onClick={handleNavigateToCreate} variant="contained">
-                    Добавить
-                </FilledButton>
             </Box>
 
             {state.loading && <Loader text={'Загрузка списка товаров'}/>}

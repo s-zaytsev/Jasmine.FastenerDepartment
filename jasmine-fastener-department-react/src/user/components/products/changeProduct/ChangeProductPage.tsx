@@ -1,7 +1,6 @@
 import ProductForm from "../shared/ProductForm.tsx";
 import Page from "../../../../shared/components/layout/Page.tsx";
 import {Box, Tab, Tabs} from "@mui/material";
-import PriceTagPreview from "../shared/PriceTagPreview.tsx";
 import ProductHistory from "../history/ProductHistory.tsx";
 import Loader from "../../../../shared/components/Loader.tsx";
 import useChangeProductPage from "./useChangeProductPage.ts";
@@ -9,13 +8,12 @@ import useChangeProductPage from "./useChangeProductPage.ts";
 const ChangeProductPage = () => {
 
     const {
-        product,
         model,
+        historyEntries,
         suppliers,
         productTypes,
         loading,
         tabIndex,
-        handleFormChanged,
         handleChangeTabIndex,
         handleSubmit,
     } = useChangeProductPage();
@@ -30,30 +28,27 @@ const ChangeProductPage = () => {
             description={'Изменение характеристик существующего товара'}
             button={{
                 label: 'Сохранить',
-                onClick: handleSubmit
+                type: "submit",
+                formId: 'product-edit-form'
             }}>
 
             <Tabs value={tabIndex} onChange={handleChangeTabIndex} centered>
                 <Tab label="Параметры"/>
-                <Tab label={`История (${product.historyEntries.length})`}/>
+                <Tab label={`История (${historyEntries?.length ?? 0})`}/>
             </Tabs>
 
             {tabIndex === 0 &&
-                <Box className={"flex w-full"}>
                     <ProductForm
                         changeModel={model}
                         suppliers={suppliers}
                         productTypes={productTypes}
-                        onChanged={handleFormChanged}/>
-
-                    <PriceTagPreview product={product}/>
-
-                </Box>
+                        onSubmit={handleSubmit}
+                    />
             }
 
             {tabIndex === 1 &&
                 <Box className={'w-full'}>
-                    <ProductHistory history={product.historyEntries} productTypes={productTypes}/>
+                    <ProductHistory history={historyEntries} productTypes={productTypes}/>
                 </Box>
             }
         </Page>

@@ -4,6 +4,7 @@ import {Box, FormControl, Switch} from "@mui/material";
 import {InfoOutlined} from "@mui/icons-material";
 import Typography from "../../../../../shared/components/Typography";
 import SettingsCard from "./SettingsCard.tsx";
+import {memo} from "react";
 
 type OrderSettingsCardProps = {
     control: Control<ChangeProduct, unknown, ChangeProduct>;
@@ -32,4 +33,4 @@ const OrderSettingsCard = (props: OrderSettingsCardProps) => {
     )
 }
 
-export default OrderSettingsCard;
+export default memo(OrderSettingsCard);

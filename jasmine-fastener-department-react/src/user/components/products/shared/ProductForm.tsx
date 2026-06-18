@@ -8,46 +8,57 @@ import DetailsSettingsCard from "./settingsCards/DetailsSettingsCard.tsx";
 import PrintSettingsCard from "./settingsCards/PrintSettingsCard";
 import OrderSettingsCard from "./settingsCards/OrderSettingsCard";
 import SupplierSettingsCard from "./settingsCards/SupplierSettingsCard";
+import PriceTagPreview from "./PriceTagPreview.tsx";
 
 interface ChangeProductFormProps {
     changeModel: ChangeProduct;
     suppliers: Supplier[];
     productTypes: ProductType[];
-    onChanged: (model: ChangeProduct) => void;
+    onSubmit: (data: ChangeProduct) => void;
 }
 
 const ProductForm = (props: ChangeProductFormProps) => {
     const {
         formState: {
+            isValid,
             errors
         },
         control,
+        handleSubmit,
         reset,
-        watch
     } = useForm<ChangeProduct>({
-        defaultValues: props.changeModel,
+        values: props.changeModel,
         mode: "onBlur"
     });
+
+    const onSubmit = (data: ChangeProduct) => {
+        if (!isValid) return;
+        props.onSubmit(data);
+    };
 
     useEffect(() => {
         reset(props.changeModel);
     }, [props.changeModel, reset]);
 
-    useEffect(() => {
-        const subscription = watch((data) => {
-            props.onChanged(data as ChangeProduct);
-        });
-
-        return () => subscription.unsubscribe();
-    }, [watch, props.onChanged]);
-
     return (
-        <Box component="form" className={'w-full flex flex-col gap-[0.5rem]'}>
+        <Box
+            component="form"
+            id="product-edit-form"
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex w-full gap-[1rem]"
+        >
+            <Box className={'w-1/2 flex flex-col gap-[0.5rem]'}>
+                <DetailsSettingsCard control={control} errors={errors} productTypes={props.productTypes}/>
+                <SupplierSettingsCard control={control} errors={errors} suppliers={props.suppliers}/>
+                <PrintSettingsCard control={control}/>
+                <OrderSettingsCard control={control}/>
+            </Box>
 
-            <DetailsSettingsCard control={control} errors={errors} productTypes={props.productTypes}/>
-            <SupplierSettingsCard control={control} errors={errors} suppliers={props.suppliers}/>
-            <PrintSettingsCard control={control}/>
-            <OrderSettingsCard control={control}/>
+            <Box className="w-1/2">
+                <PriceTagPreview control={control}/>
+            </Box>
+
+            <button type="submit" style={{display: 'none'}}/>
         </Box>
     );
 };

@@ -2,6 +2,7 @@ import {Box} from "@mui/material";
 import {primitives} from "../../../assets/variables/primitives.ts";
 import {semanticColors} from "../../../assets/variables/semanticColors.ts";
 import Typography from "../Typography.tsx";
+import {memo} from "react";
 
 type ElementsGroupItemProps<T> = {
     id: T;
@@ -31,4 +32,4 @@ const ElementsGroupItem = <T, >(props: ElementsGroupItemProps<T>) => {
     )
 }
 
-export default ElementsGroupItem;
+export default memo(ElementsGroupItem) as typeof ElementsGroupItem;

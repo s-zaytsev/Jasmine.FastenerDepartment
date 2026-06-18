@@ -1,4 +1,4 @@
-import type {ReactNode} from "react";
+import {memo, type ReactNode} from "react";
 import {Box} from "@mui/material";
 import Typography from "../../../../../shared/components/Typography.tsx";
 import Card from "../../../../../shared/components/Card.tsx";
@@ -29,4 +29,4 @@ const SettingsCard = (props: ProductFormCardProps) => {
     )
 }
 
-export default SettingsCard;
+export default memo(SettingsCard);
