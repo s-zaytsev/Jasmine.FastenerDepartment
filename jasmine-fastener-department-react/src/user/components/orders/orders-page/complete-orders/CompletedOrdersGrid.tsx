@@ -1,6 +1,6 @@
 import type {Page} from "../../../../../shared/models/models.ts";
 import type {Order} from "../../../../models/orderModels.ts";
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import Typography from "../../../../../shared/components/Typography.tsx";
 import CompletedOrdersCard from "./CompletedOrdersCard.tsx";
 
@@ -21,12 +21,16 @@ const CompletedOrdersGrid = (props: CompletedOrdersGridProps) => {
 
     return (
         <Box className={'grid grid-cols-4 gap-[1rem]'}>
-            {props.page?.items.map(x =>
-                <CompletedOrdersCard
-                    key={x.id}
-                    order={x}
-                    onNavigateToDetails={props.onNavigateToDetails}
-                />)}
+            {props.page?.items.map((x, index) =>
+                <Grow key={x.id} in={true} timeout={index * 150}>
+                    <Box>
+                        <CompletedOrdersCard
+                            order={x}
+                            onNavigateToDetails={props.onNavigateToDetails}
+                        />
+                    </Box>
+                </Grow>
+            )}
         </Box>
     )
 }

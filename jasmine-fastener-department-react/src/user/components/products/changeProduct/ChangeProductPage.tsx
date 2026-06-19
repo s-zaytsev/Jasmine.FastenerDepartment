@@ -32,18 +32,23 @@ const ChangeProductPage = () => {
                 formId: 'product-edit-form'
             }}>
 
-            <Tabs value={tabIndex} onChange={handleChangeTabIndex} centered>
+            <Tabs
+                value={tabIndex}
+                onChange={handleChangeTabIndex}
+                centered
+                TabIndicatorProps={{style: {display: 'none'}}}
+            >
                 <Tab label="Параметры"/>
                 <Tab label={`История (${historyEntries?.length ?? 0})`}/>
             </Tabs>
 
             {tabIndex === 0 &&
-                    <ProductForm
-                        changeModel={model}
-                        suppliers={suppliers}
-                        productTypes={productTypes}
-                        onSubmit={handleSubmit}
-                    />
+                <ProductForm
+                    changeModel={model}
+                    suppliers={suppliers}
+                    productTypes={productTypes}
+                    onSubmit={handleSubmit}
+                />
             }
 
             {tabIndex === 1 &&

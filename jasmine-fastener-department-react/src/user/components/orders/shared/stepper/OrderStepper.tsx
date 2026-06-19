@@ -27,11 +27,17 @@ const OrderStepper = (props: OrderStepperProps) => {
 
     const handleNext = useCallback(() => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        scrollToTop();
     }, []);
 
     const handleBack = useCallback( () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        scrollToTop();
     }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
 
     return (
         <Box className={'flex flex-col h-full'}>

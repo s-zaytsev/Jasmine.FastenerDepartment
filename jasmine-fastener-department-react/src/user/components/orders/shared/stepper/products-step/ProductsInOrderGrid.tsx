@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import {AddOutlined} from "@mui/icons-material";
 import Typography from "../../../../../../shared/components/Typography.tsx";
 import useGroup from "../../../../../../shared/hooks/useGroup.ts";
@@ -40,15 +40,17 @@ const ProductsInOrderGrid = (props: ProductsInOrderFormProps) => {
 
     return (
         <Box className={"w-full px-[2rem] flex flex-col gap-[2rem]"}>
-            {Object.entries(groupedByType).map(([key, value]) => (
-                <Box key={key}>
-                    <Section title={key}>
-                        <ProductsInOrderGridSectionTable
-                            products={value}
-                            onDeleteFromOrder={props.onDeleteFromOrder}
-                        />
-                    </Section>
-                </Box>
+            {Object.entries(groupedByType).map(([key, value], index) => (
+                <Grow key={key} in={true} timeout={index * 150}>
+                    <Box>
+                        <Section title={key}>
+                            <ProductsInOrderGridSectionTable
+                                products={value}
+                                onDeleteFromOrder={props.onDeleteFromOrder}
+                            />
+                        </Section>
+                    </Box>
+                </Grow>
             ))}
         </Box>
     );

@@ -1,5 +1,5 @@
 import type {Order} from "../../../../models/orderModels.ts";
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import Typography from "../../../../../shared/components/Typography.tsx";
 import type {Page} from "../../../../../shared/models/models.ts";
 import ActiveOrdersCard from "./ActiveOrdersCard.tsx";
@@ -25,17 +25,20 @@ const ActiveOrdersGrid = (props: ActiveOrdersGridProps) => {
 
     return (
         <Box className={'grid grid-cols-3 gap-[1rem]'}>
-            {props.page?.items.map(x =>
-                    <ActiveOrdersCard
-                        key={x.id}
-                        order={x}
-                        onChange={props.onChange}
-                        onComplete={props.onComplete}
-                        onCancel={props.onCancel}
-                        onSend={props.onSend}
-                        onNavigateToDetails={props.onNavigateToDetails}
-                    />)
-            }
+            {props.page?.items.map((x, index) =>
+                <Grow key={x.id} in={true} timeout={index * 150}>
+                    <Box>
+                        <ActiveOrdersCard
+                            order={x}
+                            onChange={props.onChange}
+                            onComplete={props.onComplete}
+                            onCancel={props.onCancel}
+                            onSend={props.onSend}
+                            onNavigateToDetails={props.onNavigateToDetails}
+                        />
+                    </Box>
+                </Grow>
+            )}
         </Box>
     );
 }

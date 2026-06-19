@@ -14,44 +14,42 @@ type ProductTypeGridCardProps = {
 
 const ProductTypeGridCard = (props: ProductTypeGridCardProps) => {
     return (
-        <Box className={'w-[23%]'}>
-            <Card>
-                <Box className={'w-full'}>
-                    <Box className={'flex justify-between items-center'}>
-                        <IconBox>
-                            <HandymanOutlined/>
-                        </IconBox>
+        <Card>
+            <Box className={'w-full'}>
+                <Box className={'flex justify-between items-center'}>
+                    <IconBox>
+                        <HandymanOutlined/>
+                    </IconBox>
 
-                        <IconButton
-                            description={'Редактировать'}
-                            onClick={() => props.onEdit(props.productType.id)}
-                        >
-                            <Edit/>
-                        </IconButton>
-                    </Box>
-
-                    <Box className={'mt-[1rem]'}>
-                        <Typography variant={'headlineH2'}>{props.productType.name}</Typography>
-                    </Box>
-
-                    <Box className={'flex items-center mt-[0.5rem] gap-[0.5rem]'}>
-                        <Typography
-                            variant={'bodyRegular'}
-                            color={'tertiary'}
-                        >
-                            Всего товаров:
-                        </Typography>
-
-                        <Typography
-                            variant={'bodyRegularBold'}
-                            color={'primary'}
-                        >
-                            {props.productType.productCount}
-                        </Typography>
-                    </Box>
+                    <IconButton
+                        description={'Редактировать'}
+                        onClick={() => props.onEdit(props.productType.id)}
+                    >
+                        <Edit/>
+                    </IconButton>
                 </Box>
-            </Card>
-        </Box>
+
+                <Box className={'mt-[1rem]'}>
+                    <Typography variant={'headlineH2'}>{props.productType.name}</Typography>
+                </Box>
+
+                <Box className={'flex items-center mt-[0.5rem] gap-[0.5rem]'}>
+                    <Typography
+                        variant={'bodyRegular'}
+                        color={'tertiary'}
+                    >
+                        Всего товаров:
+                    </Typography>
+
+                    <Typography
+                        variant={'bodyRegularBold'}
+                        color={'primary'}
+                    >
+                        {props.productType.productCount}
+                    </Typography>
+                </Box>
+            </Box>
+        </Card>
     );
 }
 

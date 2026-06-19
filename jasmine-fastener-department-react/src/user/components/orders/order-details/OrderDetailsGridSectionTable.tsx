@@ -1,5 +1,5 @@
 import type {TableColumnDefinition} from "../../../../shared/models/models.ts";
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import SortTableHead from "../../../../shared/components/tables/SortTableHead.tsx";
 import OrderDetailsGridSectionRow from "./OrderDetailsGridSectionRow.tsx";
 import {type OrderProduct, OrderStatusCode} from "../../../models/orderModels.ts";
@@ -20,13 +20,16 @@ const OrderDetailsGridSectionTable = (props: OrderDetailsGridSectionTableProps) 
         <Box className={'w-full'}>
             <SortTableHead columns={columns}/>
             {
-                props?.products?.map(product => (
-                    <OrderDetailsGridSectionRow
-                        key={product.id}
-                        product={product}
-                        columns={columns}
-                        orderStatusCode={props.orderStatusCode}
-                    />
+                props?.products?.map((product, index) => (
+                    <Grow key={product.id} in={true} timeout={index * 150}>
+                        <Box>
+                            <OrderDetailsGridSectionRow
+                                product={product}
+                                columns={columns}
+                                orderStatusCode={props.orderStatusCode}
+                            />
+                        </Box>
+                    </Grow>
                 ))}
         </Box>
     )

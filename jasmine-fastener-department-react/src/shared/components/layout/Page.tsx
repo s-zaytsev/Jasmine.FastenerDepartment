@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Fade} from "@mui/material";
 import type {ReactNode} from "react";
 import PageHeader from "../header/PageHeader.tsx";
 
@@ -22,7 +22,9 @@ const Page = (props: PageProps) => {
                 description={props.description}
                 button={props.button}
             />
-            {props.children}
+            <Fade in={true} timeout={300}>
+                <Box>{props.children}</Box>
+            </Fade>
         </Box>
     );
 };

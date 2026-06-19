@@ -1,5 +1,5 @@
 import {useForm} from "react-hook-form";
-import {Box} from "@mui/material";
+import {Box, Fade} from "@mui/material";
 import {type ChangeProduct} from "../../../models/productModel.ts";
 import type {Supplier} from "../../../models/supplierModels.ts";
 import {useEffect} from "react";
@@ -48,15 +48,36 @@ const ProductForm = (props: ChangeProductFormProps) => {
             className="flex w-full gap-[1rem]"
         >
             <Box className={'w-1/2 flex flex-col gap-[0.5rem]'}>
-                <DetailsSettingsCard control={control} errors={errors} productTypes={props.productTypes}/>
-                <SupplierSettingsCard control={control} errors={errors} suppliers={props.suppliers}/>
-                <PrintSettingsCard control={control}/>
-                <OrderSettingsCard control={control}/>
+                <Fade in={true} timeout={400}>
+                    <Box>
+                        <DetailsSettingsCard control={control} errors={errors} productTypes={props.productTypes}/>
+                    </Box>
+                </Fade>
+
+                <Fade in={true} timeout={500}>
+                    <Box>
+                        <SupplierSettingsCard control={control} errors={errors} suppliers={props.suppliers}/>
+                    </Box>
+                </Fade>
+
+                <Fade in={true} timeout={600}>
+                    <Box>
+                        <PrintSettingsCard control={control}/>
+                    </Box>
+                </Fade>
+
+                <Fade in={true} timeout={700}>
+                    <Box>
+                        <OrderSettingsCard control={control}/>
+                    </Box>
+                </Fade>
             </Box>
 
-            <Box className="w-1/2">
-                <PriceTagPreview control={control}/>
-            </Box>
+            <Fade in={true} timeout={800}>
+                <Box className="w-1/2">
+                    <PriceTagPreview control={control}/>
+                </Box>
+            </Fade>
 
             <button type="submit" style={{display: 'none'}}/>
         </Box>

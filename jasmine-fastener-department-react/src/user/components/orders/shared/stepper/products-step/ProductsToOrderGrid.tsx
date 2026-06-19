@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import {ReorderOutlined} from "@mui/icons-material";
 import type {ProductToOrder} from "../../../../../models/productsToOrderModels.ts";
 import Typography from "../../../../../../shared/components/Typography.tsx";
@@ -18,7 +18,7 @@ const ProductsToOrderGrid = (props: ProductsToOrderFormProps) => {
     const {
         groupBy
     } = useGroup();
-    
+
     const groupedByType = useMemo(() => {
         return groupBy(
             props.products || [],
@@ -27,7 +27,6 @@ const ProductsToOrderGrid = (props: ProductsToOrderFormProps) => {
                 sortFn: (a, b) => a.product.name.localeCompare(b.product.name),
                 sortGroups: true
             });
-        
     }, [groupBy, props.products]);
 
     if (Object.keys(groupedByType).length === 0) {
@@ -42,16 +41,18 @@ const ProductsToOrderGrid = (props: ProductsToOrderFormProps) => {
 
     return (
         <Box className={"w-full px-[2rem] flex flex-col gap-[2rem]"}>
-            {Object.entries(groupedByType).map(([key, value]) => (
-                <Box key={key}>
-                    <Section title={key}>
-                        <ProductsToOrderGridSectionTable
-                            products={value}
-                            productsInOrder={props.productsInOrder}
-                            onMoveToOrder={props.onMoveToOrder}
-                        />
-                    </Section>
-                </Box>
+            {Object.entries(groupedByType).map(([key, value], index) => (
+                <Grow key={key} in={true} timeout={index * 150}>
+                    <Box>
+                        <Section title={key}>
+                            <ProductsToOrderGridSectionTable
+                                products={value}
+                                productsInOrder={props.productsInOrder}
+                                onMoveToOrder={props.onMoveToOrder}
+                            />
+                        </Section>
+                    </Box>
+                </Grow>
             ))}
         </Box>
     );

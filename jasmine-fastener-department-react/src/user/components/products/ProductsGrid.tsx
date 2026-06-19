@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import {type Product, type ProductsQuery, ProductsQueryParameter} from "../../models/productModel.ts";
 import ProductGridRow from "./ProductGridRow.tsx";
 import SortTableHead from "../../../shared/components/tables/SortTableHead.tsx";
@@ -38,15 +38,18 @@ const ProductsGrid = (props: ProductGridProps) => {
                 sortBy={props.query.sortBy}
                 sortDesc={props.query.sortDesc}
             />
-            {props?.page?.items?.map((product: Product) => (
-                <ProductGridRow
-                    key={product.id}
-                    product={product}
-                    headColumns={columns}
-                    onNavigateToProduct={props.onNavigateToProduct}
-                    onChangeOrderStatus={props.onChangeOrderStatus}
-                    onChangePrintStatus={props.onChangePrintStatus}
-                />
+            {props?.page?.items?.map((product: Product, index) => (
+                <Grow key={product.id} in={true} timeout={index * 150}>
+                    <Box>
+                        <ProductGridRow
+                            product={product}
+                            headColumns={columns}
+                            onNavigateToProduct={props.onNavigateToProduct}
+                            onChangeOrderStatus={props.onChangeOrderStatus}
+                            onChangePrintStatus={props.onChangePrintStatus}
+                        />
+                    </Box>
+                </Grow>
             ))}
 
             {

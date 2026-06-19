@@ -1,5 +1,5 @@
 import type {ChangeOrder, ChangeOrderForm, ChangeOrderProduct, CreateOrder} from "../../../../../models/orderModels.ts";
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import {useFieldArray, useForm} from "react-hook-form";
 import {memo, useCallback, useMemo} from "react";
 import useGroup from "../../../../../../shared/hooks/useGroup.ts";
@@ -77,16 +77,20 @@ const OrderProductsAmountGrid = (props: OrderListProps) => {
 
     return (
         <Box className={"w-[80%] m-auto p-[20px]"}>
-            <Box component={"form"} className={'flex flex-col gap-[2rem]'}>
+            <Box component={"form"} className={'flex flex-col gap-[2rem] '}>
                 <FormObserver control={control} name={'products'} onChange={handleUpdate}/>
-                {groupedTablesData.map(({key, rows}) => (
-                    <Section key={key} title={key}>
-                        <OrderProductsAmountGridSectionTable
-                            rows={rows}
-                            control={control}
-                            onRemove={handleRemove}
-                        />
-                    </Section>
+                {groupedTablesData.map(({key, rows}, index) => (
+                    <Grow key={key} in={true} timeout={index * 200}>
+                        <Box>
+                            <Section title={key}>
+                                <OrderProductsAmountGridSectionTable
+                                    rows={rows}
+                                    control={control}
+                                    onRemove={handleRemove}
+                                />
+                            </Section>
+                        </Box>
+                    </Grow>
                 ))}
             </Box>
         </Box>);

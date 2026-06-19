@@ -1,6 +1,6 @@
 import type {ChangeOrder, CreateOrder} from "../../../../../models/orderModels.ts";
 import useGroup from "../../../../../../shared/hooks/useGroup.ts";
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import Section from "../../../../../../shared/components/section/Section.tsx";
 import ConfirmOrderSectionTable from "./ConfirmOrderSectionTable.tsx";
 
@@ -21,12 +21,14 @@ const ConfirmOrder = (props: ConfirmOrderProps) => {
     return (
         <Box className={'w-full flex flex-col gap-[2rem]'}>
             {
-                Object.entries(groupedByType).map(([key, value]) => (
-                    <Box key={key}>
-                        <Section title={key} itemsCount={value.length}>
-                            <ConfirmOrderSectionTable products={value}/>
-                        </Section>
-                    </Box>
+                Object.entries(groupedByType).map(([key, value], index) => (
+                    <Grow key={key} in={true} timeout={index * 150}>
+                        <Box>
+                            <Section title={key} itemsCount={value.length}>
+                                <ConfirmOrderSectionTable products={value}/>
+                            </Section>
+                        </Box>
+                    </Grow>
                 ))
             }
         </Box>

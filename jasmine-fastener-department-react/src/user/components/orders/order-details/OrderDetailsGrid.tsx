@@ -1,6 +1,6 @@
 import {type OrderProduct, OrderStatusCode} from "../../../models/orderModels.ts";
 import type {ProductType} from "../../../models/productTypeModels.ts";
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import useGroup from "../../../../shared/hooks/useGroup.ts";
 import Section from "../../../../shared/components/section/Section.tsx";
 import OrderDetailsGridSectionTable from "./OrderDetailsGridSectionTable.tsx";
@@ -24,12 +24,14 @@ const OrderDetailsGrid = (props: OrderDetailsGridProps) => {
     return (
         <Box className={'w-full mt-[1rem] flex flex-col gap-[2rem]'}>
             {
-                Object.entries(groupedByType).map(([key, value]) => (
-                    <Box key={key}>
-                        <Section title={key} itemsCount={value.length}>
-                            <OrderDetailsGridSectionTable products={value} orderStatusCode={props.orderStatusCode}/>
-                        </Section>
-                    </Box>
+                Object.entries(groupedByType).map(([key, value], index) => (
+                    <Grow key={key} in={true} timeout={index * 150}>
+                        <Box>
+                            <Section title={key} itemsCount={value.length}>
+                                <OrderDetailsGridSectionTable products={value} orderStatusCode={props.orderStatusCode}/>
+                            </Section>
+                        </Box>
+                    </Grow>
                 ))
             }
         </Box>

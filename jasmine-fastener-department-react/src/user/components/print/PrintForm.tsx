@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import PrintFormRow from "./PrintFormRow.tsx";
 import {PrintOutlined} from "@mui/icons-material";
 import type {ProductToPrint} from "../../models/printModels.ts";
@@ -15,16 +15,20 @@ type PrintFormProps = {
 const PrintForm = (props: PrintFormProps) => {
     return (
         <Box className={"w-full h-full p-4 mt-[1rem]"}>
-            {props.products?.map(x =>
-                <PrintFormRow
-                    key={x.product.id}
-                    product={x.product}
-                    count={x.count}
-                    onDecrement={props.onDecrement}
-                    onIncrement={props.onIncrement}
-                    onChangeCount={props.onChangeCount}
-                    onDelete={props.onDelete}
-                />)}
+            {props.products?.map((x, index) =>
+                <Grow key={x.product.id} in={true} timeout={index * 150}>
+                    <Box>
+                        <PrintFormRow
+                            product={x.product}
+                            count={x.count}
+                            onDecrement={props.onDecrement}
+                            onIncrement={props.onIncrement}
+                            onChangeCount={props.onChangeCount}
+                            onDelete={props.onDelete}
+                        />
+                    </Box>
+                </Grow>)
+            }
             {!props.products?.length &&
                 <Box className={'center-component'}>
                     <p>Очередь печати пуста. Кликните по иконке <PrintOutlined color={"disabled"}/> в списке товаров для

@@ -1,5 +1,5 @@
 import type {TableColumnDefinition} from "../../../../../../shared/models/models.ts";
-import {Box} from "@mui/material";
+import {Box, Grow} from "@mui/material";
 import SortTableHead from "../../../../../../shared/components/tables/SortTableHead.tsx";
 import ProductsInOrderGridSectionTableRow from "./ProductsInOrderGridSectionTableRow.tsx";
 import type {ChangeOrderProduct} from "../../../../../models/orderModels.ts";
@@ -20,13 +20,16 @@ const ProductsInOrderGridSectionTable = (props: ProductsInOrderGridSectionTableP
         <Box className={'w-full'}>
             <SortTableHead columns={columns}/>
             {
-                props?.products?.map(product => (
-                    <ProductsInOrderGridSectionTableRow
-                        key={product.productId}
-                        product={product}
-                        columns={columns}
-                        onDeleteFromOrder={props.onDeleteFromOrder}
-                    />
+                props?.products?.map((product, index) => (
+                    <Grow key={product.productId} appear={true} in={true} timeout={{enter: index * 150, exit: 500}}>
+                        <Box>
+                            <ProductsInOrderGridSectionTableRow
+                                product={product}
+                                columns={columns}
+                                onDeleteFromOrder={props.onDeleteFromOrder}
+                            />
+                        </Box>
+                    </Grow>
                 ))}
         </Box>
     )
