@@ -1,10 +1,8 @@
 import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHooks.ts";
 import type {CompleteOrderForm, CompleteOrderState} from "../../../models/orderModels.ts";
-import {useNotify} from "../../../../shared/providers/NotificationProvider.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {completeOrder, getOrder, getProductTypes} from "../../../slices/CompleteOrderSlice.ts";
 import {useEffect} from "react";
-import {NotificationMessage} from "../../../../shared/models/notificationModel.ts";
 
 const useCompleteOrderPage = () => {
     const state = useAppSelector<CompleteOrderState>(
@@ -12,32 +10,20 @@ const useCompleteOrderPage = () => {
     );
 
     const dispatch = useAppDispatch();
-    const notification = useNotify();
     const navigate = useNavigate();
     const params = useParams();
 
     const handleSubmit = async (formData: CompleteOrderForm) => {
-        try {
-            await dispatch(completeOrder({
-                id: params.id,
-                model: {
-                    comment: state.model.comment,
-                    products: formData.products
-                }
-            }))
+        await dispatch(completeOrder({
+            id: params.id,
+            model: {
+                comment: state.model.comment,
+                products: formData.products
+            }
+        }))
 
-            navigate("/orders");
-        } catch (ex) {
-            notification.notifyError('Ошибка завершения заказа')
-        }
+        navigate("/orders");
     }
-
-    useEffect(() => {
-        if (state.error) {
-            const message = NotificationMessage.error(state.error!).message;
-            notification.notifyError(message!);
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         if (!params.id) {

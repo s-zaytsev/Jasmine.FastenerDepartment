@@ -126,6 +126,7 @@ const changeOrderSlice = createSlice({
                 state.loading = true;
             })
             .addCase(changeOrder.fulfilled, (state) => {
+                state.success = 'Данные заказа обновлены';
                 state.loading = false;
             })
             .addCase(changeOrder.rejected, (state, action) => {

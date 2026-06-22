@@ -1,5 +1,4 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
-import {useNotify} from "../../../shared/providers/NotificationProvider.tsx";
 import {useCallback, useEffect, useState} from "react";
 import {
     changeProductType,
@@ -16,7 +15,6 @@ const useProductTypesPage = () => {
     );
 
     const dispatch = useAppDispatch();
-    const notification = useNotify();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -49,12 +47,6 @@ const useProductTypesPage = () => {
         await dispatch(changeProductType({id, model}));
         await dispatch(getExtendedProductTypes());
     }, [dispatch, state.selectedProductType?.id]);
-
-    useEffect(() => {
-        if (state.error) {
-            notification.notifyError(state.error.toString());
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         dispatch(getExtendedProductTypes());

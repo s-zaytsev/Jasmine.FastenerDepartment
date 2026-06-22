@@ -1,6 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHooks.ts";
 import {type ChangeOrderProduct, type CreateOrderState, OrderStepperStep} from "../../../models/orderModels.ts";
-import {useNotify} from "../../../../shared/providers/NotificationProvider.tsx";
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect} from "react";
 import {
@@ -30,14 +29,7 @@ const useCreateOrderPage = () => {
     );
 
     const dispatch = useAppDispatch();
-    const notification = useNotify();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (state.error) {
-            notification.notifyError(state.error.toString());
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         dispatch(getSuppliers());
@@ -46,16 +38,12 @@ const useCreateOrderPage = () => {
     }, [dispatch]);
 
 
-    const handleSubmit = useCallback( async () => {
-        try {
-            await dispatch(createOrder({
-                supplierId: state.model.supplier?.id,
-                products: state.model.products
-            }));
-            navigate("/orders");
-        } catch {
-            notification.notifyError('Ошибка создания заказа')
-        }
+    const handleSubmit = useCallback(async () => {
+        await dispatch(createOrder({
+            supplierId: state.model.supplier?.id,
+            products: state.model.products
+        }));
+        navigate("/orders");
     }, [dispatch]);
 
     const handleMoveToOrder = useCallback((product: ProductToOrder) => {

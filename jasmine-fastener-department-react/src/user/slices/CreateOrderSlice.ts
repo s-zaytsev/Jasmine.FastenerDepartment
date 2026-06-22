@@ -102,6 +102,7 @@ const createOrderSlice = createSlice({
                 state.loading = true;
             })
             .addCase(createOrder.fulfilled, (state) => {
+                state.success = 'Заказ создан';
                 state.loading = false;
             })
             .addCase(createOrder.rejected, (state, action) => {

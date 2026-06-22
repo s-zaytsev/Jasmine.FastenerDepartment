@@ -14,6 +14,7 @@ import completeOrderSlice from "../user/slices/CompleteOrderSlice.ts";
 import productTypesSlice from "../user/slices/ProductTypesSlice.ts";
 import orderDetailsSlice from "../user/slices/OrderDetailsSlice.ts";
 import settingsSlice from "../user/slices/SettingsSlice.ts";
+import {notificationMiddleware} from "../shared/middlewares/notificationMiddleware.ts";
 
 export const store = configureStore({
     reducer: {
@@ -32,7 +33,9 @@ export const store = configureStore({
         supplierProducts: supplierProductsSlice,
         productTypes: productTypesSlice,
         settings: settingsSlice
-    }
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(notificationMiddleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

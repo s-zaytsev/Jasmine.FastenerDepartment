@@ -1,6 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHooks.ts";
 import {type ChangeOrderProduct, type ChangeOrderState, OrderStepperStep} from "../../../models/orderModels.ts";
-import {useNotify} from "../../../../shared/providers/NotificationProvider.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {
     addExistedProduct,
@@ -27,7 +26,6 @@ const useChangeOrderPage = () => {
     );
 
     const dispatch = useAppDispatch();
-    const notification = useNotify();
     const navigate = useNavigate();
     const params = useParams();
 
@@ -47,12 +45,6 @@ const useChangeOrderPage = () => {
     const handleUpdateProducts = useCallback((products: ChangeOrderProduct[]) => {
         dispatch(updateProducts(products));
     }, [dispatch]);
-
-    useEffect(() => {
-        if (state.error) {
-            notification.notifyError(state.error.toString());
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         if (!params.id) {

@@ -114,7 +114,7 @@ const Toast = ({
                         margin: "0 0 0 24px",
                         ".MuiButtonBase-root": {
                             padding: 0,
-                            color: primitives.colors.dark
+                            color: colorSet.color
                         }
                     }
                 }}

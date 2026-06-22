@@ -11,6 +11,12 @@ export interface NotificationProviderProps {
     children: ReactNode;
 }
 
+let notifyRef: (props: NotificationProps) => void = () => {};
+
+export const apiNotify = (severity: ToastSeverity, message: string) => {
+    notifyRef({ message, severity });
+};
+
 const NotificationContext = createContext<((props: NotificationProps) => void)>(() => { });
 
 export const useNotify = () => {
@@ -30,7 +36,7 @@ export const useNotify = () => {
 
     const notifyError = useCallback((message: string) => {
         notify("error", message);
-    }, [context]);
+    }, [notify]);
 
     return { notify, notifySuccess, notifyError };
 };
@@ -45,6 +51,8 @@ const NotificationProvider = (props: NotificationProviderProps) => {
         setSeverity(props.severity || "info");
         setOpen(true);
     }, []);
+
+    notifyRef = handleShowNotification;
 
     const handleClose = useCallback(() => {
         setOpen(false);

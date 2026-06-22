@@ -93,7 +93,7 @@ const createProductSlice = createSlice({
             })
             .addCase(saveProduct.fulfilled, (state) => {
                 state.loading = false;
-                state.success = "Продукт успешно создан";
+                state.success = "Товар успешно создан";
                 state.model = {
                     id: '',
                     number: 0,

@@ -70,6 +70,7 @@ const supplierProductsSlice = createSlice({
                 state.loading = true;
             })
             .addCase(changeSupplierProduct.fulfilled, (state) => {
+                state.success = 'Данные товара изменены';
                 state.loading = false;
             })
             .addCase(changeSupplierProduct.rejected, (state, action) => {

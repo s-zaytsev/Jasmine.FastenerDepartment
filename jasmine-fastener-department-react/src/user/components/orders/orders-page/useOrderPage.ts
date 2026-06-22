@@ -1,6 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHooks.ts";
 import type {CancelOrder, OrderPageState, SendOrder} from "../../../models/orderModels.ts";
-import {useNotify} from "../../../../shared/providers/NotificationProvider.tsx";
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import {
@@ -17,7 +16,6 @@ const useOrderPage = () => {
         (state) => state.orders
     );
     const dispatch = useAppDispatch();
-    const notification = useNotify();
     const navigate = useNavigate();
 
     const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
@@ -68,12 +66,6 @@ const useOrderPage = () => {
         dispatch(clearSelectedOrder());
         await dispatch(getActiveOrdersPage(state.activeOrdersQuery));
     }, [dispatch, handleSendDialogClose, state.activeOrdersQuery, state.selectedOrder?.id]);
-
-    useEffect(() => {
-        if (state.error) {
-            notification.notifyError(state.error.toString());
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         dispatch(getCompletedOrdersPage(state.completedOrdersQuery));

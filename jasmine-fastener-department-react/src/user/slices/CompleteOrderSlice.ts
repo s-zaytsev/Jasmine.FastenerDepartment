@@ -84,6 +84,7 @@ const completeOrderSlice = createSlice({
                 state.loading = true;
             })
             .addCase(completeOrder.fulfilled, (state) => {
+                state.success = 'Заказ завершен';
                 state.loading = false;
             })
             .addCase(completeOrder.rejected, (state, action) => {

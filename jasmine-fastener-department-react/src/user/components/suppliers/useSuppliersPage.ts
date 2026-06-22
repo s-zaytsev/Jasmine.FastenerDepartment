@@ -1,6 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
 import {useNavigate} from "react-router-dom";
-import {useNotify} from "../../../shared/providers/NotificationProvider.tsx";
 import {useCallback, useEffect, useState} from "react";
 import {
     changeSupplier,
@@ -10,7 +9,6 @@ import {
     selectSupplier
 } from "../../slices/SuppliersSlice.ts";
 import type {ChangeSupplierModel, SuppliersPageState} from "../../models/supplierModels.ts";
-import {NotificationMessage} from "../../../shared/models/notificationModel.ts";
 
 const useSuppliersPage = () => {
     const state = useAppSelector<SuppliersPageState>(
@@ -19,7 +17,6 @@ const useSuppliersPage = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const notification = useNotify();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -56,13 +53,6 @@ const useSuppliersPage = () => {
     const handleNavigateToSupplierProducts = useCallback((id: string) => {
         navigate(id);
     }, [navigate]);
-
-    useEffect(() => {
-        if (state.error) {
-            const message = NotificationMessage.error(state.error!).message;
-            notification.notifyError(message!);
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         dispatch(getExtendedSuppliers());

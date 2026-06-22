@@ -65,6 +65,7 @@ const productTypesSlice = createSlice({
                 state.loading = true;
             })
             .addCase(createProductType.fulfilled, (state) => {
+                state.success = 'Тип товара создан';
                 state.loading = false;
             })
             .addCase(createProductType.rejected, (state, action) => {
@@ -77,6 +78,7 @@ const productTypesSlice = createSlice({
                 state.loading = true;
             })
             .addCase(changeProductType.fulfilled, (state) => {
+                state.success = 'Тип товара обновлен';
                 state.loading = false;
             })
             .addCase(changeProductType.rejected, (state, action) => {

@@ -1,6 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
 import {useNavigate} from "react-router-dom";
-import {useNotify} from "../../../shared/providers/NotificationProvider.tsx";
 import {useCallback, useEffect} from "react";
 import {
     changeNeededOrderStatus,
@@ -13,7 +12,6 @@ import {
     getProductTypes
 } from "../../slices/ProductsSlice.ts";
 import {type ProductsPageState, type ProductsQuery} from "../../models/productModel.ts";
-import {NotificationMessage} from "../../../shared/models/notificationModel.ts";
 import useProductFilters from "./productFilters/useProductFilters.ts";
 
 const useProductsPage = () => {
@@ -40,7 +38,6 @@ const useProductsPage = () => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const notification = useNotify();
 
     const handleNavigateToCreate = useCallback(() => {
         navigate('create');
@@ -83,13 +80,6 @@ const useProductsPage = () => {
     const handleReload = useCallback((query: ProductsQuery) => {
         dispatch(getProducts(query));
     }, [dispatch]);
-
-    useEffect(() => {
-        if (state.error) {
-            const message = NotificationMessage.error(state.error!).message;
-            notification.notifyError(message!);
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         dispatch(getProductTypes());

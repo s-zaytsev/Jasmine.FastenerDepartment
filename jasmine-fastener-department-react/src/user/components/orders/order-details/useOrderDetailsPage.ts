@@ -1,6 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHooks.ts";
 import type {OrderDetailsPageState} from "../../../models/orderModels.ts";
-import {useNotify} from "../../../../shared/providers/NotificationProvider.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {downloadDocument, getOrder, getProductTypes} from "../../../slices/OrderDetailsSlice.ts";
 import {useEffect} from "react";
@@ -11,19 +10,12 @@ const useOrderDetailsPage = () => {
         (state) => state.orderDetails
     );
     const dispatch = useAppDispatch();
-    const notification = useNotify();
     const params = useParams();
     const navigate = useNavigate();
 
     function handleDownload() {
         dispatch(downloadDocument(params.id!));
     }
-
-    useEffect(() => {
-        if (state.error) {
-            notification.notifyError(state.error.toString());
-        }
-    }, [notification, state.error]);
 
     useEffect(() => {
         if (!params.id) {

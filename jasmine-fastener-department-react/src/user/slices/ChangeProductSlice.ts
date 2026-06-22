@@ -97,6 +97,7 @@ const changeProductSlice = createSlice({
                 state.loading = true;
             })
             .addCase(save.fulfilled, (state) => {
+                state.success = 'Данные товара обновлены';
                 state.loading = false;
             })
             .addCase(save.rejected, (state, action) => {
