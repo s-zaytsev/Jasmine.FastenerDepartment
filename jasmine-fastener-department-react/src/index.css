@@ -53,11 +53,6 @@ body {
     width: 181px;
 }
 
-.MuiList-root.MuiMenu-list {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
 .MuiMenuItem-root {
     height: 34px;
 }

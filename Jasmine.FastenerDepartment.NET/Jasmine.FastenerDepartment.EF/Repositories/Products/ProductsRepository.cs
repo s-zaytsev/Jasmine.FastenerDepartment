@@ -243,15 +243,15 @@ internal class ProductsRepository : RepositoryBase<Guid, Product>, IProductsRepo
 
         var filters = await dbQuery
             .SelectMany(p => p.Suppliers.DefaultIfEmpty())
-            .GroupBy(s => s == null ? (Guid?)null : s.Id)
+            .GroupBy(s => s == null ? Guid.Empty : s.Id)
             .Select(g => new Filter<Guid?>
             {
-                Id = g.Key,
-                Title = g.Key == null
+                Id = g.Key != Guid.Empty ? g.Key : null,
+                Title = g.Key == Guid.Empty
                     ? string.Empty
                     : g.First().Name.Value,
                 Count = g.Count(),
-                IsEnabled = g.Key != null && query.Suppliers.Contains(g.Key.Value) == true
+                IsEnabled = query.Suppliers.Contains(g.Key == Guid.Empty ? null : g.Key) == true
             })
             .OrderBy(x => x.Title)
             .ToListAsync(cancellationToken);
