@@ -1,4 +1,6 @@
-﻿namespace Jasmine.FastenerDepartment.Domain.Common.Exceptions;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+
+namespace Jasmine.FastenerDepartment.Domain.Common.Exceptions;
 
 /// <summary>
 /// Domain exception.
@@ -13,7 +15,7 @@ public class DomainException : InvalidOperationException
     /// <summary>
     /// User message.
     /// </summary>
-    public string UserMessage { get; set; }
+    public LocalizedString UserMessage { get; set; }
 
     /// <summary>
     /// Creates exception.
@@ -23,8 +25,11 @@ public class DomainException : InvalidOperationException
     /// <param name="userMessage">Exception user message.</param>
     /// <param name="innerException">Inner exception.</param>
     public DomainException(
-        int code, string message, string userMessage = null, Exception innerException = null)
-        : base(message ?? userMessage, innerException)
+        int code,
+        string message,
+        LocalizedString userMessage = null,
+        Exception innerException = null)
+        : base(message ?? userMessage.En, innerException)
     {
         Code = code;
         UserMessage = userMessage;

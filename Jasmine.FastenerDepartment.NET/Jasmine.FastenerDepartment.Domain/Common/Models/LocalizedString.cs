@@ -15,6 +15,8 @@ public class LocalizedString
     /// </summary>
     public string Ru { get; init; }
 
+    private LocalizedString() { }
+
     /// <summary>
     /// Creates localized string.
     /// </summary>

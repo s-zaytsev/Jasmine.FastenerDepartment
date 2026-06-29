@@ -1,10 +1,26 @@
-﻿namespace Jasmine.FastenerDepartment.Domain.Common.Exceptions.Messages;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
 
-internal class CommonExceptionMessages
+namespace Jasmine.FastenerDepartment.Domain.Common.Exceptions.Messages;
+
+internal static class CommonExceptionMessages
 {
-    public const string IncorrectName = "Incorrect name. Name cannot be empty.";
-    public const string IncorrectPrice = "Incorrect price. Price cannot be less than 0.";
-    public const string IncorrectQuantity = "Incorrect quantity. Quantity cannot be less than 0.";
-    public const string SpecialMeasurementNotAllowed = "Special measurement cannot be used with common measurement.";
-    public const string MeasurementUnitNotFound = "Measurement unit not found.";
+    public static LocalizedString IncorrectName = new(
+        "Incorrect name. Name cannot be empty",
+        "Некорректное наименование. Наименование не может быть пустым");
+
+    public static LocalizedString IncorrectPrice = new(
+        "Incorrect price. Price cannot be less than 0",
+        "Некорректная цена. Цена не может быть меньше 0");
+
+    public static LocalizedString IncorrectQuantity = new(
+        "Incorrect quantity. Quantity cannot be less than 0",
+        "Некорректное количество. Количество не может быть меньше 0");
+
+    public static LocalizedString SpecialMeasurementNotAllowed = new(
+        "Special measurement cannot be used with common measurement",
+        "Нестандартная единица измерения не может использоваться вместе со стандартной");
+
+    public static LocalizedString MeasurementUnitNotFound = new(
+        "Measurement unit not found",
+        "Отсутствует единица измерения");
 }

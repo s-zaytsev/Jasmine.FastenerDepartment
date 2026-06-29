@@ -1,4 +1,5 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Exceptions;
+using Jasmine.FastenerDepartment.Domain.Common.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
@@ -13,6 +14,7 @@ public class ErrorHandlingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly Serilog.ILogger _logger;
+    private ILanguageService _languageService;
 
     /// <summary>
     /// Creates error handling middleware.
@@ -31,10 +33,12 @@ public class ErrorHandlingMiddleware
     /// Invokes.
     /// </summary>
     /// <param name="context">HTTP context.</param>
-    public async Task InvokeAsync(HttpContext context)
+    /// <param name="languageService">Language service.</param>
+    public async Task InvokeAsync(HttpContext context, ILanguageService languageService)
     {
         try
         {
+            _languageService = languageService;
             await _next(context);
         }
         catch (Exception ex)
@@ -112,11 +116,11 @@ public class ErrorHandlingMiddleware
         _ => "Server exception"
     };
 
-    private static string GetUserFriendlyMessage(Exception exception)
+    private string GetUserFriendlyMessage(Exception exception)
     {
-        if (exception is DomainException domainException && !string.IsNullOrWhiteSpace(domainException.UserMessage))
+        if (exception is DomainException domainException && domainException.UserMessage is not null)
         {
-            return domainException.UserMessage;
+            return domainException.UserMessage.GetText(_languageService.LanguageCode);
         }
 
         var message = exception switch
