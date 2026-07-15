@@ -44,6 +44,7 @@ const ChangeProductPage = () => {
 
             {tabIndex === 0 &&
                 <ProductForm
+                    key={model.id}
                     changeModel={model}
                     suppliers={suppliers}
                     productTypes={productTypes}
