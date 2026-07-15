@@ -347,181 +347,181 @@ fun SyncSuccessWithMessagePreview() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SyncSuccessWithHistoryPreview() {
-    JasmineFastenerDepartmentTheme {
-        SyncBody(
-            uiState = SynchronizationUiState(
-                lastSynchronizeTime = null,
-                products = emptyList(),
-                successMessage = "",
-                errorMessage = null,
-                status = SynchronizeStatus.Success,
-                historyItems = listOf(
-                    SynchronizationHistoryEntry(
-                        date = ZonedDateTime.now(),
-                        historyItems = listOf(
-                            SynchronizationHistoryEntryItem(
-                                productId = UUID.randomUUID().toString(),
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = UUID.randomUUID().toString(),
-                                        productId = UUID.randomUUID().toString(),
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    ),
-                                    ProductHistoryEntry(
-                                        id = UUID.randomUUID().toString(),
-                                        productId = UUID.randomUUID().toString(),
-                                        createdDate = ZonedDateTime.now().minusHours(1),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedName,
-                                        oldValue = "Old Name",
-                                        newValue = "New Name",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test1",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test1",
-                                        productId = "Test1",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test2",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test2",
-                                        productId = "Test2",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test3",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test3",
-                                        productId = "Test3",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test4",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test4",
-                                        productId = "Test4",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            )
-                        )
-                    ),
-                    SynchronizationHistoryEntry(
-                        date = ZonedDateTime.now().minusDays(3),
-                        historyItems = listOf(
-                            SynchronizationHistoryEntryItem(
-                                productId = UUID.randomUUID().toString(),
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = UUID.randomUUID().toString(),
-                                        productId = UUID.randomUUID().toString(),
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test1",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test1",
-                                        productId = "Test1",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test2",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test2",
-                                        productId = "Test2",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test3",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test3",
-                                        productId = "Test3",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            ),
-                            SynchronizationHistoryEntryItem(
-                                productId = "Test4",
-                                productHistoryEntries = listOf(
-                                    ProductHistoryEntry(
-                                        id = "test4",
-                                        productId = "Test4",
-                                        createdDate = ZonedDateTime.now(),
-                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
-                                        oldValue = "2.00",
-                                        newValue = "4.00",
-                                        productNumber = 213123
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
-            ),
-            onReset = {},
-            onSync = {}
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun SyncSuccessWithHistoryPreview() {
+//    JasmineFastenerDepartmentTheme {
+//        SyncBody(
+//            uiState = SynchronizationUiState(
+//                lastSynchronizeTime = null,
+//                products = emptyList(),
+//                successMessage = "",
+//                errorMessage = null,
+//                status = SynchronizeStatus.Success,
+//                historyItems = listOf(
+//                    SynchronizationHistoryEntry(
+//                        date = ZonedDateTime.now(),
+//                        historyItems = listOf(
+//                            SynchronizationHistoryEntryItem(
+//                                productId = UUID.randomUUID().toString(),
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = UUID.randomUUID().toString(),
+//                                        productId = UUID.randomUUID().toString(),
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    ),
+//                                    ProductHistoryEntry(
+//                                        id = UUID.randomUUID().toString(),
+//                                        productId = UUID.randomUUID().toString(),
+//                                        createdDate = ZonedDateTime.now().minusHours(1),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedName,
+//                                        oldValue = "Old Name",
+//                                        newValue = "New Name",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test1",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test1",
+//                                        productId = "Test1",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test2",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test2",
+//                                        productId = "Test2",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test3",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test3",
+//                                        productId = "Test3",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test4",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test4",
+//                                        productId = "Test4",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            )
+//                        )
+//                    ),
+//                    SynchronizationHistoryEntry(
+//                        date = ZonedDateTime.now().minusDays(3),
+//                        historyItems = listOf(
+//                            SynchronizationHistoryEntryItem(
+//                                productId = UUID.randomUUID().toString(),
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = UUID.randomUUID().toString(),
+//                                        productId = UUID.randomUUID().toString(),
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test1",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test1",
+//                                        productId = "Test1",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test2",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test2",
+//                                        productId = "Test2",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test3",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test3",
+//                                        productId = "Test3",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            ),
+//                            SynchronizationHistoryEntryItem(
+//                                productId = "Test4",
+//                                productHistoryEntries = listOf(
+//                                    ProductHistoryEntry(
+//                                        id = "test4",
+//                                        productId = "Test4",
+//                                        createdDate = ZonedDateTime.now(),
+//                                        changeReasonCode = ProductChangeReasonCode.ChangedPrice,
+//                                        oldValue = "2.00",
+//                                        newValue = "4.00",
+//                                        productNumber = 213123
+//                                    )
+//                                )
+//                            )
+//                        )
+//                    )
+//                ),
+//            ),
+//            onReset = {},
+//            onSync = {}
+//        )
+//    }
+//}

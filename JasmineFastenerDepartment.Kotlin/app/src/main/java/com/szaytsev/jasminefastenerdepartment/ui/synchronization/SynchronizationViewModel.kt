@@ -16,7 +16,7 @@ import com.szaytsev.jasminefastenerdepartment.ui.toSynchronizationProduct
 import com.szaytsev.jasminefastenerdepartment.ui.toUtc
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.time.ZonedDateTime
 
@@ -74,10 +74,12 @@ class SynchronizationViewModel(
             }
 
             response.modifiedProducts.forEach {
-                var product = productsRepository.getProductStream(it.id).first()
+                var product = productsRepository.getProductStream(it.id).firstOrNull()
                 if (product != null) {
                     product = it.toProduct()
                     productsRepository.updateProduct(product)
+                } else {
+                    productsRepository.insertProduct(it.toProduct())
                 }
             }
 

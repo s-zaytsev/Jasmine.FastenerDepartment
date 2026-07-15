@@ -9,7 +9,7 @@ import com.szaytsev.jasminefastenerdepartment.data.models.ProductPriceTagCode
 
 @Composable
 fun ProductChangeReason(historyEntry: ProductHistoryEntry) {
-    val code = historyEntry.changeReasonCode;
+    val code = historyEntry.reason.code;
 
     if (code === ProductChangeReasonCode.Created) {
         Text("Товар создан")

@@ -40,9 +40,9 @@ class AppDataContainer(private val context: Context) : AppContainer {
         LocalProductRepository(JasmineDatabase.getDatabase(context).productDao())
     }
 
-     private val baseUrl = "http://10.0.2.2:5034/"
+    // private val baseUrl = "http://10.0.2.2:5034/"
     //  private val baseUrl = "http://192.168.1.4:86/"
-   // private val baseUrl = "http://192.168.1.70:5034/"
+    private val baseUrl = "http://192.168.1.70:5034/"
     // private val baseUrl = "http://192.168.1.110:5034/"
 
     private val retrofit: Retrofit = Retrofit.Builder()
