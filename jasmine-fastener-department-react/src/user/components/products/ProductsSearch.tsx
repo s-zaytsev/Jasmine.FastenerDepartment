@@ -3,7 +3,7 @@ import {Box, TextField} from "@mui/material";
 
 export interface ProductsSearchProps {
     value: string;
-    onSearch: (value: string) => void;
+    onSearch: (value: string, keepPageNo?: boolean) => void;
     placeholder?: string;
 }
 
@@ -17,12 +17,12 @@ const ProductsSearch = (props: ProductsSearchProps) => {
 
     useEffect(() => {
         const timerId = setTimeout(() => {
-            props.onSearch(searchText);
+            props.onSearch(searchText, true);
         }, 500);
         return () => {
             clearTimeout(timerId);
         };
-    }, [searchText]);
+    }, [props.value, searchText]);
 
     return (
         <Box className={'w-full'}>

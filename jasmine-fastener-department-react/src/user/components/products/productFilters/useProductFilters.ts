@@ -109,8 +109,8 @@ const useProductFilters = (query: ProductsQuery, filters: ProductPageFilters) =>
         handleReload(newQuery);
     }, [dispatch, query.onlyToOrder]);
 
-    const handleSearch = useCallback((value: string) => {
-        const newQuery = {...query, search: value, pageNo: 1};
+    const handleSearch = useCallback((value: string, keepPageNo?: boolean) => {
+        const newQuery = {...query, search: value, pageNo: keepPageNo ? query.pageNo : 1};
         dispatch(changeQuery(newQuery));
         handleReload(newQuery);
     }, [dispatch, query.search]);
