@@ -6,6 +6,7 @@ import type {ProductsToOrderQuery, SupplierNumber} from "../models/productsToOrd
 import ProductsToOrderApi from "../api/productsToOrderApi.ts";
 import ProductTypesApi from "../api/productTypesApi.ts";
 import {createAsyncThunkWithErrorHandler} from "../../shared/thunks/createAsyncThunkWithErrorHandler.ts";
+import {addBaseCases} from "../../shared/actions/globalActions.ts";
 
 export const getOrder = createAsyncThunkWithErrorHandler(
     "changeOrder/getOrder",
@@ -48,8 +49,10 @@ const initialState: ChangeOrderState = {
     error: undefined
 };
 
+const name = "changeOrder";
+
 const changeOrderSlice = createSlice({
-    name: "changeOrder",
+    name: name,
     initialState: initialState,
     reducers: {
         addProduct: (state) => {
@@ -91,6 +94,7 @@ const changeOrderSlice = createSlice({
         }
     },
     extraReducers: builder => {
+        addBaseCases(builder, name);
         builder
             .addCase(getOrder.pending, (state) => {
                 state.loading = true;

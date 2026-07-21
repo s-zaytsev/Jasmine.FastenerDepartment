@@ -60,7 +60,7 @@ const DetailsSettingsCard = (props: DetailsCardSettingsProps) => {
                         )}
                     />
 
-                    <Controller
+                    {props.productTypes.length && <Controller
                         name="typeId"
                         control={props.control}
                         defaultValue={''}
@@ -80,7 +80,7 @@ const DetailsSettingsCard = (props: DetailsCardSettingsProps) => {
                                         field.onBlur();
                                     }}
                                 >
-                                    <MenuItem key={'empty-type'} value=""></MenuItem>
+                                    <MenuItem key={'empty-type'} value={''}></MenuItem>
                                     {props.productTypes.map((x) => (
                                         <MenuItem key={x.id} value={x.id}>
                                             {x.name}
@@ -89,7 +89,7 @@ const DetailsSettingsCard = (props: DetailsCardSettingsProps) => {
                                 </Select>
                             </FormControl>
                         )}
-                    />
+                    />}
 
                 </Box>
 

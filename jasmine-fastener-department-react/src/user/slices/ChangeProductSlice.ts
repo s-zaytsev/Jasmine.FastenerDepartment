@@ -4,6 +4,7 @@ import ProductsApi from "../api/productsApi.ts";
 import SuppliersApi from "../api/suppliersApi.ts";
 import ProductTypesApi from "../api/productTypesApi.ts";
 import {createAsyncThunkWithErrorHandler} from "../../shared/thunks/createAsyncThunkWithErrorHandler.ts";
+import {addBaseCases} from "../../shared/actions/globalActions.ts";
 
 export const getProduct = createAsyncThunkWithErrorHandler(
     "changeProduct/getProduct",
@@ -55,8 +56,10 @@ const initialState: ChangeProductPageState = {
     error: undefined
 };
 
+const name = "changeProduct";
+
 const changeProductSlice = createSlice({
-    name: "changeProduct",
+    name: name,
     initialState: initialState,
     reducers: {
         setSuccess: (state, action) => {
@@ -64,6 +67,7 @@ const changeProductSlice = createSlice({
         }
     },
     extraReducers: builder => {
+        addBaseCases(builder, name);
         builder
             .addCase(getProduct.pending, (state) => {
                 state.loading = true;
