@@ -2,6 +2,7 @@
 using Jasmine.FastenerDepartment.Documents.Export.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Services;
+using Jasmine.FastenerDepartment.Domain.Companies.Models;
 using Jasmine.FastenerDepartment.Domain.HistoryEntries.Models;
 using Jasmine.FastenerDepartment.Domain.MeasurementUnits.Models;
 using Jasmine.FastenerDepartment.Domain.Orders.Models;
@@ -12,6 +13,7 @@ using Jasmine.FastenerDepartment.Domain.Settings.Models.Company;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Common;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Companies;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Documents;
 using Jasmine.FastenerDepartment.WebApi.Dtos.HistoryEntries;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
@@ -410,7 +412,7 @@ public class WebApiMapper
 
     internal SendOrderModel Map(SendOrderModelDto dto)
     {
-        return new() 
+        return new()
         {
             RecipientContact = dto.RecipientContact,
             MessageType = dto.MessageType,
@@ -513,6 +515,47 @@ public class WebApiMapper
             Name = file.FileName,
             ContentType = file.ContentType,
             Content = file.OpenReadStream()
+        };
+    }
+
+    internal CompanyDto Map(Company company)
+    {
+        return new(
+            company.Id,
+            company.Title.Value,
+            company.Type.Name.GetText(_languageService.LanguageCode));
+    }
+
+    internal CompanyDetailsDto MapDetails(Company company)
+    {
+        return new(
+            company.Id,
+            company.Title.Value,
+            company.FirstName,
+            company.MiddleName,
+            company.LastName,
+            company.Email.Value,
+            company.City,
+            company.Street,
+            company.BuildingNumber,
+            company.Inn.Value,
+            company.PhoneNumber.Value);
+    }
+
+    internal ChangeCompany Map(ChangeCompanyDto model)
+    {
+        return new()
+        {
+            Title = model.Title,
+            FirstName = model.FirstName,
+            MiddleName = model.MiddleName,
+            LastName = model.LastName,
+            Email = model.Email,
+            City = model.City,
+            Street = model.Street,
+            BuildingNumber = model.BuildingNumber,
+            Inn = model.Inn,
+            PhoneNumber = model.PhoneNumber
         };
     }
 }

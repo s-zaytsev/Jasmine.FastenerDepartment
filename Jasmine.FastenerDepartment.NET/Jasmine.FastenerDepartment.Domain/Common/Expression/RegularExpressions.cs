@@ -13,10 +13,15 @@ public static class RegularExpressions
     private static readonly string Price = @"[0-9]+,?.?[0-9]?";
     private static readonly string MultiplySpaces = @"(\s)\1+";
 
+    private static readonly string Email = @"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$";
+    private static readonly string PhoneNumber = @"^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$";
+
     private static readonly Regex HardwareMultiSizeRegex = new(HardwareMultiSize);
     private static readonly Regex HardwareSingleSizeRegex = new(HardwareSingleSize);
     private static readonly Regex PriceRegex = new(Price);
     private static readonly Regex MultiplySpacesRegex = new(MultiplySpaces);
+    private static readonly Regex EmailRegex = new(Email);
+    private static readonly Regex PhoneNumberRegex = new(PhoneNumber);
 
     /// <summary>
     /// Checks the product name for a hardware size.
@@ -72,5 +77,25 @@ public static class RegularExpressions
     public static string RemoveMultiplySpaces(string text)
     {
         return MultiplySpacesRegex.Replace(text, " ");
+    }
+
+    /// <summary>
+    /// Checks an email.
+    /// </summary>
+    /// <param name="email">Email.</param>
+    /// <returns>Email is valid or not.</returns>
+    public static bool IsValidEmail(string email)
+    {
+        return EmailRegex.IsMatch(email);
+    }
+
+    /// <summary>
+    /// Checks a phone number.
+    /// </summary>
+    /// <param name="phoneNumber">Phone number.</param>
+    /// <returns>Phone number valid or not.</returns>
+    public static bool IsValidPhoneNumber(string phoneNumber)
+    {
+        return PhoneNumberRegex.IsMatch(phoneNumber);
     }
 }

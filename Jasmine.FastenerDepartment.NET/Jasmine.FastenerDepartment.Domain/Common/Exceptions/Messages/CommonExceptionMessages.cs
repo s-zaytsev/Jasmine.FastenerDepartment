@@ -23,4 +23,16 @@ internal static class CommonExceptionMessages
     public static LocalizedString MeasurementUnitNotFound = new(
         "Measurement unit not found",
         "Отсутствует единица измерения");
+
+    public static LocalizedString IncorrectEmail = new(
+        "Incorrect email",
+        "Некорректная электронная почта");
+
+    public static LocalizedString IncorrectPhoneNumber = new(
+        "Incorrect phone number",
+        "Некорректный номер телефона");
+
+    public static LocalizedString IncorrectInn = new(
+        "Incorrect INN",
+        "Некорректный ИНН");
 }

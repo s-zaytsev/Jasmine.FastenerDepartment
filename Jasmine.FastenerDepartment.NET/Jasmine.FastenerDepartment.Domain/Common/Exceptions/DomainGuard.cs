@@ -13,7 +13,10 @@ internal static class DomainGuard
         { CommonExceptionCode.IncorrectPrice, CommonExceptionMessages.IncorrectPrice },
         { CommonExceptionCode.IncorrectQuantity, CommonExceptionMessages.IncorrectQuantity },
         { CommonExceptionCode.SpecialMeasurementNotAllowed, CommonExceptionMessages.SpecialMeasurementNotAllowed },
-        { CommonExceptionCode.MeasurementUnitNotFound, CommonExceptionMessages.MeasurementUnitNotFound }
+        { CommonExceptionCode.MeasurementUnitNotFound, CommonExceptionMessages.MeasurementUnitNotFound },
+        { CommonExceptionCode.IncorrectEmail, CommonExceptionMessages.IncorrectEmail },
+        { CommonExceptionCode.IncorrectPhoneNumber, CommonExceptionMessages.IncorrectPhoneNumber },
+        { CommonExceptionCode.IncorrectInn, CommonExceptionMessages.IncorrectInn }
     };
 
     private static readonly IDictionary<Enum, LocalizedString> _orderExceptions = new Dictionary<Enum, LocalizedString>

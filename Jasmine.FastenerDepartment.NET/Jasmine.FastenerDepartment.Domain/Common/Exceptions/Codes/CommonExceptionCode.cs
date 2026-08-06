@@ -6,5 +6,8 @@ internal enum CommonExceptionCode
     IncorrectPrice = 1002,
     IncorrectQuantity = 1003,
     SpecialMeasurementNotAllowed = 1004,
-    MeasurementUnitNotFound = 1005
+    MeasurementUnitNotFound = 1005,
+    IncorrectEmail = 1006,
+    IncorrectPhoneNumber = 1007,
+    IncorrectInn = 1008
 }
