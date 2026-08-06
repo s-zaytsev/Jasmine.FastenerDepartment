@@ -14,6 +14,9 @@ import CompleteOrderPage from "./components/orders/complete-order/CompleteOrderP
 import ProductTypesPage from "./components/productTypes/ProductTypesPage.tsx";
 import OrderDetailsPage from "./components/orders/order-details/OrderDetailsPage.tsx";
 import SettingsPage from "./components/settings/SettingsPage.tsx";
+import CompaniesPage from "./components/companies/CompaniesPage.tsx";
+import ChangeCompanyPage from "./components/companies/changeCompany/ChangeCompanyPage.tsx";
+import CreateCompanyPage from "./components/companies/createCompany/CreateCompanyPage.tsx";
 
 export const userRoutes = [
     <Route path="products" element={<ProductsPage/>} key="products"/>,
@@ -31,6 +34,9 @@ export const userRoutes = [
     <Route path="suppliers/:id" element={<SupplierProductsPage/>} key="supplier"/>,
     <Route path="product-types" element={<ProductTypesPage/>} key="product-types"/>,
     <Route path="settings" element={<SettingsPage/>} key="settings"/>,
+    <Route path="companies" element={<CompaniesPage/>} key="companies"/>,
+    <Route path="companies/create" element={<CreateCompanyPage/>} key="create-company"/>,
+    <Route path="companies/:id" element={<ChangeCompanyPage/>} key="change-company"/>,
     <Route index element={<Navigate to="products"/>} key="index"/>,
     <Route path="*" element={<Navigate to=""/>} key="wildcard"/>,
 ];

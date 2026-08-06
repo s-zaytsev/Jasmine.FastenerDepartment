@@ -15,6 +15,9 @@ import productTypesSlice from "../user/slices/ProductTypesSlice.ts";
 import orderDetailsSlice from "../user/slices/OrderDetailsSlice.ts";
 import settingsSlice from "../user/slices/SettingsSlice.ts";
 import {notificationMiddleware} from "../shared/middlewares/notificationMiddleware.ts";
+import companiesSlice from "../user/slices/CompaniesSlice.ts";
+import changeCompanySlice from "../user/slices/ChangeCompanySlice.ts";
+import createCompanySlice from "../user/slices/CreateCompanySlice.ts";
 
 export const store = configureStore({
     reducer: {
@@ -32,7 +35,10 @@ export const store = configureStore({
         suppliers: suppliersSlice,
         supplierProducts: supplierProductsSlice,
         productTypes: productTypesSlice,
-        settings: settingsSlice
+        settings: settingsSlice,
+        companies: companiesSlice,
+        createCompany: createCompanySlice,
+        changeCompany: changeCompanySlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(notificationMiddleware)

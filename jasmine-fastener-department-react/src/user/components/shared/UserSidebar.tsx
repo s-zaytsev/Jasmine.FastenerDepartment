@@ -16,6 +16,7 @@ const mainItems = [
     {title: "Заказы", link: "/orders", icon: <LocalShippingOutlined/>},
     {title: "Поставщики", link: "/suppliers", icon: <BusinessOutlined/>},
     {title: "Типы товаров", link: "/product-types", icon: <DesignServicesOutlined/>},
+    {title: "Компании", link: "/companies", icon: <BusinessOutlined/>},
     {title: "Экспорт", link: "/export", icon: <CloudDownloadOutlined/>},
     {title: "История", link: "/history", icon: <HistoryOutlined/>}
 ];

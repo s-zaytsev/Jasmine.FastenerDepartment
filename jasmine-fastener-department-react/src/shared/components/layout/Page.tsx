@@ -22,7 +22,7 @@ const Page = (props: PageProps) => {
                 description={props.description}
                 button={props.button}
             />
-            <Fade in={true} timeout={300}>
+            <Fade className={'h-full'} in={true} timeout={300}>
                 <Box>{props.children}</Box>
             </Fade>
         </Box>
