@@ -109,4 +109,18 @@ public record Quantity
         Value = quantity;
         MeasurementUnitCode = measurementUnitCode;
     }
+
+    /// <summary>
+    /// Creates quantity.
+    /// </summary>
+    /// <param name="quantity">Quantity.</param>
+    /// <param name="measurementUnit">Measurement unit.</param>
+    public Quantity(
+        double quantity,
+        MeasurementUnit measurementUnit)
+    {
+        Value = quantity;
+        MeasurementUnitCode = measurementUnit.Id;
+        MeasurementUnit = measurementUnit;
+    }
 }

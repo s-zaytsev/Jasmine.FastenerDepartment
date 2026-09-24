@@ -9,11 +9,8 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DocumentFormat.OpenXml" Version="2.20.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Jasmine.FastenerDepartment.Domain\Jasmine.FastenerDepartment.Domain.csproj" />
+	  <ProjectReference Include="..\Jasmine.FastenerDepartment.Templates.Html\Jasmine.FastenerDepartment.Templates.Html.csproj" />
+	  <ProjectReference Include="..\Jasmine.FastenerDepartment.Templates.OfficeDocuments\Jasmine.FastenerDepartment.Templates.OfficeDocuments.csproj" />
 	</ItemGroup>
 
 </Project>

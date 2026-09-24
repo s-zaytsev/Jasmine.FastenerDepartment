@@ -147,20 +147,4 @@ public class OrdersController : ControllerBase
 
         return NoContent();
     }
-
-    /// <summary>
-    /// Returns an order document.
-    /// </summary>
-    /// <param name="id">Order identifier.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>File.</returns>
-    [HttpGet("document/{id}")]
-    [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
-    public async Task<IActionResult> DownloadDocumentAsync(
-        [FromRoute] Guid id, CancellationToken cancellationToken)
-    {
-        var response = await _ordersService.GetOrderDocumentStreamAsync(id, cancellationToken);
-
-        return File(response.Stream, "application/octet-stream", $"{response.Name}.docx");
-    }
 }

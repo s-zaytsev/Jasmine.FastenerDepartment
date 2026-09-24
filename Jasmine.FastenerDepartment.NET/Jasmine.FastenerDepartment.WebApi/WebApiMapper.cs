@@ -1,5 +1,4 @@
 ﻿using Jasmine.FastenerDepartment.Application.Models.Synchronization;
-using Jasmine.FastenerDepartment.Documents.Export.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Services;
 using Jasmine.FastenerDepartment.Domain.Companies.Models;
@@ -12,9 +11,12 @@ using Jasmine.FastenerDepartment.Domain.ProductTypes.Models;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Company;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
+using Jasmine.FastenerDepartment.Domain.Templates.Models;
+using Jasmine.FastenerDepartment.Domain.Templates.Models.Content;
+using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
+using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.ProductCatalog;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Common;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Companies;
-using Jasmine.FastenerDepartment.WebApi.Dtos.Documents;
 using Jasmine.FastenerDepartment.WebApi.Dtos.HistoryEntries;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Products;
@@ -23,6 +25,9 @@ using Jasmine.FastenerDepartment.WebApi.Dtos.ProductTypes;
 using Jasmine.FastenerDepartment.WebApi.Dtos.SettingsEntries;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Suppliers;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Synchronization;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Templates;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Templates.Content;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Templates.RenderRequests;
 
 namespace Jasmine.FastenerDepartment.WebApi;
 
@@ -165,19 +170,6 @@ public class WebApiMapper
             model.Id,
             model.ShortName.GetText(_languageService.LanguageCode),
             model.Name.GetText(_languageService.LanguageCode));
-    }
-
-    internal ExportDocumentRequest Map(ExportDocumentRequestDto model)
-    {
-        return new()
-        {
-            DocumentType = model.DocumentType
-        };
-    }
-
-    internal ExportDocumentResponseDto Map(ExportDocumentResponse model)
-    {
-        return new(model.Name, model.Stream);
     }
 
     internal SynchronizationRequest Map(SynchronizationRequestDto model)
@@ -557,5 +549,115 @@ public class WebApiMapper
             Inn = model.Inn,
             PhoneNumber = model.PhoneNumber
         };
+    }
+
+    internal TemplateDto Map(Template template)
+    {
+        return new TemplateDto(
+            template.Id,
+            template.Name.Value,
+            Map(template.Type),
+            Map(template.Content, template.TypeCode));
+    }
+
+    internal TemplateTypeDto Map(TemplateType model)
+    {
+        return new(model.Id, model.Name.GetText(_languageService.LanguageCode));
+    }
+
+    internal ChangeTemplate Map(ChangeTemplateDto model)
+    {
+        return new ChangeTemplate
+        {
+            Name = model.Name,
+            TypeCode = model.TypeCode,
+            Content = Map(model.Content, model.TypeCode)
+        };
+    }
+
+    internal TemplateContentDto Map(TemplateContent content, TemplateTypeCode typeCode)
+    {
+        if (typeCode == TemplateTypeCode.OrderForm)
+        {
+            var model = content as OrderFormTemplateContent;
+            return new OrderFormTemplateContentDto
+            (
+                model.HasCompanyData,
+                model.GroupByType,
+                model.TableColumnCodes
+                    .Select(x => new TemplateContentTableColumnDto(
+                        (int)x,
+                        ContentTableColumns.Columns[typeCode][x]
+                            .GetText(_languageService.LanguageCode)))
+            );
+        }
+
+        if (typeCode == TemplateTypeCode.ProductCatalog)
+        {
+            var model = content as ProductCatalogTemplateContent;
+            return new ProductCatalogTemplateContentDto(
+                model.GroupByType,
+                model.TableColumnCodes
+                    .Select(x => new TemplateContentTableColumnDto(
+                        (int)x,
+                        ContentTableColumns.Columns[typeCode][x]
+                            .GetText(_languageService.LanguageCode)))
+            );
+        }
+
+        return null;
+    }
+
+    internal TemplateContent Map(TemplateContentDto content, TemplateTypeCode typeCode)
+    {
+        if (typeCode == TemplateTypeCode.OrderForm)
+        {
+            var model = content as OrderFormTemplateContentDto;
+            return new OrderFormTemplateContent(
+                model.HasCompanyData,
+                model.GroupByType,
+                model.TableColumns?.Select(x => (OrderFormTemplateContentTableColumnCode)x.Code));
+        }
+
+        if (typeCode == TemplateTypeCode.ProductCatalog)
+        {
+            var model = content as ProductCatalogTemplateContentDto;
+            return new ProductCatalogTemplateContent(
+                model.GroupByType,
+                model.TableColumns?.Select(x => (ProductCatalogTemplateContentTableColumnCode)x.Code));
+        }
+
+        return null;
+    }
+
+    internal OrderFormRenderRequest Map(OrderFormRenderRequestDto dto)
+    {
+        return new()
+        {
+            Id = dto.Id,
+            CompanyId = dto.CompanyId,
+            FormatCode = dto.FormatCode,
+            OrderId = dto.OrderId,
+        };
+    }
+
+    internal ProductCatalogRenderRequest Map(ProductCatalogRenderRequestDto dto)
+    {
+        return new()
+        {
+            Id = dto.Id,
+            FormatCode = dto.FormatCode
+        };
+    }
+
+    internal IEnumerable<TemplateContentTableColumnGroupDto> Map(
+        IReadOnlyDictionary<TemplateTypeCode, IReadOnlyDictionary<Enum, LocalizedString>> model)
+    {
+        return model.Select(x => new TemplateContentTableColumnGroupDto(x.Key, [.. x.Value.Select(Map)]));
+    }
+
+    internal TemplateContentTableColumnDto Map(KeyValuePair<Enum, LocalizedString> column)
+    {
+        return new(Convert.ToInt32(column.Key), column.Value.GetText(_languageService.LanguageCode));
     }
 }

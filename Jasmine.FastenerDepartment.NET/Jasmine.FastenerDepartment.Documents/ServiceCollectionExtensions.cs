@@ -1,6 +1,6 @@
-﻿using Jasmine.FastenerDepartment.Documents.Export.Services;
-using Jasmine.FastenerDepartment.Documents.Orders.Services;
-using Microsoft.Extensions.Configuration;
+﻿using Jasmine.FastenerDepartment.Documents.Factories;
+using Jasmine.FastenerDepartment.Documents.Providers;
+using Jasmine.FastenerDepartment.Domain.Templates.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jasmine.FastenerDepartment.Documents;
@@ -14,12 +14,10 @@ public static class ServiceCollectionExtensions
     /// Adds document services.
     /// </summary>
     /// <param name="services">Service collection.</param>
-    /// <param name="configuration">Configuration.</param>
-    public static void AddDocumentsServices(this IServiceCollection services, IConfiguration configuration)
+    public static void AddDocumentsServices(this IServiceCollection services)
     {
-        services.AddScoped<IExportDocumentsService, ExportDocumentsService>();
-        services.AddScoped<IDocumentsServiceFactory, DocumentsServiceFactory>();
-        services.AddScoped<IWordExportDocumentsService, WordExportDocumentService>();
-        services.AddScoped<IOrderDocumentsService, OrderDocumentsService>();
+        services.AddScoped<ITemplateFactory, TemplateFactory>();
+        services.AddScoped<HtmlTemplateProvider>();
+        services.AddScoped<WordTemplateProvider>();
     }
 }

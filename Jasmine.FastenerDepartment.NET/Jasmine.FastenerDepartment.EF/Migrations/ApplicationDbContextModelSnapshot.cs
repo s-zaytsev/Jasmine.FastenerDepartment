@@ -590,6 +590,57 @@ namespace Jasmine.FastenerDepartment.EF.Migrations
                     b.ToTable("SupplierProducts", (string)null);
                 });
 
+            modelBuilder.Entity("Jasmine.FastenerDepartment.Domain.Templates.Models.Template", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("jsonb");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TypeCode")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeCode");
+
+                    b.ToTable("Templates", (string)null);
+                });
+
+            modelBuilder.Entity("Jasmine.FastenerDepartment.Domain.Templates.Models.TemplateType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TemplateTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Name = "{\"En\":\"Order form\",\"Ru\":\"Бланк заказа\"}"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "{\"En\":\"Product catalog\",\"Ru\":\"Каталог товаров\"}"
+                        });
+                });
+
             modelBuilder.Entity("Jasmine.FastenerDepartment.Domain.Companies.Models.Company", b =>
                 {
                     b.HasOne("Jasmine.FastenerDepartment.Domain.Companies.Models.CompanyType", "Type")
@@ -1000,6 +1051,40 @@ namespace Jasmine.FastenerDepartment.EF.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Jasmine.FastenerDepartment.Domain.Templates.Models.Template", b =>
+                {
+                    b.HasOne("Jasmine.FastenerDepartment.Domain.Templates.Models.TemplateType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeCode")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("Jasmine.FastenerDepartment.Domain.Common.Models.Name", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("TemplateId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("varchar(500)")
+                                .HasColumnName("Title");
+
+                            b1.HasKey("TemplateId");
+
+                            b1.HasIndex("Value")
+                                .IsUnique();
+
+                            b1.ToTable("Templates");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TemplateId");
+                        });
+
+                    b.Navigation("Name");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Jasmine.FastenerDepartment.Domain.Orders.Models.Order", b =>

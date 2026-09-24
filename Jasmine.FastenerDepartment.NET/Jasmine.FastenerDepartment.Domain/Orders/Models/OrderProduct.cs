@@ -106,6 +106,23 @@ public class OrderProduct : EntityBase<Guid>
     }
 
     /// <summary>
+    /// Creates the order product.
+    /// </summary>
+    /// <param name="product">Product.</param>
+    /// <param name="quantity">Quantity.</param>
+    /// <param name="supplierProductNumber">Supplier product number.</param>
+    public OrderProduct(
+        Product product,
+        Quantity quantity,
+        string supplierProductNumber)
+    {
+        Product = product;
+        Ordered = quantity;
+        ProductName = new(product.Name.Value);
+        SupplierProductNumber = supplierProductNumber;
+    }
+
+    /// <summary>
     /// Changes the product name.
     /// </summary>
     /// <param name="name">Name.</param>

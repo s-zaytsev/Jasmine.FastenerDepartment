@@ -7,6 +7,7 @@ using Jasmine.FastenerDepartment.Domain.ProductsToOrder.Repositories;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Repositories;
 using Jasmine.FastenerDepartment.Domain.Settings.Repositories;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Repositories;
+using Jasmine.FastenerDepartment.Domain.Templates.Repositories;
 using Jasmine.FastenerDepartment.EF.Repositories.Companies;
 using Jasmine.FastenerDepartment.EF.Repositories.MeasurementUnits;
 using Jasmine.FastenerDepartment.EF.Repositories.Orders;
@@ -15,6 +16,7 @@ using Jasmine.FastenerDepartment.EF.Repositories.ProductsToOrder;
 using Jasmine.FastenerDepartment.EF.Repositories.ProductTypes;
 using Jasmine.FastenerDepartment.EF.Repositories.SettingsEntries;
 using Jasmine.FastenerDepartment.EF.Repositories.Suppliers;
+using Jasmine.FastenerDepartment.EF.Repositories.Templates;
 using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -42,5 +44,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ISettingsEntriesRepository, SettingsEntriesRepository>();
         services.AddScoped<ICompaniesRepository, CompaniesRepository>();
+        services.AddScoped<ITemplatesRepository, TemplatesRepository>();
+        services.AddScoped<ITemplateTypesRepository, TemplateTypesRepository>();
     }
 }

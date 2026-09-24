@@ -101,6 +101,9 @@ public class Product : AggregateRootBase<Guid>
     /// </summary>
     private Product() { }
 
+    /// <summary>
+    /// Creates product.
+    /// </summary>
     public Product(
         int number,
         string name,
@@ -125,6 +128,9 @@ public class Product : AggregateRootBase<Guid>
         AddInitHistoryEntry();
     }
 
+    /// <summary>
+    /// Creates product.
+    /// </summary>
     public Product(
         Guid id,
         DateTime createdDate,
@@ -149,6 +155,9 @@ public class Product : AggregateRootBase<Guid>
         AddInitHistoryEntry(createdDate);
     }
 
+    /// <summary>
+    /// Creates product.
+    /// </summary>
     public Product(
         DateTime createdDate,
         DateTime modifiedDate,
@@ -173,6 +182,23 @@ public class Product : AggregateRootBase<Guid>
         IsDeleted = isDeleted;
 
         AddInitHistoryEntry(createdDate);
+    }
+
+    /// <summary>
+    /// Creates product.
+    /// </summary>
+    public Product(
+        int number,
+        string name,
+        decimal price,
+        MeasurementUnit measurementUnit,
+        ProductType type)
+    {
+        Number = new(number);
+        Name = new(name);
+        Price = new(price);
+        MeasurementUnit = measurementUnit;
+        Type = type;
     }
 
     /// <summary>

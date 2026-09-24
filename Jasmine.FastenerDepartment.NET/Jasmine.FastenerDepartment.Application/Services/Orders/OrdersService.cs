@@ -1,5 +1,4 @@
-﻿using Jasmine.FastenerDepartment.Documents.Orders.Services;
-using Jasmine.FastenerDepartment.Domain.Common.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Services;
 using Jasmine.FastenerDepartment.Domain.MeasurementUnits.Models;
 using Jasmine.FastenerDepartment.Domain.Orders.Models;
@@ -13,8 +12,6 @@ using Jasmine.FastenerDepartment.Domain.Suppliers.Repositories;
 using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
 using Jasmine.FastenerDepartment.Messaging.Models;
 using Jasmine.FastenerDepartment.Messaging.Services;
-using Jasmine.FastenerDepartment.Templates.Models;
-using Jasmine.FastenerDepartment.Templates.Services;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Orders;
 
@@ -23,8 +20,6 @@ internal class OrdersService : IOrdersService
     private readonly IOrdersRepository _ordersRepository;
     private readonly IProductsRepository _productsRepository;
     private readonly ISupplierProductsRepository _supplierProductsRepository;
-    private readonly IOrderDocumentsService _orderDocumentsService;
-    private readonly ITemplateService _templateService;
     private readonly IMessageService _messageService;
     private readonly ILanguageService _languageService;
     private readonly IUnitOfWork _unitOfWork;
@@ -33,8 +28,6 @@ internal class OrdersService : IOrdersService
         IOrdersRepository ordersRepository,
         IProductsRepository productsRepository,
         ISupplierProductsRepository supplierProductsRepository,
-        IOrderDocumentsService orderDocumentsService,
-        ITemplateService templateService,
         IMessageService messageService,
         ILanguageService languageService,
         IUnitOfWork unitOfWork)
@@ -42,8 +35,6 @@ internal class OrdersService : IOrdersService
         _ordersRepository = ordersRepository;
         _productsRepository = productsRepository;
         _supplierProductsRepository = supplierProductsRepository;
-        _orderDocumentsService = orderDocumentsService;
-        _templateService = templateService;
         _messageService = messageService;
         _languageService = languageService;
         _unitOfWork = unitOfWork;
@@ -110,13 +101,11 @@ internal class OrdersService : IOrdersService
         if (order.StatusCode == OrderStatusCode.Cancelled)
             throw new InvalidOperationException("Order is already cancelled.");
 
-        var templateType = GetTemplateType(model.MessageType);
-        var template = _templateService.GetOrderRequestTemplate(templateType, order, model.Attachments?.Count > 0);
         var messageTitle = GetOrderTitle(order);
 
         var messageRequest = new MessageRequest
         {
-            Content = template,
+            Content = "",
             RecipientContact = model.RecipientContact,
             Type = model.MessageType,
             Title = messageTitle,
@@ -168,14 +157,6 @@ internal class OrdersService : IOrdersService
 
         _ordersRepository.Update(order);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-    }
-
-    public async Task<FileStreamModel> GetOrderDocumentStreamAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        var order = await GetByIdAsync(id, cancellationToken);
-        var stream = await _orderDocumentsService.GetStreamAsync(order);
-
-        return new FileStreamModel { Name = order.Number.ToString(), Stream = stream };
     }
 
     private async Task<Order> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -319,15 +300,6 @@ internal class OrdersService : IOrdersService
     {
         supplierProduct.ChangeNumber(orderProduct.SupplierProductNumber);
         _supplierProductsRepository.Update(supplierProduct);
-    }
-
-    private TemplateType GetTemplateType(MessageType messageType)
-    {
-        return messageType switch
-        {
-            MessageType.Email => TemplateType.Html,
-            _ => throw new NotSupportedException($"Message type {messageType} not supported.")
-        };
     }
 
     private string GetOrderTitle(Order order)

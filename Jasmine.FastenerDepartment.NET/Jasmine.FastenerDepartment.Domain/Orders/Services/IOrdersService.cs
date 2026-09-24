@@ -64,12 +64,4 @@ public interface IOrdersService
     /// <param name="model">Cancel order model.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     Task CancelAsync(Guid id, CancelOrderModel model, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Returns an order document stream.
-    /// </summary>
-    /// <param name="id">Order Identifier.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Order document stream.</returns>
-    Task<FileStreamModel> GetOrderDocumentStreamAsync(Guid id, CancellationToken cancellationToken = default);
 }

@@ -1,5 +1,6 @@
-﻿using Jasmine.FastenerDepartment.Application.Services.Documents;
-using Jasmine.FastenerDepartment.WebApi.Dtos.Documents;
+﻿using Jasmine.FastenerDepartment.Domain.Templates.Services;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Templates;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Templates.RenderRequests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jasmine.FastenerDepartment.WebApi.Controllers;
@@ -11,36 +12,67 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 [Route("documents")]
 public class DocumentsController : ControllerBase
 {
-    private readonly IDocumentsService _documentsService;
+    private readonly ITemplateRenderService _templateRenderService;
     private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates controller.
     /// </summary>
-    /// <param name="documentsService">Document service.</param>
+    /// <param name="templateRenderService">Template render service.</param>
     /// <param name="mapper">Mapper.</param>
     public DocumentsController(
-        IDocumentsService documentsService,
+        ITemplateRenderService templateRenderService,
         WebApiMapper mapper)
     {
-        _documentsService = documentsService;
+        _templateRenderService = templateRenderService;
         _mapper = mapper;
     }
 
     /// <summary>
-    /// Returns the file.
+    /// Renders a preview of a document.
     /// </summary>
-    /// <param name="model">Export document request</param>
+    /// <param name="dto">Create template model.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>File.</returns>
-    [HttpGet]
-    [ProducesResponseType(typeof(File), StatusCodes.Status200OK)]
-    public async Task<IActionResult> DownloadDocumentAsync(
-        [FromQuery] ExportDocumentRequestDto model, CancellationToken cancellationToken)
+    /// <returns>Preview of a document.</returns>
+    [HttpPost("preview")]
+    public async Task<IActionResult> RenderTemplatePreviewAsync(
+        [FromBody] ChangeTemplateDto dto, CancellationToken cancellationToken)
     {
-        var request = _mapper.Map(model);
-        var response = await _documentsService.ExportDocumentAsync(request, cancellationToken);
+        var model = _mapper.Map(dto);
+        var render = await _templateRenderService.RenderPreviewAsync(model, cancellationToken);
 
-        return File(response.Stream, "application/octet-stream", response.Name);
+        return File(render.Content, render.ContentType, render.FileName);
+    }
+
+    /// <summary>
+    /// Renders an order form document.
+    /// </summary>
+    /// <param name="dto">Order form render request.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Order form document.</returns>
+    [HttpPost("order-form")]
+    public async Task<IActionResult> RenderOrderFormTemplateAsync(
+        [FromBody] OrderFormRenderRequestDto dto, CancellationToken cancellationToken)
+    {
+        var model = _mapper.Map(dto);
+        var render = await _templateRenderService.RenderOrderFormAsync(model, cancellationToken);
+
+        return File(render.Content, render.ContentType, render.FileName);
+    }
+
+    /// <summary>
+    /// Render a product catalog document.
+    /// </summary>
+    /// <param name="dto">Product catalog render request.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Product catalog document.</returns>
+    [HttpPost("product-catalog")]
+    public async Task<IActionResult> RenderProductCatalogTemplateAsync(
+        [FromBody] ProductCatalogRenderRequestDto dto, CancellationToken cancellationToken)
+    {
+        var model = _mapper.Map(dto);
+        var render = await _templateRenderService.RenderProductCatalogAsync(model, cancellationToken);
+
+        return File(render.Content, render.ContentType, render.FileName);
     }
 }

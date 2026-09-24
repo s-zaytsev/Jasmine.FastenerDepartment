@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Jasmine.FastenerDepartment.Domain.Templates.Repositories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jasmine.FastenerDepartment.Domain;
@@ -14,5 +15,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Service collection.</param>
     /// <param name="configuration">Configuration.</param>
     public static void AddDomainServices(this IServiceCollection services, IConfiguration configuration)
-    { }
+    {
+        services.AddScoped<ITemplateContentTableColumnsRepository, TemplateContentTableColumnsRepository>();
+    }
 }

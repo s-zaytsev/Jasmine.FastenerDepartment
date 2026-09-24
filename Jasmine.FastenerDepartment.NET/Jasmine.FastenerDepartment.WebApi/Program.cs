@@ -3,7 +3,6 @@ using Jasmine.FastenerDepartment.Documents;
 using Jasmine.FastenerDepartment.Domain;
 using Jasmine.FastenerDepartment.EF;
 using Jasmine.FastenerDepartment.Messaging;
-using Jasmine.FastenerDepartment.Templates;
 using Jasmine.FastenerDepartment.WebApi.Configuration;
 using Jasmine.FastenerDepartment.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
@@ -43,9 +42,8 @@ public class Program
         builder.Services.AddWebServices();
         builder.Services.AddDomainServices(builder.Configuration);
         builder.Services.AddEFServices();
-        builder.Services.AddDocumentsServices(builder.Configuration);
+        builder.Services.AddDocumentsServices();
         builder.Services.AddApplicationServices(builder.Configuration);
-        builder.Services.AddTemplatesServices();
         builder.Services.AddMessagingServices(builder.Configuration);
 
         var app = builder.Build();
@@ -104,7 +102,6 @@ public class Program
                 "Logs/Jasmine.FastenerDepartment-.log",
                 rollingInterval: RollingInterval.Day,
                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
-            // ��� Grafana Loki
             //     .WriteTo.GrafanaLoki("http://localhost:3100")
             .CreateLogger();
     }

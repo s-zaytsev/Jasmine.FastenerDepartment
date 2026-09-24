@@ -1,5 +1,4 @@
 ﻿using Jasmine.FastenerDepartment.Application.Services.Companies;
-using Jasmine.FastenerDepartment.Application.Services.Documents;
 using Jasmine.FastenerDepartment.Application.Services.Orders;
 using Jasmine.FastenerDepartment.Application.Services.Print;
 using Jasmine.FastenerDepartment.Application.Services.Products;
@@ -8,6 +7,7 @@ using Jasmine.FastenerDepartment.Application.Services.ProductTypes;
 using Jasmine.FastenerDepartment.Application.Services.SettingsEntries;
 using Jasmine.FastenerDepartment.Application.Services.Suppliers;
 using Jasmine.FastenerDepartment.Application.Services.Synchronization;
+using Jasmine.FastenerDepartment.Application.Services.Templates;
 using Jasmine.FastenerDepartment.Domain.Companies.Services;
 using Jasmine.FastenerDepartment.Domain.Orders.Services;
 using Jasmine.FastenerDepartment.Domain.Products.Services;
@@ -15,6 +15,7 @@ using Jasmine.FastenerDepartment.Domain.ProductsToOrder.Services;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Services;
 using Jasmine.FastenerDepartment.Domain.Settings.Services;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Services;
+using Jasmine.FastenerDepartment.Domain.Templates.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -44,7 +45,6 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IProductsService, ProductsService>();
         services.AddScoped<IOrdersService, OrdersService>();
-        services.AddScoped<IDocumentsService, DocumentsService>();
         services.AddScoped<ISynchronizationService, SynchronizationService>();
         services.AddScoped<ISuppliersService, SuppliersService>();
         services.AddScoped<ISupplierProductsService, SupplierProductsService>();
@@ -53,5 +53,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProductsToOrderService, ProductsToOrderService>();
         services.AddScoped<ISettingsEntriesService, SettingsEntriesService>();
         services.AddScoped<ICompaniesService, CompaniesService>();
+        services.AddScoped<ITemplatesService, TemplatesService>();
+        services.AddScoped<ITemplateRenderService, TemplateRenderService>();
     }
 }
