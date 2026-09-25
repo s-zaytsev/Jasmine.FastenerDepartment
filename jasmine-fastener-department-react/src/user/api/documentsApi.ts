@@ -1,14 +1,18 @@
 import api from "../../core/api.ts";
-import type {ExportDocumentRequest} from "../models/exportModels.ts";
-import type {ChangeTemplate} from "../models/templateModels.ts";
+import type {ChangeTemplate, ProductCatalogRenderRequest, Template} from "../models/templateModels.ts";
 
 class DocumentsApi {
-    downloadDocument(request: ExportDocumentRequest) {
-        return api.get<Blob>(`/documents`, { params: request, responseType: 'blob' })
+    downloadProductCatalogDocument(request: ProductCatalogRenderRequest) {
+        return api.post<Blob>(`/documents/product-catalog`, request,{ responseType: 'blob'})
+    }
+
+    async getDocumentsForExport(): Promise<Template[]> {
+        const x = await api.get<Template[]>('documents/export-documents');
+        return x.data;
     }
 
     async getPreview(model: ChangeTemplate): Promise<string> {
-        const response = await api.post<Blob>(`/documents/preview`, model,{
+        const response = await api.post<Blob>(`/documents/preview`, model, {
             responseType: 'blob',
         });
 

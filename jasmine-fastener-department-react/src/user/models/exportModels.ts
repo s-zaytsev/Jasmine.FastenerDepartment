@@ -1,13 +1,6 @@
 import type {StateBase} from "../../shared/models/models.ts";
-
-export interface ExportDocumentRequest {
-    documentType: DocumentType;
-}
-
-export enum DocumentType {
-    word = 1
-}
+import type {Template} from "./templateModels.ts";
 
 export interface ExportPageState extends StateBase {
-
+    templates: Template[];
 }

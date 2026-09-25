@@ -1,6 +1,8 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
-import {DocumentType, type ExportDocumentRequest, type ExportPageState} from "../../models/exportModels.ts";
-import {downloadDocument} from "../../slices/ExportSlice.ts";
+import {type ExportPageState} from "../../models/exportModels.ts";
+import {downloadProductCatalog, getDocuments} from "../../slices/ExportSlice.ts";
+import {useEffect} from "react";
+import type {ProductCatalogRenderRequest, TemplateFormatCode} from "../../models/templateModels.ts";
 
 const useExportPage = () => {
 
@@ -10,14 +12,21 @@ const useExportPage = () => {
 
     const dispatch = useAppDispatch();
 
-    const handleDownload = (type: DocumentType) => {
-        const request: ExportDocumentRequest = {
-            documentType: type,
+    const handleDownload = (templateId: string, formatCode: TemplateFormatCode) => {
+        const request: ProductCatalogRenderRequest = {
+            templateId: templateId,
+            formatCode: formatCode,
         }
-        dispatch(downloadDocument(request));
+
+        dispatch(downloadProductCatalog(request));
     }
 
+    useEffect(() => {
+        dispatch(getDocuments());
+    }, [dispatch]);
+
     return {
+        templates: state.templates,
         handleDownload,
         loading: state.loading
     };

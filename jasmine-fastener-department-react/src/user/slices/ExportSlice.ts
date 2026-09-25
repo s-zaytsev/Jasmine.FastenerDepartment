@@ -1,18 +1,27 @@
 import {createSlice} from "@reduxjs/toolkit";
-import type {ExportDocumentRequest, ExportPageState} from "../models/exportModels.ts";
+import type {ExportPageState} from "../models/exportModels.ts";
 import DocumentsApi from "../api/documentsApi.ts";
 import {createAsyncThunkWithErrorHandler} from "../../shared/thunks/createAsyncThunkWithErrorHandler.ts";
 import {downloadService} from "../../shared/services/downloadService.ts";
+import type {ProductCatalogRenderRequest} from "../models/templateModels.ts";
 
-export const downloadDocument = createAsyncThunkWithErrorHandler(
+export const getDocuments = createAsyncThunkWithErrorHandler(
+    'export/getDocuments',
+    async () => {
+        return DocumentsApi.getDocumentsForExport();
+    }
+)
+
+export const downloadProductCatalog = createAsyncThunkWithErrorHandler(
     "export/downloadDocument",
-    async (request: ExportDocumentRequest) => {
-        const response = await DocumentsApi.downloadDocument(request);
+    async (request: ProductCatalogRenderRequest) => {
+        const response = await DocumentsApi.downloadProductCatalogDocument(request);
         downloadService.downloadFile(response);
     }
 );
 
 const initialState: ExportPageState = {
+    templates: [],
     loading: false,
     success: undefined,
     error: undefined
@@ -28,13 +37,26 @@ const exportSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(downloadDocument.pending, (state) => {
+            .addCase(getDocuments.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(downloadDocument.fulfilled, (state) => {
+            .addCase(getDocuments.fulfilled, (state, {payload}) => {
+                state.templates = payload;
                 state.loading = false;
             })
-            .addCase(downloadDocument.rejected, (state, action) => {
+            .addCase(getDocuments.rejected, (state, action) => {
+                state.error = action.payload ?? action.error;
+                state.loading = false;
+            });
+
+        builder
+            .addCase(downloadProductCatalog.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(downloadProductCatalog.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(downloadProductCatalog.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
                 state.loading = false;
             });

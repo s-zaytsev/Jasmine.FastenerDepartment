@@ -53,7 +53,7 @@ export const textStyles = {
       smallBold: {
         fontSize: "12px",
         lineHeight: "130%",
-        fontWeight: 500
+        fontWeight: 600
       }
     },
     label: {

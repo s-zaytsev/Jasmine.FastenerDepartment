@@ -1,19 +1,18 @@
-import {DocumentType} from "../../models/exportModels.ts";
 import Page from "../../../shared/components/layout/Page.tsx";
-import ExportDocumentCard from "./ExportDocumentCard.tsx";
-import MicrosoftWordIcon from "../../../assets/MicrosoftWordIcon.tsx";
 import Loader from "../../../shared/components/Loader.tsx";
 import useExportPage from "./useExportPage.ts";
+import ExportDocumentGrid from "./ExportDocumentGrid.tsx";
 
 const ExportPage = () => {
-    
+
     const {
+        templates,
         handleDownload,
         loading
     } = useExportPage();
 
     if (loading) {
-        return <Loader />;
+        return <Loader/>;
     }
 
     return (
@@ -21,11 +20,10 @@ const ExportPage = () => {
             title={'Экспорт документов'}
             description={'Выбор необходимого формата для экспорта документа'}
         >
-            <ExportDocumentCard
-                title={'Microsoft Word'}
-                description={'Скачать базу товаров в формате .docx'}
-                icon={<MicrosoftWordIcon/>}
-                onClick={() => handleDownload(DocumentType.word)}/>
+            <ExportDocumentGrid
+                templates={templates}
+                onDownload={handleDownload}
+            />
         </Page>
     )
 }
