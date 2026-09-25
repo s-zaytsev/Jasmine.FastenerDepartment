@@ -8,7 +8,7 @@ public class ProductCatalogRenderRequest
     /// <summary>
     /// Template identifier.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid TemplateId { get; set; }
 
     /// <summary>
     /// Format code.

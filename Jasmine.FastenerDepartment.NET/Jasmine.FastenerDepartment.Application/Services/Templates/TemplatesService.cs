@@ -9,6 +9,8 @@ namespace Jasmine.FastenerDepartment.Application.Services.Templates;
 
 internal class TemplatesService : ITemplatesService
 {
+    private readonly TemplateTypeCode[] _codesForExport = [TemplateTypeCode.ProductCatalog];
+
     private readonly ITemplatesRepository _templatesRepository;
     private readonly ITemplateTypesRepository _templatesTypesRepository;
     private readonly ITemplateContentTableColumnsRepository _templatesContentTableColumnsRepository;
@@ -29,6 +31,12 @@ internal class TemplatesService : ITemplatesService
     public async Task<IEnumerable<Template>> GetTemplatesAsync(CancellationToken cancellationToken = default)
     {
         var templates = await _templatesRepository.GetAllAsync(cancellationToken);
+        return templates;
+    }
+
+    public async Task<IEnumerable<Template>> GetTemplatesForExportAsync(CancellationToken cancellationToken = default)
+    {
+        var templates = await _templatesRepository.GetByTypeCodesAsync(_codesForExport, cancellationToken);
         return templates;
     }
 

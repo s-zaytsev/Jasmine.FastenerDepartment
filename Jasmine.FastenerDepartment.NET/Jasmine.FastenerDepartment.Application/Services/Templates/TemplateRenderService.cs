@@ -47,7 +47,7 @@ internal class TemplateRenderService : ITemplateRenderService
     {
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
-        var template = await GetTemplateByIdAsync(model.Id);
+        var template = await GetTemplateByIdAsync(model.TemplateId);
         CheckTemplateType(template.TypeCode, TemplateTypeCode.OrderForm);
 
         var company = await GetCompanyAsync(model.CompanyId);
@@ -69,7 +69,7 @@ internal class TemplateRenderService : ITemplateRenderService
     {
         ArgumentNullException.ThrowIfNull(model, nameof(model));
 
-        var template = await GetTemplateByIdAsync(model.Id);
+        var template = await GetTemplateByIdAsync(model.TemplateId);
         CheckTemplateType(template.TypeCode, TemplateTypeCode.ProductCatalog);
 
         var products = await _productsRepository.GetAllAsync(cancellationToken);

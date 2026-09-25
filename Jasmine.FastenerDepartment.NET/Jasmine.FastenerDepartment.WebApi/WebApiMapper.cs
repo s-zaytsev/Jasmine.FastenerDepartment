@@ -634,7 +634,7 @@ public class WebApiMapper
     {
         return new()
         {
-            Id = dto.Id,
+            TemplateId = dto.TemplateId,
             CompanyId = dto.CompanyId,
             FormatCode = dto.FormatCode,
             OrderId = dto.OrderId,
@@ -645,7 +645,7 @@ public class WebApiMapper
     {
         return new()
         {
-            Id = dto.Id,
+            TemplateId = dto.TemplateId,
             FormatCode = dto.FormatCode
         };
     }

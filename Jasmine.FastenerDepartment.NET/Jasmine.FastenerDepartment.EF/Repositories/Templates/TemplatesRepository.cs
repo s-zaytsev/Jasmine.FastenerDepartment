@@ -11,6 +11,14 @@ internal class TemplatesRepository : RepositoryBase<Guid, Template>, ITemplatesR
         : base(context)
     { }
 
+    public async Task<ICollection<Template>> GetByTypeCodesAsync(
+        TemplateTypeCode[] codes, CancellationToken cancellationToken = default)
+    {
+        return await GetQuery()
+            .Where(x => codes.Contains(x.TypeCode))
+            .ToListAsync(cancellationToken);
+    }
+
     protected override IQueryable<Template> GetQuery()
     {
         return base.GetQuery()
