@@ -21,6 +21,7 @@ import createCompanySlice from "../user/slices/CreateCompanySlice.ts";
 import templatesSlice from "../user/slices/TemplatesSlice.ts";
 import createTemplateSlice from "../user/slices/CreateTemplateSlice.ts";
 import changeTemplateSlice from "../user/slices/ChangeTemplateSlice.ts";
+import recipientsSlice from "../user/slices/RecipientsSlice.ts";
 
 export const store = configureStore({
     reducer: {
@@ -44,7 +45,8 @@ export const store = configureStore({
         changeCompany: changeCompanySlice,
         templates: templatesSlice,
         createTemplate: createTemplateSlice,
-        changeTemplate: changeTemplateSlice
+        changeTemplate: changeTemplateSlice,
+        recipients: recipientsSlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(notificationMiddleware)

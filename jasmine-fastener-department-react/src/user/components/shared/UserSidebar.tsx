@@ -1,5 +1,6 @@
 import Sidebar from "../../../shared/components/sidebar/Sidebar.tsx";
 import {
+    AccountBoxOutlined,
     BusinessOutlined,
     CloudDownloadOutlined,
     DesignServicesOutlined,
@@ -17,6 +18,7 @@ const mainItems = [
     {title: "Поставщики", link: "/suppliers", icon: <BusinessOutlined/>},
     {title: "Типы товаров", link: "/product-types", icon: <DesignServicesOutlined/>},
     {title: "Компании", link: "/companies", icon: <BusinessOutlined/>},
+    {title: "Контакты", link: "/recipients", icon: <AccountBoxOutlined/>},
     {title: "Шаблоны", link: "/templates", icon: <ListAltOutlined/>},
     {title: "Экспорт", link: "/export", icon: <CloudDownloadOutlined/>},
     {title: "История", link: "/history", icon: <HistoryOutlined/>}

@@ -20,6 +20,7 @@ import CreateCompanyPage from "./components/companies/createCompany/CreateCompan
 import TemplatesPage from "./components/templates/TemplatesPage.tsx";
 import CreateTemplatePage from "./components/templates/createTemplate/CreateTemplatePage.tsx";
 import ChangeTemplatePage from "./components/templates/changeTemplate/ChangeTemplatePage.tsx";
+import RecipientsPage from "./components/recipients/RecipientsPage.tsx";
 
 export const userRoutes = [
     <Route path="products" element={<ProductsPage/>} key="products"/>,
@@ -43,6 +44,7 @@ export const userRoutes = [
     <Route path="templates" element={<TemplatesPage/>} key="templates"/>,
     <Route path="templates/create" element={<CreateTemplatePage/>} key="create-template"/>,
     <Route path="templates/:id" element={<ChangeTemplatePage/>} key="change-template"/>,
+    <Route path="recipients" element={<RecipientsPage/>} key="recipients"/>,
     <Route index element={<Navigate to="products"/>} key="index"/>,
     <Route path="*" element={<Navigate to=""/>} key="wildcard"/>,
 ];
