@@ -8,6 +8,7 @@ using Jasmine.FastenerDepartment.Domain.Orders.Models;
 using Jasmine.FastenerDepartment.Domain.Products.Models;
 using Jasmine.FastenerDepartment.Domain.ProductsToOrder.Models;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Models;
+using Jasmine.FastenerDepartment.Domain.Recipients.Models;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Company;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
@@ -22,6 +23,7 @@ using Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Products;
 using Jasmine.FastenerDepartment.WebApi.Dtos.ProductsToOrder;
 using Jasmine.FastenerDepartment.WebApi.Dtos.ProductTypes;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Recipients;
 using Jasmine.FastenerDepartment.WebApi.Dtos.SettingsEntries;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Suppliers;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Synchronization;
@@ -659,5 +661,19 @@ public class WebApiMapper
     internal TemplateContentTableColumnDto Map(KeyValuePair<Enum, LocalizedString> column)
     {
         return new(Convert.ToInt32(column.Key), column.Value.GetText(_languageService.LanguageCode));
+    }
+
+    internal RecipientDto Map(Recipient model)
+    {
+        return new(model.Id, model.Name.Value, model.Email?.Value);
+    }
+
+    internal ChangeRecipient Map(ChangeRecipientDto model)
+    {
+        return new ChangeRecipient
+        {
+            Name = model.Name,
+            Email = model.Email,
+        };
     }
 }

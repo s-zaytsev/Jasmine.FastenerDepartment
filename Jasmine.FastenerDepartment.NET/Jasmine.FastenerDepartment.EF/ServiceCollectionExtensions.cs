@@ -5,6 +5,7 @@ using Jasmine.FastenerDepartment.Domain.Orders.Repositories;
 using Jasmine.FastenerDepartment.Domain.Products.Repositories;
 using Jasmine.FastenerDepartment.Domain.ProductsToOrder.Repositories;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Repositories;
+using Jasmine.FastenerDepartment.Domain.Recipients.Repositories;
 using Jasmine.FastenerDepartment.Domain.Settings.Repositories;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Repositories;
 using Jasmine.FastenerDepartment.Domain.Templates.Repositories;
@@ -14,6 +15,7 @@ using Jasmine.FastenerDepartment.EF.Repositories.Orders;
 using Jasmine.FastenerDepartment.EF.Repositories.Products;
 using Jasmine.FastenerDepartment.EF.Repositories.ProductsToOrder;
 using Jasmine.FastenerDepartment.EF.Repositories.ProductTypes;
+using Jasmine.FastenerDepartment.EF.Repositories.Recipients;
 using Jasmine.FastenerDepartment.EF.Repositories.SettingsEntries;
 using Jasmine.FastenerDepartment.EF.Repositories.Suppliers;
 using Jasmine.FastenerDepartment.EF.Repositories.Templates;
@@ -46,5 +48,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICompaniesRepository, CompaniesRepository>();
         services.AddScoped<ITemplatesRepository, TemplatesRepository>();
         services.AddScoped<ITemplateTypesRepository, TemplateTypesRepository>();
+        services.AddScoped<IRecipientsRepository, RecipientsRepository>();
     }
 }

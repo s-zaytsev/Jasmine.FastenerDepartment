@@ -4,6 +4,7 @@ using Jasmine.FastenerDepartment.Application.Services.Print;
 using Jasmine.FastenerDepartment.Application.Services.Products;
 using Jasmine.FastenerDepartment.Application.Services.ProductsToOrder;
 using Jasmine.FastenerDepartment.Application.Services.ProductTypes;
+using Jasmine.FastenerDepartment.Application.Services.Recipients;
 using Jasmine.FastenerDepartment.Application.Services.SettingsEntries;
 using Jasmine.FastenerDepartment.Application.Services.Suppliers;
 using Jasmine.FastenerDepartment.Application.Services.Synchronization;
@@ -13,6 +14,7 @@ using Jasmine.FastenerDepartment.Domain.Orders.Services;
 using Jasmine.FastenerDepartment.Domain.Products.Services;
 using Jasmine.FastenerDepartment.Domain.ProductsToOrder.Services;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Services;
+using Jasmine.FastenerDepartment.Domain.Recipients.Services;
 using Jasmine.FastenerDepartment.Domain.Settings.Services;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Services;
 using Jasmine.FastenerDepartment.Domain.Templates.Services;
@@ -55,5 +57,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICompaniesService, CompaniesService>();
         services.AddScoped<ITemplatesService, TemplatesService>();
         services.AddScoped<ITemplateRenderService, TemplateRenderService>();
+        services.AddScoped<IRecipientsService, RecipientsService>();
     }
 }
