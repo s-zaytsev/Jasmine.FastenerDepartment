@@ -6,7 +6,7 @@ import TemplatesApi from "../api/templatesApi.ts";
 export const getTemplates = createAsyncThunkWithErrorHandler(
     "templates/getTemplates",
     async () => {
-        return TemplatesApi.getTemplates();
+        return TemplatesApi.getTemplates({});
     }
 );
 

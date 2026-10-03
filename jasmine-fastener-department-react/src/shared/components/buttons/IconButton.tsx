@@ -15,6 +15,7 @@ type IconButtonProps = {
 const IconButton = (props: IconButtonProps) => {
     const isActive = props.isActive ?? true;
     const isDisabled = props.isDisabled;
+    const backgroundColor = !isDisabled ? primitives.colors.tonal : semanticColors.surface.medium;
 
     return (
         <Tooltip title={!isDisabled ? props.description : ''}>
@@ -24,7 +25,7 @@ const IconButton = (props: IconButtonProps) => {
                     color: isActive && !isDisabled ? primitives.colors.primary : semanticColors.text.secondary,
                     cursor: !isDisabled ? 'pointer' : 'default',
                     minWidth: 0,
-                    backgroundColor: props.hasBackground ? primitives.colors.tonal : undefined,
+                    backgroundColor: props.hasBackground ? backgroundColor : undefined,
                     borderRadius: primitives.border.radius,
                 }}>
                 {props.children}

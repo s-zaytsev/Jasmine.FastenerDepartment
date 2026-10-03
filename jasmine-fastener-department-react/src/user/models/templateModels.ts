@@ -18,6 +18,10 @@ export interface ChangeTemplatePageState extends StateBase {
     preview: string;
 }
 
+export interface TemplatesQuery {
+    typeCodes?: TemplateTypeCode[];
+}
+
 export interface Template {
     id: string;
     name: string;
@@ -90,5 +94,12 @@ export interface TemplateContentTableColumn {
 export interface ProductCatalogRenderRequest {
     templateId: string;
     formatCode: TemplateFormatCode;
+}
+
+export interface OrderFormRenderRequest {
+    templateId: string;
+    formatCode: TemplateFormatCode;
+    orderId: string;
+    companyId?: string;
 }
 

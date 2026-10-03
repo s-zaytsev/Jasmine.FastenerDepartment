@@ -1,4 +1,4 @@
-import {type ChangeEvent, useEffect, useState} from "react";
+import {type ChangeEvent, memo, useEffect, useState} from "react";
 import {Box, Button} from "@mui/material";
 import FileCard from "./FileCard.tsx";
 
@@ -27,7 +27,7 @@ const FileUploader = (props: FileUploaderProps) => {
     }, [files]);
 
     return (
-        <Box className={'flex flex-col items-center'}>
+        <Box className={'w-full flex flex-col items-center'}>
 
             {files.map((file: File) =>
                 <FileCard key={file.name + file.size} file={file} onDelete={handleDeleteFile}/>
@@ -51,4 +51,4 @@ const FileUploader = (props: FileUploaderProps) => {
     )
 }
 
-export default FileUploader;
+export default memo(FileUploader);

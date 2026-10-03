@@ -2,7 +2,7 @@ import {memo, useEffect} from "react";
 import {Box} from "@mui/material";
 import MainTemplateDataCard from "./MainTemplateDataCard.tsx";
 import ContentForm from "./contentForms/ContentForm.tsx";
-import TemplatePreview from "./TemplatePreview.tsx";
+import TemplatePreview from "../../../../shared/components/templates/TemplatePreview.tsx";
 import {
     type ChangeTemplate,
     type OrderFormTemplateContent,

@@ -91,3 +91,11 @@ export enum LanguageCode {
 export enum MessageType {
     email = 1
 }
+
+export interface FileModel {
+    id: string;
+    name: string;
+    size: number;
+    type: string;
+    lastModified: number;
+}

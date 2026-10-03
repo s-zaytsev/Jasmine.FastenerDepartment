@@ -3,12 +3,13 @@ import {
     type ChangeTemplate,
     type Template,
     type TemplateContentTableColumnGroup,
+    type TemplatesQuery,
     type TemplateType
 } from "../models/templateModels.ts";
 
 class TemplatesApi {
-    getTemplates(): Promise<Template[]> {
-        return api.get<Promise<Template[]>>(`/templates`)
+    getTemplates(query: TemplatesQuery): Promise<Template[]> {
+        return api.get<Promise<Template[]>>(`/templates`, {params: query})
             .then(x => x.data);
     }
 

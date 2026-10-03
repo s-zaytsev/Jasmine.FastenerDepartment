@@ -30,7 +30,7 @@ const OrderFormTemplateCardContent = (props: OrderFormTemplateCardContentProps) 
                 />
             </Box>
 
-            <Box className={'flex justify-between items-center  gap-[0.5rem]'}>
+            <Box className={'flex justify-between items-baseline gap-[0.5rem]'}>
                 <Typography variant={'labelRegular'} color={'tertiary'}>Колонки</Typography>
                 <Box className={'flex'}>
                     <Typography variant={'labelRegular'}>

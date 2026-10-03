@@ -1,7 +1,10 @@
-import {MessageType, type Page, type Quantity, type QueryBase, type StateBase} from "../../shared/models/models.ts";
+import {type FileModel, type Page, type Quantity, type QueryBase, type StateBase} from "../../shared/models/models.ts";
 import type {Supplier} from "./supplierModels.ts";
 import type {ProductType} from "./productTypeModels.ts";
 import type {ProductToOrder} from "./productsToOrderModels.ts";
+import {type Template, TemplateFormatCode} from "./templateModels.ts";
+import type {Recipient} from "./recipientModels.ts";
+import type {Company} from "./companyModels.ts";
 
 export interface OrderPageState extends StateBase {
     completedOrdersQuery: OrdersQuery;
@@ -24,6 +27,18 @@ export interface ChangeOrderState extends StateBase {
     model: OrderStepperModel;
     products: ProductToOrder[];
     productTypes: ProductType[];
+}
+
+export interface SendOrderState extends StateBase {
+    companies: Company[];
+    templates: Template[];
+    recipients: Recipient[];
+    selectedCompany?: Company;
+    selectedTemplate?: Template;
+    selectedRecipient?: Recipient;
+    selectedFormats: TemplateFormatCode[];
+    extraFiles: FileModel[];
+    preview: string;
 }
 
 export interface CompleteOrderState extends StateBase {
@@ -125,7 +140,16 @@ export interface CompleteOrder {
 
 export interface SendOrder {
     recipientContact: string;
-    messageType: MessageType;
+    companyId?: string;
+    templateId: string;
+    formats: TemplateFormatCode[];
+    attachments?: File[];
+}
+
+export interface DownloadOrder {
+    companyId?: string;
+    templateId: string;
+    formats: TemplateFormatCode[];
     attachments?: File[];
 }
 

@@ -5,6 +5,7 @@ import type {
     ChangeOrder,
     CompleteOrder,
     CreateOrder,
+    DownloadOrder,
     Order,
     OrdersQuery,
     SendOrder
@@ -37,15 +38,44 @@ class OrdersApi {
     sendOrder(id: string, model: SendOrder): Promise<void> {
         const body = new FormData();
         body.append('recipientContact', model.recipientContact);
-        body.append('messageType', String(model.messageType));
+        body.append('templateId', model.templateId);
+
+        for (const format of model.formats) {
+            body.append('formats', format.toString());
+        }
+
+        if (model.companyId) {
+            body.append('companyId', model.companyId);
+        }
 
         if (model.attachments) {
-            for (const file of model.attachments) {
-                body.append('attachments', file);
+            for (const attachment of model.attachments) {
+                body.append('attachments', attachment);
             }
         }
 
         return api.post(`/orders/${id}/send`, body)
+    }
+
+    downloadOrder(id: string, model: DownloadOrder) {
+        const body = new FormData();
+        body.append('templateId', model.templateId);
+
+        for (const format of model.formats) {
+            body.append('formats', format.toString());
+        }
+
+        if (model.companyId) {
+            body.append('companyId', model.companyId);
+        }
+
+        if (model.attachments) {
+            for (const attachment of model.attachments) {
+                body.append('attachments', attachment);
+            }
+        }
+
+        return api.post<Blob>(`/orders/${id}/download`, body, {responseType: 'blob'})
     }
 
     cancelOrder(id: string, model: CancelOrder): Promise<void> {
@@ -53,7 +83,7 @@ class OrdersApi {
     }
 
     downloadDocument(id: string) {
-        return api.get<Blob>(`/orders/document/${id}`, { responseType: 'blob' })
+        return api.get<Blob>(`/orders/document/${id}`, {responseType: 'blob'})
     }
 }
 

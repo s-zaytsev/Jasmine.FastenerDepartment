@@ -1,5 +1,10 @@
 import api from "../../core/api.ts";
-import type {ChangeTemplate, ProductCatalogRenderRequest, Template} from "../models/templateModels.ts";
+import type {
+    ChangeTemplate,
+    OrderFormRenderRequest,
+    ProductCatalogRenderRequest,
+    Template
+} from "../models/templateModels.ts";
 
 class DocumentsApi {
     downloadProductCatalogDocument(request: ProductCatalogRenderRequest) {
@@ -18,6 +23,15 @@ class DocumentsApi {
 
         const htmlText = await response.data.text();
         return htmlText;
+    }
+
+    async renderOrderForm(request: OrderFormRenderRequest): Promise<string> {
+        const response = await api.post<Blob>(`/documents/order-form`, request, {
+            responseType: 'blob',
+        });
+
+        const text = await response.data.text();
+        return text;
     }
 }
 

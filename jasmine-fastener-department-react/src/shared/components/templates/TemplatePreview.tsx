@@ -1,4 +1,4 @@
-import {semanticColors} from "../../../../assets/variables/semanticColors.ts";
+import {semanticColors} from "../../../assets/variables/semanticColors.ts";
 import {memo} from "react";
 
 type TemplatePreviewProps = {
@@ -15,6 +15,7 @@ const TemplatePreview = (props: TemplatePreviewProps) => {
                 width: '100%',
                 height: '100%',
                 padding: '1rem',
+                margin: '5px 0',
                 border: 'none',
                 backgroundColor: semanticColors.surface.white
             }}

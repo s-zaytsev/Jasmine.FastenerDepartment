@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHooks.ts";
-import type {CancelOrder, OrderPageState, SendOrder} from "../../../models/orderModels.ts";
+import type {CancelOrder, OrderPageState} from "../../../models/orderModels.ts";
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import {
@@ -7,8 +7,7 @@ import {
     clearSelectedOrder,
     getActiveOrdersPage,
     getCompletedOrdersPage,
-    selectOrder,
-    sendOrder
+    selectOrder
 } from "../../../slices/OrdersSlice.ts";
 
 const useOrderPage = () => {
@@ -22,10 +21,6 @@ const useOrderPage = () => {
     const handleCancelDialogOpen = useCallback(() => setIsCancelDialogOpen(true), []);
     const handleCancelDialogClose = useCallback(() => setIsCancelDialogOpen(false), []);
 
-    const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
-    const handleSendDialogOpen = useCallback(() => setIsSendDialogOpen(true), []);
-    const handleSendDialogClose = useCallback(() => setIsSendDialogOpen(false), []);
-
     const handleNavigateToCreate = useCallback(() => {
         navigate("create");
     }, [navigate]);
@@ -35,10 +30,9 @@ const useOrderPage = () => {
         handleCancelDialogOpen();
     }, [dispatch, handleCancelDialogOpen]);
 
-    const handleOpenDialogToSend = useCallback((id: string) => {
-        dispatch(selectOrder({id}))
-        handleSendDialogOpen();
-    }, [dispatch, handleSendDialogOpen]);
+    const handleNavigateToSend = useCallback((id: string) => {
+        navigate(`${id}/send`);
+    }, [navigate])
 
     const handleChangeOrder = useCallback((id: string) => {
         navigate(`${id}/change`);
@@ -60,13 +54,6 @@ const useOrderPage = () => {
         await dispatch(getActiveOrdersPage(state.activeOrdersQuery));
     }, [dispatch, handleCancelDialogClose, state.activeOrdersQuery, state.completedOrdersQuery, state.selectedOrder?.id]);
 
-    const handleSendOrder = useCallback(async (model: SendOrder) => {
-        handleSendDialogClose();
-        await dispatch(sendOrder({id: state.selectedOrder?.id, model: model}));
-        dispatch(clearSelectedOrder());
-        await dispatch(getActiveOrdersPage(state.activeOrdersQuery));
-    }, [dispatch, handleSendDialogClose, state.activeOrdersQuery, state.selectedOrder?.id]);
-
     useEffect(() => {
         dispatch(getCompletedOrdersPage(state.completedOrdersQuery));
         dispatch(getActiveOrdersPage(state.activeOrdersQuery));
@@ -78,17 +65,14 @@ const useOrderPage = () => {
         selectedOrder: state.selectedOrder,
         loading: state.loading,
         isCancelDialogOpen,
-        isSendDialogOpen,
         handleCancelDialogClose,
-        handleSendDialogClose,
         handleNavigateToCreate,
         handleOpenDialogToCancel,
-        handleOpenDialogToSend,
         handleChangeOrder,
         handleCompleteOrder,
         handleNavigateToDetails,
         handleCancelOrder,
-        handleSendOrder
+        handleNavigateToSend
     };
 }
 

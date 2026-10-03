@@ -21,7 +21,7 @@ const ProductCatalogTemplateCardContent = (props: ProductCatalogTemplateCardCont
                 />
             </Box>
 
-            <Box className={'flex justify-between items-center'}>
+            <Box className={'flex justify-between items-baseline'}>
                 <Typography variant={'labelRegular'} color={'tertiary'}>Колонки</Typography>
                 <Box className={'flex gap-[0.5rem]'}>
                     <Typography variant={'labelRegular'}>

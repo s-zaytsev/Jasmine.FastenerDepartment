@@ -22,6 +22,7 @@ import templatesSlice from "../user/slices/TemplatesSlice.ts";
 import createTemplateSlice from "../user/slices/CreateTemplateSlice.ts";
 import changeTemplateSlice from "../user/slices/ChangeTemplateSlice.ts";
 import recipientsSlice from "../user/slices/RecipientsSlice.ts";
+import SendOrderSlice from "../user/slices/SendOrderSlice.ts";
 
 export const store = configureStore({
     reducer: {
@@ -32,6 +33,7 @@ export const store = configureStore({
         orders: ordersSlice,
         createOrder: createOrderSlice,
         changeOrder: changeOrderSlice,
+        sendOrder: SendOrderSlice,
         completeOrder: completeOrderSlice,
         orderDetails: orderDetailsSlice,
         history: productsHistorySlice,

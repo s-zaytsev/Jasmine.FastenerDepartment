@@ -2,6 +2,7 @@ import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import OrdersApi from "../api/ordersApi.ts";
 import {type OrderPageState, type OrdersQuery, OrdersQueryParameter} from "../models/orderModels.ts";
 import {createAsyncThunkWithErrorHandler} from "../../shared/thunks/createAsyncThunkWithErrorHandler.ts";
+import {downloadService} from "../../shared/services/downloadService.ts";
 
 export const getCompletedOrdersPage = createAsyncThunkWithErrorHandler(
     "orders/getCompletedOrdersPage",
@@ -28,6 +29,14 @@ export const cancelOrder = createAsyncThunkWithErrorHandler(
     "orders/cancelOrder",
     async ({id, model}: any) => {
         return OrdersApi.cancelOrder(id, model);
+    }
+);
+
+export const downloadOrder = createAsyncThunkWithErrorHandler(
+    "orders/downloadOrder",
+    async ({id, model}: any) => {
+        const response = await OrdersApi.downloadOrder(id, model);
+        downloadService.downloadFile(response);
     }
 );
 

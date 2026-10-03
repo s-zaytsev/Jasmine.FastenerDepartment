@@ -9,6 +9,13 @@ export interface PageProps {
         label: string;
         type?: "submit" | "reset" | "button";
         formId?: string;
+        isDisabled?: boolean;
+        onClick?: (args?: any) => void;
+    };
+    iconButton?: {
+        icon: ReactNode;
+        description: string;
+        isDisabled?: boolean;
         onClick?: (args?: any) => void;
     };
     children: ReactNode;
@@ -21,6 +28,7 @@ const Page = (props: PageProps) => {
                 title={props.title}
                 description={props.description}
                 button={props.button}
+                iconButton={props.iconButton}
             />
             <Fade className={'h-full'} in={true} timeout={300}>
                 <Box>{props.children}</Box>

@@ -4,6 +4,7 @@ import Typography from "../Typography.tsx";
 import {semanticColors} from "../../../assets/variables/semanticColors.ts";
 import IconButton from "../buttons/IconButton.tsx";
 import {CloseOutlined} from "@mui/icons-material";
+import {memo} from "react";
 
 type FileCardProps = {
     file: File;
@@ -14,13 +15,13 @@ const FileCard = (props: FileCardProps) => {
     return (
         <Card backgroundColor={semanticColors.surface.light}>
             <Box className={'flex justify-between items-center w-full'}>
-                <Box className={'flex flex-col'}>
+                <Box className={'flex flex-col gap-[0.5rem]'}>
                     <Typography variant={'bodyRegular'} color={'primary'}>{props.file.name}</Typography>
-                    <Typography variant={'labelRegular'} color={'tertiary'} sx={{marginTop: '0.5rem'}}>{props.file.size / 100} Kb</Typography>
+                    <Typography variant={'labelRegular'} color={'tertiary'}>{props.file.size / 100} Kb</Typography>
                 </Box>
                 <Box>
                     <IconButton description={'Удалить из списка'} onClick={() => props.onDelete(props.file)}>
-                        <CloseOutlined />
+                        <CloseOutlined/>
                     </IconButton>
                 </Box>
             </Box>
@@ -28,4 +29,4 @@ const FileCard = (props: FileCardProps) => {
     )
 }
 
-export default FileCard;
+export default memo(FileCard);

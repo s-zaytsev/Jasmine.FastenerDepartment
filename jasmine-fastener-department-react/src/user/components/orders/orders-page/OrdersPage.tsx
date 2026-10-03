@@ -5,7 +5,6 @@ import CompletedOrdersGrid from "./complete-orders/CompletedOrdersGrid.tsx";
 import CancelOrderDialog from "../dialogs/CancelOrderDialog.tsx";
 import ActiveOrdersGrid from "./active-orders/ActiveOrdersGrid.tsx";
 import Section from "../../../../shared/components/section/Section.tsx";
-import SendOrderDialog from "../dialogs/SendOrderDialog.tsx";
 import useOrderPage from "./useOrderPage.ts";
 
 const OrdersPage = () => {
@@ -15,17 +14,14 @@ const OrdersPage = () => {
         selectedOrder,
         loading,
         isCancelDialogOpen,
-        isSendDialogOpen,
         handleCancelDialogClose,
-        handleSendDialogClose,
         handleNavigateToCreate,
         handleOpenDialogToCancel,
-        handleOpenDialogToSend,
         handleChangeOrder,
         handleCompleteOrder,
         handleNavigateToDetails,
         handleCancelOrder,
-        handleSendOrder
+        handleNavigateToSend
     } = useOrderPage();
 
     if (loading) {
@@ -49,7 +45,7 @@ const OrdersPage = () => {
                             onChange={handleChangeOrder}
                             onCancel={handleOpenDialogToCancel}
                             onComplete={handleCompleteOrder}
-                            onSend={handleOpenDialogToSend}
+                            onSend={handleNavigateToSend}
                             onNavigateToDetails={handleNavigateToDetails}
                         />
                     </Section>
@@ -73,13 +69,6 @@ const OrdersPage = () => {
                 open={isCancelDialogOpen}
                 onClose={handleCancelDialogClose}
                 onSubmit={handleCancelOrder}
-            />
-
-            <SendOrderDialog
-                order={selectedOrder}
-                open={isSendDialogOpen}
-                onClose={handleSendDialogClose}
-                onSubmit={handleSendOrder}
             />
         </Page>
     )

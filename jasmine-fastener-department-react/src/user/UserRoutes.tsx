@@ -21,6 +21,7 @@ import TemplatesPage from "./components/templates/TemplatesPage.tsx";
 import CreateTemplatePage from "./components/templates/createTemplate/CreateTemplatePage.tsx";
 import ChangeTemplatePage from "./components/templates/changeTemplate/ChangeTemplatePage.tsx";
 import RecipientsPage from "./components/recipients/RecipientsPage.tsx";
+import SendOrderPage from "./components/orders/send-order/SendOrderPage.tsx";
 
 export const userRoutes = [
     <Route path="products" element={<ProductsPage/>} key="products"/>,
@@ -31,6 +32,7 @@ export const userRoutes = [
     <Route path="orders/:id" element={<OrderDetailsPage/>} key="order-details"/>,
     <Route path="orders/create" element={<CreateOrderPage/>} key="create-order"/>,
     <Route path="orders/:id/change" element={<ChangeOrderPage/>} key="change-order"/>,
+    <Route path="orders/:id/send" element={<SendOrderPage/>} key="send-order"/>,
     <Route path="orders/:id/complete" element={<CompleteOrderPage/>} key="complete-order"/>,
     <Route path="print" element={<PrintPage/>} key="print"/>,
     <Route path="export" element={<ExportPage/>} key="export"/>,
