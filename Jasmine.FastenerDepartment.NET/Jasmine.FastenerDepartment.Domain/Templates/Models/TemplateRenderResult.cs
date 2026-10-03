@@ -1,4 +1,6 @@
-﻿namespace Jasmine.FastenerDepartment.Domain.Templates.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+
+namespace Jasmine.FastenerDepartment.Domain.Templates.Models;
 
 /// <summary>
 /// Template render result.
@@ -39,5 +41,19 @@ public class TemplateRenderResult
         Content = content;
         ContentType = contentType;
         FileName = name;
+    }
+
+    /// <summary>
+    /// Returns template render result as a file.
+    /// </summary>
+    /// <returns>File.</returns>
+    public FileModel AsFile()
+    {
+        return new FileModel
+        {
+            Content = Content,
+            ContentType = ContentType,
+            Name = FileName
+        };
     }
 }

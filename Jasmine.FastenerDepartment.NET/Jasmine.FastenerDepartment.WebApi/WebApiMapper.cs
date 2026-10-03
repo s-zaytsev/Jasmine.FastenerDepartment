@@ -12,6 +12,7 @@ using Jasmine.FastenerDepartment.Domain.Recipients.Models;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Company;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
+using Jasmine.FastenerDepartment.Domain.Templates;
 using Jasmine.FastenerDepartment.Domain.Templates.Models;
 using Jasmine.FastenerDepartment.Domain.Templates.Models.Content;
 using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
@@ -409,7 +410,21 @@ public class WebApiMapper
         return new()
         {
             RecipientContact = dto.RecipientContact,
-            MessageType = dto.MessageType,
+            MessageType = MessageTypeCode.Email,
+            CompanyId = dto.CompanyId,
+            TemplateId = dto.TemplateId,
+            Formats = dto.Formats,
+            Attachments = [.. dto.Attachments?.Select(Map) ?? []]
+        };
+    }
+
+    internal DownloadOrderModel Map(DownloadOrderDto dto)
+    {
+        return new()
+        {
+            CompanyId = dto.CompanyId,
+            TemplateId = dto.TemplateId,
+            Formats = dto.Formats,
             Attachments = [.. dto.Attachments?.Select(Map) ?? []]
         };
     }
@@ -551,6 +566,11 @@ public class WebApiMapper
             Inn = model.Inn,
             PhoneNumber = model.PhoneNumber
         };
+    }
+
+    internal TemplatesQuery Map(TemplatesQueryDto model)
+    {
+        return new() { TypeCodes = model.TypeCodes };
     }
 
     internal TemplateDto Map(Template template)

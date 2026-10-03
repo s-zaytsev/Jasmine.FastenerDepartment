@@ -4,25 +4,23 @@ using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
 
-namespace Jasmine.FastenerDepartment.Messaging.Services;
+namespace Jasmine.FastenerDepartment.Messaging.MessageProviders;
 
-internal class EmailService : IEmailService
+internal class EmailsProvider : IMessageTypeProvider
 {
     private readonly EmailSettings _settings;
 
-    public EmailService(IOptionsSnapshot<EmailSettings> settings)
+    public EmailsProvider(IOptionsSnapshot<EmailSettings> settings)
     {
         _settings = settings.Value;
     }
 
-    public async Task<string> SendAsync(MessageRequest request, CancellationToken cancellationToken)
+    public async Task SendAsync(SendModel model, CancellationToken cancellationToken)
     {
         using var client = CreateSmtpClient();
-        var message = CreateMessage(request);
+        var message = CreateMessage(model);
 
         await client.SendMailAsync(message, cancellationToken);
-
-        return request.RecipientContact;
     }
 
     private SmtpClient CreateSmtpClient()
@@ -37,19 +35,19 @@ internal class EmailService : IEmailService
         return client;
     }
 
-    private MailMessage CreateMessage(MessageRequest request)
+    private MailMessage CreateMessage(SendModel model)
     {
         var mailMessage = new MailMessage
         {
             From = new MailAddress(_settings.UserName, _settings.DisplayName),
-            Subject = request.Title,
-            Body = request.Content,
+            Subject = model.Title,
+            Body = model.Content,
             IsBodyHtml = true
         };
 
-        mailMessage.To.Add(request.RecipientContact);
+        mailMessage.To.Add(model.RecipientContact);
 
-        foreach (var file in request.Attachments)
+        foreach (var file in model.Attachments)
         {
             mailMessage.Attachments.Add(new(file.Content, file.Name, file.ContentType));
         }

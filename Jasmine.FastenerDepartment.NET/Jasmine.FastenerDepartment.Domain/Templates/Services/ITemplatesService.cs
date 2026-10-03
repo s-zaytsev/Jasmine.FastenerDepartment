@@ -11,9 +11,10 @@ public interface ITemplatesService
     /// <summary>
     /// Returns a collection of templates.
     /// </summary>
+    /// <param name="query">Templates query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Collection of templates.</returns>
-    Task<IEnumerable<Template>> GetTemplatesAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Template>> GetTemplatesAsync(TemplatesQuery query, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a collection of templates.

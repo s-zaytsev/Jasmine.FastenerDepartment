@@ -4,7 +4,7 @@ using Jasmine.FastenerDepartment.Domain.Templates.Models.Content;
 namespace Jasmine.FastenerDepartment.Domain.Templates.Factories;
 
 /// <summary>
-/// Template dactory.
+/// Template factory.
 /// </summary>
 public interface ITemplateFactory
 {

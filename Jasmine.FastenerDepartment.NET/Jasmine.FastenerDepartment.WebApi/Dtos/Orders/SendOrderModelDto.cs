@@ -1,4 +1,4 @@
-﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Templates.Models;
 
 namespace Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 
@@ -6,9 +6,13 @@ namespace Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 /// Send order model.
 /// </summary>
 /// <param name="RecipientContact">Recipient contact.</param>
-/// <param name="MessageType">Message type.</param>
+/// <param name="CompanyId">Company identifier.</param>
+/// <param name="TemplateId">Template identifier.</param>
+/// <param name="Formats">Collection of template formats.</param>
 /// <param name="Attachments">Attachments.</param>
 public record SendOrderModelDto(
     string RecipientContact,
-    MessageType MessageType,
+    Guid? CompanyId,
+    Guid TemplateId,
+    List<TemplateFormatCode> Formats,
     List<IFormFile> Attachments);

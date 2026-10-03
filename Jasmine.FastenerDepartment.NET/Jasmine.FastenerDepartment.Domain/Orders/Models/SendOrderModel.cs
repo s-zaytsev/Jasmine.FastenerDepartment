@@ -1,6 +1,7 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Templates.Models;
 
-namespace Jasmine.FastenerDepartment.Domain.Products.Models;
+namespace Jasmine.FastenerDepartment.Domain.Orders.Models;
 
 /// <summary>
 /// Send order model.
@@ -15,7 +16,22 @@ public class SendOrderModel
     /// <summary>
     /// Message type.
     /// </summary>
-    public MessageType MessageType { get; set; }
+    public MessageTypeCode MessageType { get; set; }
+
+    /// <summary>
+    /// Company identifier.
+    /// </summary>
+    public Guid? CompanyId { get; set; }
+
+    /// <summary>
+    /// Template identifier.
+    /// </summary>
+    public Guid TemplateId { get; set; }
+
+    /// <summary>
+    /// Collection of template format codes.
+    /// </summary>
+    public ICollection<TemplateFormatCode> Formats { get; set; }
 
     /// <summary>
     /// Attachments.

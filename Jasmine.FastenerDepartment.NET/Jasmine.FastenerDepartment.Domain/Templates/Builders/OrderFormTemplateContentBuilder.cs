@@ -22,7 +22,7 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
     private readonly Dictionary<OrderFormTemplateContentTableColumnCode, int> _fixedWidthPercent = new()
     {
         { OrderFormTemplateContentTableColumnCode.SupplierProductNumber, 15 },
-        { OrderFormTemplateContentTableColumnCode.ProductSize, 15 },
+        { OrderFormTemplateContentTableColumnCode.ProductSize, 25 },
         { OrderFormTemplateContentTableColumnCode.Amount, 10 },
     };
 

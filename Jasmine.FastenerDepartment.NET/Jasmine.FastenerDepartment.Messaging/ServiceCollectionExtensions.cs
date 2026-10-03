@@ -1,5 +1,8 @@
-﻿using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
+﻿using Jasmine.FastenerDepartment.Domain.Messaging.Services;
+using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Messaging.Factories;
+using Jasmine.FastenerDepartment.Messaging.MessageProviders;
+using Jasmine.FastenerDepartment.Messaging.Providers;
 using Jasmine.FastenerDepartment.Messaging.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,9 +21,11 @@ public static class ServiceCollectionExtensions
     /// <param name="configuration">Configuration.</param>
     public static void AddMessagingServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IMessageServicesFactory, MessageServicesFactory>();
-        services.AddScoped<IEmailService, EmailService>();
-        services.AddScoped<IMessageService, EmailService>();
+        services.AddScoped<IMessagesTypeProvidersFactory, MessagesTypeProvidersFactory>();
+        services.AddScoped<IMessageTemplateProvidersFactory, MessageTemplateProvidersFactory>();
+        services.AddScoped<EmailsProvider>();
+        services.AddScoped<EmailsTemplateProvider>();
+        services.AddScoped<IMessagesService, MessagesService>();
 
         services.Configure<EmailSettings>(configuration.GetSection("Emails"));
     }

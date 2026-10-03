@@ -2,16 +2,8 @@
 
 namespace Jasmine.FastenerDepartment.Messaging.Models;
 
-/// <summary>
-/// Message request.
-/// </summary>
-public class MessageRequest
+internal class SendModel
 {
-    /// <summary>
-    /// Message type.
-    /// </summary>
-    public MessageType Type { get; set; }
-
     /// <summary>
     /// Recipient contact.
     /// </summary>
@@ -30,5 +22,5 @@ public class MessageRequest
     /// <summary>
     /// Attachments.
     /// </summary>
-    public ICollection<FileModel> Attachments { get; set; }
+    public List<FileModel> Attachments { get; set; }
 }

@@ -2,41 +2,35 @@
 using Jasmine.FastenerDepartment.Domain.Orders.Models;
 using Jasmine.FastenerDepartment.Templates.Emails.Constants;
 
-namespace Jasmine.FastenerDepartment.Templates.Emails.Builders.Emails;
+namespace Jasmine.FastenerDepartment.Templates.Emails.Builders;
 
-internal class OrderRequestEmailTemplateBuilder : EmailTemplateBuilderBase
+public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
 {
     private readonly Order _order;
     private readonly bool _hasAttachments;
 
     protected override string Title { get; set; }
     protected override string Body { get; set; }
-    protected override LanguageCode? LanguageCode { get; set; }
 
     /// <summary>
     /// Creates HTML template builder.
     /// </summary>
     /// <param name="order">Order.</param>
     /// <param name="hasAttachments">Whether the email has attachments.</param>
-    public OrderRequestEmailTemplateBuilder(Order order, bool hasAttachments)
+    public OrderFormEmailTemplateBuilder(Order order, bool hasAttachments, LanguageCode? languageCode)
     {
         _order = order;
         _hasAttachments = hasAttachments;
-    }
-
-    public override EmailTemplateBuilderBase SetLanguage(LanguageCode? languageCode)
-    {
         LanguageCode = languageCode;
-        return this;
     }
 
-    public override EmailTemplateBuilderBase SetTitle()
+    protected override EmailTemplateBuilderBase SetTitle()
     {
         Title = $"{OrderConstants.ORDER.GetText(LanguageCode)} #{_order.Number}";
         return this;
     }
 
-    public override EmailTemplateBuilderBase SetBody()
+    protected override EmailTemplateBuilderBase SetBody()
     {
         var header = GetHeader();
         var title = GetTitle();
@@ -181,13 +175,10 @@ internal class OrderRequestEmailTemplateBuilder : EmailTemplateBuilderBase
 
     private string GetSectionDesktopTable(List<OrderProduct> products)
     {
-        var desktopBlock = $@"
-              ";
+        var desktopBlock = $@"";
 
         var mobileBlock = $@"
-            <div class=""mobile-row"">
-              
-            </div>";
+            <div class=""mobile-row""></div>";
 
         return $@"
             <table

@@ -1,23 +1,23 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
-using Jasmine.FastenerDepartment.Messaging.Services;
+using Jasmine.FastenerDepartment.Messaging.MessageProviders;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jasmine.FastenerDepartment.Messaging.Factories;
 
-internal class MessageServicesFactory : IMessageServicesFactory
+internal class MessagesTypeProvidersFactory : IMessagesTypeProvidersFactory
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public MessageServicesFactory(IServiceProvider serviceProvider)
+    public MessagesTypeProvidersFactory(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
 
-    public IMessageService GetService(MessageType type)
+    public IMessageTypeProvider GetProvider(MessageTypeCode type)
     {
         return type switch
         {
-            MessageType.Email => _serviceProvider.GetRequiredService<IEmailService>(),
+            MessageTypeCode.Email => _serviceProvider.GetRequiredService<EmailsProvider>(),
             _ => throw new NotSupportedException($"Message type {type} not supported."),
         };
     }

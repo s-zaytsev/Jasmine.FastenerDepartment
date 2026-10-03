@@ -1,5 +1,6 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Exceptions;
 using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Templates;
 using Jasmine.FastenerDepartment.Domain.Templates.Models;
 using Jasmine.FastenerDepartment.Domain.Templates.Repositories;
 using Jasmine.FastenerDepartment.Domain.Templates.Services;
@@ -28,15 +29,19 @@ internal class TemplatesService : ITemplatesService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<Template>> GetTemplatesAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Template>> GetTemplatesAsync(
+        TemplatesQuery query, CancellationToken cancellationToken = default)
     {
-        var templates = await _templatesRepository.GetAllAsync(cancellationToken);
+        ArgumentNullException.ThrowIfNull(query, nameof(query));
+
+        var templates = await _templatesRepository.GetAsync(query, cancellationToken);
         return templates;
     }
 
     public async Task<IEnumerable<Template>> GetTemplatesForExportAsync(CancellationToken cancellationToken = default)
     {
-        var templates = await _templatesRepository.GetByTypeCodesAsync(_codesForExport, cancellationToken);
+        var query = new TemplatesQuery { TypeCodes = _codesForExport };
+        var templates = await _templatesRepository.GetAsync(query, cancellationToken);
         return templates;
     }
 

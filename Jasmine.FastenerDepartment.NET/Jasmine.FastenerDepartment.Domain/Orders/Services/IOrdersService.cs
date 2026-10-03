@@ -64,4 +64,14 @@ public interface IOrdersService
     /// <param name="model">Cancel order model.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     Task CancelAsync(Guid id, CancelOrderModel model, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Returns a file model as a zip file.
+    /// </summary>
+    /// <param name="id">Order identifier.</param>
+    /// <param name="model">Download order model.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Zip file.</returns>
+    Task<FileModel> DownloadOrderFilesAsZipAsync(
+        Guid id, DownloadOrderModel model, CancellationToken cancellationToken = default);
 }

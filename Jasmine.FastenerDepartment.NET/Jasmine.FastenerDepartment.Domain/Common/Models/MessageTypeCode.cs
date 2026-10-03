@@ -3,7 +3,7 @@
 /// <summary>
 /// Message type.
 /// </summary>
-public enum MessageType
+public enum MessageTypeCode
 {
     /// <summary>
     /// Email.

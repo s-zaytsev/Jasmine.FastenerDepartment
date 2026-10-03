@@ -3,6 +3,9 @@
 namespace Jasmine.FastenerDepartment.Templates.Emails.Constants;
 internal static class OrderConstants
 {
+    internal readonly static string INVISIBLE_SPACES =
+        string.Join("", Enumerable.Repeat("&#8204;&nbsp;&zwnj;&nbsp;&thinsp;&zwnj;&nbsp;", 200));
+
     internal readonly static LocalizedString ORDER = new("Order", "Заказ");
     internal readonly static LocalizedString FROM = new("from", "от");
     internal readonly static LocalizedString NUMBER = new("Number", "Артикул");

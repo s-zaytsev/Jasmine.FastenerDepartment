@@ -26,6 +26,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Jasmine.FastenerDepartment.Application\Jasmine.FastenerDepartment.Application.csproj" />
+		<ProjectReference Include="..\Jasmine.FastenerDepartment.Messaging\Jasmine.FastenerDepartment.Messaging.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,4 +1,5 @@
-﻿using Jasmine.FastenerDepartment.Domain.Templates.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Templates;
+using Jasmine.FastenerDepartment.Domain.Templates.Models;
 using Jasmine.FastenerDepartment.Domain.Templates.Repositories;
 using Jasmine.FastenerDepartment.EF.Repositories.Common;
 using Microsoft.EntityFrameworkCore;
@@ -11,12 +12,17 @@ internal class TemplatesRepository : RepositoryBase<Guid, Template>, ITemplatesR
         : base(context)
     { }
 
-    public async Task<ICollection<Template>> GetByTypeCodesAsync(
-        TemplateTypeCode[] codes, CancellationToken cancellationToken = default)
+    public async Task<ICollection<Template>> GetAsync(
+        TemplatesQuery query, CancellationToken cancellationToken = default)
     {
-        return await GetQuery()
-            .Where(x => codes.Contains(x.TypeCode))
-            .ToListAsync(cancellationToken);
+        var queryDb = GetQuery();
+
+        if (query.TypeCodes?.Count > 0)
+        {
+            queryDb = queryDb.Where(x => query.TypeCodes.Contains(x.TypeCode));
+        }
+
+        return await queryDb.ToListAsync(cancellationToken);
     }
 
     protected override IQueryable<Template> GetQuery()

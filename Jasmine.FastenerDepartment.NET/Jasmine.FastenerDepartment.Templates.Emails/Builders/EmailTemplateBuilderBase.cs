@@ -1,20 +1,21 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Templates.Emails.Constants;
 
-namespace Jasmine.FastenerDepartment.Templates.Emails.Builders.Emails;
+namespace Jasmine.FastenerDepartment.Templates.Emails.Builders;
 
-internal abstract class EmailTemplateBuilderBase
+public abstract class EmailTemplateBuilderBase
 {
     protected abstract string Title { get; set; }
     protected abstract string Body { get; set; }
-    protected abstract LanguageCode? LanguageCode { get; set; }
+    protected LanguageCode? LanguageCode { get; set; }
 
-    public abstract EmailTemplateBuilderBase SetTitle();
-    public abstract EmailTemplateBuilderBase SetBody();
-    public abstract EmailTemplateBuilderBase SetLanguage(LanguageCode? languageCode);
+    protected abstract EmailTemplateBuilderBase SetTitle();
+    protected abstract EmailTemplateBuilderBase SetBody();
 
     public string Build()
     {
-        var invisibleSpace = string.Join("", Enumerable.Repeat("&#8204;&nbsp;&zwnj;&nbsp;&thinsp;&zwnj;&nbsp;", 200));
+        SetTitle();
+        SetBody();
 
         return $@"
             <!DOCTYPE html>
@@ -72,8 +73,14 @@ internal abstract class EmailTemplateBuilderBase
                 </head>
 
                 <body>
-                    <div style=""display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff;"">
-                        {invisibleSpace}
+                    <div style=""
+                        display: none;
+                        max-height: 0px;
+                        overflow: hidden;
+                        font-size: 1px;
+                        line-height: 1px;
+                        color: #fff;"">
+                        {OrderConstants.INVISIBLE_SPACES}
                     </div>
                     <div class=""body-wrapper"">
                        {Body}

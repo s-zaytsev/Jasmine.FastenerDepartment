@@ -147,4 +147,21 @@ public class OrdersController : ControllerBase
 
         return NoContent();
     }
+
+    /// <summary>
+    /// Downloads the order.
+    /// </summary>
+    /// <param name="id">Order identifier.</param>
+    /// <param name="dto">Download order model.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    [HttpPost("{id}/download")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> DownloadOrderAsync(
+        [FromRoute] Guid id, [FromForm] DownloadOrderDto dto, CancellationToken cancellationToken)
+    {
+        var model = _mapper.Map(dto);
+        var file = await _ordersService.DownloadOrderFilesAsZipAsync(id, model, cancellationToken);
+
+        return File(file.Content, file.ContentType, file.Name);
+    }
 }

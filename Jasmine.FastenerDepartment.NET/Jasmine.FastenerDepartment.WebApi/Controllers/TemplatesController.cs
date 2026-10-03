@@ -32,13 +32,16 @@ public class TemplatesController : ControllerBase
     /// <summary>
     /// Returns a collection of templates.
     /// </summary>
+    /// <param name="queryDto">Templates query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Collection of templates.</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<TemplateDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetTemplatesAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetTemplatesAsync(
+        [FromQuery] TemplatesQueryDto queryDto, CancellationToken cancellationToken)
     {
-        var templates = await _templatesService.GetTemplatesAsync(cancellationToken);
+        var query = _mapper.Map(queryDto);
+        var templates = await _templatesService.GetTemplatesAsync(query, cancellationToken);
         var dtos = templates.Select(_mapper.Map);
         return Ok(dtos);
     }

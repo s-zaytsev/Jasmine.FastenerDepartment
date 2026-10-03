@@ -11,9 +11,8 @@ public interface ITemplatesRepository : IRepository<Guid, Template>
     /// <summary>
     /// Returns a collection of templates by type codes.
     /// </summary>
-    /// <param name="codes">Template type codes.</param>
+    /// <param name="query">Templates query.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Collection of templates by type codes.</returns>
-    Task<ICollection<Template>> GetByTypeCodesAsync(
-        TemplateTypeCode[] codes, CancellationToken cancellationToken = default);
+    Task<ICollection<Template>> GetAsync(TemplatesQuery query, CancellationToken cancellationToken = default);
 }
