@@ -13,5 +13,10 @@ public enum TemplateFormatCode
     /// <summary>
     /// Microsoft Word.
     /// </summary>
-    Word = 2
+    Word = 2,
+
+    /// <summary>
+    /// Microsoft excel.
+    /// </summary>
+    Excel = 3
 }

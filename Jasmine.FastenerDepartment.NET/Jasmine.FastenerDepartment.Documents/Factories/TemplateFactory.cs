@@ -26,6 +26,8 @@ internal class TemplateFactory : ITemplateFactory
                 _serviceProvider.GetRequiredService<HtmlTemplateProvider>().Render(templateType, data),
             TemplateFormatCode.Word =>
                 _serviceProvider.GetRequiredService<WordTemplateProvider>().Render(templateType, data),
+            TemplateFormatCode.Excel =>
+                _serviceProvider.GetRequiredService<ExcelTemplateProvider>().Render(templateType, data),
             _ => throw new NotSupportedException(),
         };
     }

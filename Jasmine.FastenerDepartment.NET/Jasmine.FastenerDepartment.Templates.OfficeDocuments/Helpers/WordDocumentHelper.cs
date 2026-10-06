@@ -1,7 +1,7 @@
 ﻿using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace Jasmine.FastenerDepartment.Templates.OfficeDocuments.Heplers;
+namespace Jasmine.FastenerDepartment.Templates.OfficeDocuments.Helpers;
 
 internal static class WordDocumentHelper
 {

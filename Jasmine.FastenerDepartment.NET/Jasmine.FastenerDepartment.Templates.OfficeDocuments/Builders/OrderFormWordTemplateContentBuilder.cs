@@ -4,7 +4,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using Jasmine.FastenerDepartment.Domain.Templates.Builders;
 using Jasmine.FastenerDepartment.Domain.Templates.Models;
 using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
-using Jasmine.FastenerDepartment.Templates.OfficeDocuments.Heplers;
+using Jasmine.FastenerDepartment.Templates.OfficeDocuments.Helpers;
 using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 
 namespace Jasmine.FastenerDepartment.Templates.OfficeDocuments.Builders;

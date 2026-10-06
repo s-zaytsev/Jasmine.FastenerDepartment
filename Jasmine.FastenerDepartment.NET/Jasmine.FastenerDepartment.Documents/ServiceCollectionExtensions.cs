@@ -19,5 +19,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITemplateFactory, TemplateFactory>();
         services.AddScoped<HtmlTemplateProvider>();
         services.AddScoped<WordTemplateProvider>();
+        services.AddScoped<ExcelTemplateProvider>();
     }
 }
