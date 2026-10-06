@@ -9,7 +9,8 @@ import FormatsCardItem from "./FormatsCardItem.tsx";
 
 const formats = [
     {code: TemplateFormatCode.word, title: 'Microsoft Word', extension: '.docx'},
-    {code: TemplateFormatCode.html, title: 'HTML', extension: '.html'}
+    {code: TemplateFormatCode.html, title: 'HTML', extension: '.html'},
+    {code: TemplateFormatCode.excel, title: 'Microsoft Excel', extension: '.xlsx'}
 ]
 
 type FormatsCardProps = {

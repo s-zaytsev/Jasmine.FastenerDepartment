@@ -42,7 +42,8 @@ export enum TemplateTypeCode {
 export enum TemplateFormatCode
 {
     html = 1,
-    word = 2
+    word = 2,
+    excel = 3
 }
 
 export type TemplateContent = ProductCatalogTemplateContent | OrderFormTemplateContent;

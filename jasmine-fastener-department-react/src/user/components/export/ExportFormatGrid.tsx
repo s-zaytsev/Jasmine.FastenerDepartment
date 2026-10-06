@@ -5,7 +5,8 @@ import {semanticColors} from "../../../assets/variables/semanticColors.ts";
 
 const types = [
     {code: TemplateFormatCode.word, title: 'DOCX', subtitle: 'Word'},
-    {code: TemplateFormatCode.html, title: 'HTML', subtitle: 'Web'}
+    {code: TemplateFormatCode.html, title: 'HTML', subtitle: 'Web'},
+    {code: TemplateFormatCode.excel, title: 'XLSX', subtitle: 'Excel'}
 ];
 
 type ExportFormatGridProps = {

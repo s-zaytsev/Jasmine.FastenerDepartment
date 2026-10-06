@@ -21,7 +21,6 @@ const ExportDocumentCard = (props: ExportDocumentCardProps) => {
     }
 
     const handleDownload = () => {
-        debugger
         props.onDownload(props.template.id, formatTypeCode);
     }
 
