@@ -17,15 +17,6 @@ namespace Jasmine.FastenerDepartment.Domain.Templates.Builders;
 public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, TRowCell>
     : TemplateBuilderBase<TContainer>
 {
-    private readonly OrderFormTemplateRenderData _data;
-
-    private readonly Dictionary<OrderFormTemplateContentTableColumnCode, int> _fixedWidthPercent = new()
-    {
-        { OrderFormTemplateContentTableColumnCode.SupplierProductNumber, 15 },
-        { OrderFormTemplateContentTableColumnCode.ProductSize, 25 },
-        { OrderFormTemplateContentTableColumnCode.Amount, 10 },
-    };
-
     private readonly LocalizedString _companyLabel = new("Company", "Компания");
     private readonly LocalizedString _fullNameLabel = new("Full name", "ФИО");
     private readonly LocalizedString _emailLabel = new("Email", "Электронная почта");
@@ -34,7 +25,25 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
     private readonly LocalizedString _innLabel = new("INN", "ИНН");
     private readonly LocalizedString _phoneNumberLabel = new("Phone number", "Номер телефона");
 
-    private int _unfixedWidthPercent = 100;
+    /// <summary>
+    /// Order form template render data.
+    /// </summary>
+    protected readonly OrderFormTemplateRenderData Data;
+
+    /// <summary>
+    /// Fixed width percent.
+    /// </summary>
+    protected readonly Dictionary<OrderFormTemplateContentTableColumnCode, int> FixedWidthPercent = new()
+    {
+        { OrderFormTemplateContentTableColumnCode.SupplierProductNumber, 15 },
+        { OrderFormTemplateContentTableColumnCode.ProductSize, 25 },
+        { OrderFormTemplateContentTableColumnCode.Amount, 10 },
+    };
+
+    /// <summary>
+    /// Unfixed width percent.
+    /// </summary>
+    protected int UnfixedWidthPercent = 100;
 
     /// <summary>
     /// Creates builder.
@@ -42,12 +51,12 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
     protected OrderFormTemplateContentBuilder(
         OrderFormTemplateRenderData data)
     {
-        _data = data;
+        Data = data;
 
-        foreach (var code in _data.Content.TableColumnCodes)
+        foreach (var code in Data.Content.TableColumnCodes)
         {
-            if (_fixedWidthPercent.TryGetValue(code, out var percent))
-                _unfixedWidthPercent -= percent;
+            if (FixedWidthPercent.TryGetValue(code, out var percent))
+                UnfixedWidthPercent -= percent;
         }
     }
 
@@ -155,29 +164,29 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
 
     private void AppendCompanyData()
     {
-        if (!_data.Content.HasCompanyData || _data.Company == null)
+        if (!Data.Content.HasCompanyData || Data.Company == null)
             return;
 
-        var languageCode = _data.LanguageCode;
+        var languageCode = Data.LanguageCode;
 
-        AppendCompanyNameLine($"{_companyLabel.GetText(languageCode)}: {_data.Company.Title.Value}");
+        AppendCompanyNameLine($"{_companyLabel.GetText(languageCode)}: {Data.Company.Title.Value}");
         AppendFullNameLine(
             $"{_fullNameLabel.GetText(languageCode)}:" +
-            $" {string.Join(" ", _data.Company.LastName, _data.Company.FirstName, _data.Company.MiddleName)}");
-        AppendEmailLine($"{_emailLabel.GetText(languageCode)}: {_data.Company.Email.Value}");
-        AppendCityLine($"{_cityLabel.GetText(languageCode)}: {_data.Company.City}");
+            $" {string.Join(" ", Data.Company.LastName, Data.Company.FirstName, Data.Company.MiddleName)}");
+        AppendEmailLine($"{_emailLabel.GetText(languageCode)}: {Data.Company.Email.Value}");
+        AppendCityLine($"{_cityLabel.GetText(languageCode)}: {Data.Company.City}");
         AppendAddressLine($"{_addressLabel.GetText(languageCode)}:" +
-            $" {string.Join(", ", _data.Company.Street, _data.Company.BuildingNumber)}");
-        AppendInnLine($"{_innLabel.GetText(languageCode)}: {_data.Company.Inn.Value}");
-        AppendPhoneNumberLine($"{_phoneNumberLabel.GetText(languageCode)}: {_data.Company.PhoneNumber.Value}");
+            $" {string.Join(", ", Data.Company.Street, Data.Company.BuildingNumber)}");
+        AppendInnLine($"{_innLabel.GetText(languageCode)}: {Data.Company.Inn.Value}");
+        AppendPhoneNumberLine($"{_phoneNumberLabel.GetText(languageCode)}: {Data.Company.PhoneNumber.Value}");
     }
 
     private void AppendProducts()
     {
-        if (!_data.Content.GroupByType)
-            AppendUngroupedTable(_data.Order, _data.LanguageCode);
+        if (!Data.Content.GroupByType)
+            AppendUngroupedTable(Data.Order, Data.LanguageCode);
         else
-            AppendGroupedTables(_data.Order, _data.LanguageCode);
+            AppendGroupedTables(Data.Order, Data.LanguageCode);
     }
 
     private void AppendUngroupedTable(
@@ -221,9 +230,9 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
     {
         var row = CreateTableRow();
 
-        foreach (var code in _data.Content.TableColumnCodes)
+        foreach (var code in Data.Content.TableColumnCodes)
         {
-            var widthPercent = _fixedWidthPercent.TryGetValue(code, out var width) ? width : _unfixedWidthPercent;
+            var widthPercent = FixedWidthPercent.TryGetValue(code, out var width) ? width : UnfixedWidthPercent;
             var cell = GetTableRowCell(code, product, widthPercent.ToString(), languageCode);
             AppendTableRowCell(row, cell);
         }

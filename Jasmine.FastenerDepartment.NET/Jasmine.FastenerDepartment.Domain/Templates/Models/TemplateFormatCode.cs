@@ -18,5 +18,10 @@ public enum TemplateFormatCode
     /// <summary>
     /// Microsoft excel.
     /// </summary>
-    Excel = 3
+    Excel = 3,
+
+    /// <summary>
+    /// PDF.
+    /// </summary>
+    Pdf = 4
 }

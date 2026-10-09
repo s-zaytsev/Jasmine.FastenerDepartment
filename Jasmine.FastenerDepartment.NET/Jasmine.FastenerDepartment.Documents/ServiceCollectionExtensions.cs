@@ -20,5 +20,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<HtmlTemplateProvider>();
         services.AddScoped<WordTemplateProvider>();
         services.AddScoped<ExcelTemplateProvider>();
+        services.AddScoped<PdfTemplateProvider>();
     }
 }

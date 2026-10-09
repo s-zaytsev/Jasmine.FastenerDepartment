@@ -28,6 +28,8 @@ internal class TemplateFactory : ITemplateFactory
                 _serviceProvider.GetRequiredService<WordTemplateProvider>().Render(templateType, data),
             TemplateFormatCode.Excel =>
                 _serviceProvider.GetRequiredService<ExcelTemplateProvider>().Render(templateType, data),
+            TemplateFormatCode.Pdf =>
+                _serviceProvider.GetRequiredService<PdfTemplateProvider>().Render(templateType, data),
             _ => throw new NotSupportedException(),
         };
     }

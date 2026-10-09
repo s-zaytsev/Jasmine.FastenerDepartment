@@ -18,16 +18,25 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
 {
     private readonly LocalizedString _currency = new("rub", "руб");
 
-    private readonly ProductCatalogTemplateRenderData _data;
+    /// <summary>
+    /// Product catalog template render data.
+    /// </summary>
+    protected readonly ProductCatalogTemplateRenderData Data;
 
-    private readonly Dictionary<ProductCatalogTemplateContentTableColumnCode, int> _fixedWidthPercent = new()
+    /// <summary>
+    /// Fixed width percent.
+    /// </summary>
+    protected readonly Dictionary<ProductCatalogTemplateContentTableColumnCode, int> FixedWidthPercent = new()
     {
         { ProductCatalogTemplateContentTableColumnCode.Number, 15 },
         { ProductCatalogTemplateContentTableColumnCode.Type, 20 },
-        { ProductCatalogTemplateContentTableColumnCode.Price, 15 },
+        { ProductCatalogTemplateContentTableColumnCode.Price, 20 },
     };
 
-    private int _unfixedWidthPercent = 100;
+    /// <summary>
+    /// Unfixed width precent.
+    /// </summary>
+    protected int UnfixedWidthPercent = 100;
 
     /// <summary>
     /// Creates builder.
@@ -35,12 +44,12 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
     protected ProductCatalogTemplateContentBuilder(
         ProductCatalogTemplateRenderData data)
     {
-        _data = data;
+        Data = data;
 
-        foreach (var code in _data.Content.TableColumnCodes)
+        foreach (var code in Data.Content.TableColumnCodes)
         {
-            if (_fixedWidthPercent.TryGetValue(code, out var percent))
-                _unfixedWidthPercent -= percent;
+            if (FixedWidthPercent.TryGetValue(code, out var percent))
+                UnfixedWidthPercent -= percent;
         }
     }
 
@@ -52,10 +61,10 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
     {
         SetMainContainer();
 
-        if (!_data.Content.GroupByType)
-            AppendUngroupedTable(_data.Products);
+        if (!Data.Content.GroupByType)
+            AppendUngroupedTable(Data.Products);
         else
-            AppendGroupedTables(_data.Products);
+            AppendGroupedTables(Data.Products);
 
         var result = ConvertMainContainerToResult();
         return result;
@@ -144,9 +153,9 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
     {
         var row = CreateTableRow();
 
-        foreach (var code in _data.Content.TableColumnCodes)
+        foreach (var code in Data.Content.TableColumnCodes)
         {
-            var width = _fixedWidthPercent.TryGetValue(code, out var value) ? value : _unfixedWidthPercent;
+            var width = FixedWidthPercent.TryGetValue(code, out var value) ? value : UnfixedWidthPercent;
             var cell = GetTableRowCell(code, product, width.ToString());
             AppendTableRowCell(row, cell);
         }
@@ -170,8 +179,8 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
             ProductCatalogTemplateContentTableColumnCode.Price =>
                 CreateTableRowCell(
                     $"{product.Price.Value:F2} " +
-                    $"{_currency.GetText(_data.LanguageCode)}/" +
-                    $"{product.MeasurementUnit.ShortName.GetText(_data.LanguageCode)}",
+                    $"{_currency.GetText(Data.LanguageCode)}/" +
+                    $"{product.MeasurementUnit.ShortName.GetText(Data.LanguageCode)}",
                     widthPercent),
             _ => throw new NotSupportedException(),
         };
