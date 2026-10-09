@@ -2,6 +2,7 @@ import type {Template, TemplateFormatCode} from "../../models/templateModels.ts"
 import {Box, Grow} from "@mui/material";
 import Typography from "../../../shared/components/Typography.tsx";
 import ExportDocumentCard from "./ExportDocumentCard.tsx";
+import {memo} from "react";
 
 type ExportDocumentGroupProps = {
     title: string;
@@ -29,4 +30,4 @@ const ExportDocumentGroup = (props: ExportDocumentGroupProps) => {
     )
 }
 
-export default ExportDocumentGroup;
+export default memo(ExportDocumentGroup);

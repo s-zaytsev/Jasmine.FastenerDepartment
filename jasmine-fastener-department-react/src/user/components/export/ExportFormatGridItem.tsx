@@ -2,6 +2,7 @@ import type {TemplateFormatCode} from "../../models/templateModels.ts";
 import {Box} from "@mui/material";
 import {primitives} from "../../../assets/variables/primitives.ts";
 import Typography from "../../../shared/components/Typography.tsx";
+import {memo} from "react";
 
 type ExportFormatGridItemProps = {
     type: TemplateFormatCode;
@@ -37,4 +38,4 @@ const ExportFormatGridItem = (props: ExportFormatGridItemProps) => {
     )
 }
 
-export default ExportFormatGridItem;
+export default memo(ExportFormatGridItem);

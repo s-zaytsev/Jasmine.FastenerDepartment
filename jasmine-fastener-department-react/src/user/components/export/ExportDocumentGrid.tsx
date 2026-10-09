@@ -1,6 +1,6 @@
 import type {Template, TemplateFormatCode} from "../../models/templateModels.ts";
 import useGroup from "../../../shared/hooks/useGroup.ts";
-import {useMemo} from "react";
+import {memo, useMemo} from "react";
 import EmptyGrid from "../../../shared/components/EmptyGrid.tsx";
 import {Box} from "@mui/material";
 import ExportDocumentGroup from "./ExportDocumentGroup.tsx";
@@ -41,4 +41,4 @@ const ExportDocumentGrid = (props: ExportDocumentGridProps) => {
     );
 }
 
-export default ExportDocumentGrid;
+export default memo(ExportDocumentGrid);

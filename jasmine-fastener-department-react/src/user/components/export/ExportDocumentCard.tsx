@@ -5,7 +5,7 @@ import Typography from "../../../shared/components/Typography.tsx";
 import IconBox from "../../../shared/components/IconBox.tsx";
 import {SubjectOutlined} from "@mui/icons-material";
 import ExportFormatGrid from "./ExportFormatGrid.tsx";
-import {useState} from "react";
+import {memo, useState} from "react";
 import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 
 type ExportDocumentCardProps = {
@@ -53,5 +53,5 @@ const ExportDocumentCard = (props: ExportDocumentCardProps) => {
     );
 }
 
-export default ExportDocumentCard;
+export default memo(ExportDocumentCard);
 

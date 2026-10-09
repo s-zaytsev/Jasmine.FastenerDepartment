@@ -2,11 +2,13 @@ import {Box} from "@mui/material";
 import ExportFormatGridItem from "./ExportFormatGridItem.tsx";
 import {TemplateFormatCode} from "../../models/templateModels.ts";
 import {semanticColors} from "../../../assets/variables/semanticColors.ts";
+import {memo} from "react";
 
 const types = [
     {code: TemplateFormatCode.word, title: 'DOCX', subtitle: 'Word'},
     {code: TemplateFormatCode.html, title: 'HTML', subtitle: 'Web'},
-    {code: TemplateFormatCode.excel, title: 'XLSX', subtitle: 'Excel'}
+    {code: TemplateFormatCode.excel, title: 'XLSX', subtitle: 'Excel'},
+    {code: TemplateFormatCode.pdf, title: 'PDF', subtitle: 'Print'}
 ];
 
 type ExportFormatGridProps = {
@@ -38,4 +40,4 @@ const ExportFormatGrid = (props: ExportFormatGridProps) => {
     )
 }
 
-export default ExportFormatGrid;
+export default memo(ExportFormatGrid);
