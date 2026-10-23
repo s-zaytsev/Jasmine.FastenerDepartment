@@ -45,6 +45,7 @@ public class Program
         builder.Services.AddDocumentsServices();
         builder.Services.AddApplicationServices(builder.Configuration);
         builder.Services.AddMessagingServices(builder.Configuration);
+        builder.Services.AddEmailTemplatesServices();
 
         var app = builder.Build();
 

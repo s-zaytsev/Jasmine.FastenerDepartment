@@ -2,8 +2,8 @@
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Messaging.Factories;
 using Jasmine.FastenerDepartment.Messaging.MessageProviders;
-using Jasmine.FastenerDepartment.Messaging.Providers;
 using Jasmine.FastenerDepartment.Messaging.Services;
+using Jasmine.FastenerDepartment.Messaging.TemplateProviders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

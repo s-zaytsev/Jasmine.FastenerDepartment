@@ -2,6 +2,7 @@
 using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Services;
 using Jasmine.FastenerDepartment.Domain.Companies.Models;
+using Jasmine.FastenerDepartment.Domain.Documents.Models;
 using Jasmine.FastenerDepartment.Domain.HistoryEntries.Models;
 using Jasmine.FastenerDepartment.Domain.MeasurementUnits.Models;
 using Jasmine.FastenerDepartment.Domain.Orders.Models;
@@ -19,6 +20,7 @@ using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
 using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.ProductCatalog;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Common;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Companies;
+using Jasmine.FastenerDepartment.WebApi.Dtos.Documents;
 using Jasmine.FastenerDepartment.WebApi.Dtos.HistoryEntries;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Products;
@@ -30,7 +32,6 @@ using Jasmine.FastenerDepartment.WebApi.Dtos.Suppliers;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Synchronization;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Templates;
 using Jasmine.FastenerDepartment.WebApi.Dtos.Templates.Content;
-using Jasmine.FastenerDepartment.WebApi.Dtos.Templates.RenderRequests;
 
 namespace Jasmine.FastenerDepartment.WebApi;
 
@@ -418,6 +419,16 @@ public class WebApiMapper
         };
     }
 
+    internal RenderOrderForm Map(RenderOrderFormDto dto)
+    {
+        return new()
+        {
+            TemplateId = dto.TemplateId,
+            FormatCode = dto.FormatCode,
+            CompanyId = dto.CompanyId
+        };
+    }
+
     internal DownloadOrderModel Map(DownloadOrderDto dto)
     {
         return new()
@@ -652,26 +663,6 @@ public class WebApiMapper
         return null;
     }
 
-    internal OrderFormRenderRequest Map(OrderFormRenderRequestDto dto)
-    {
-        return new()
-        {
-            TemplateId = dto.TemplateId,
-            CompanyId = dto.CompanyId,
-            FormatCode = dto.FormatCode,
-            OrderId = dto.OrderId,
-        };
-    }
-
-    internal ProductCatalogRenderRequest Map(ProductCatalogRenderRequestDto dto)
-    {
-        return new()
-        {
-            TemplateId = dto.TemplateId,
-            FormatCode = dto.FormatCode
-        };
-    }
-
     internal IEnumerable<TemplateContentTableColumnGroupDto> Map(
         IReadOnlyDictionary<TemplateTypeCode, IReadOnlyDictionary<Enum, LocalizedString>> model)
     {
@@ -694,6 +685,26 @@ public class WebApiMapper
         {
             Name = model.Name,
             Email = model.Email,
+        };
+    }
+
+    internal DownloadExportDocument Map(DownloadExportDocumentDto model)
+    {
+        return new DownloadExportDocument
+        {
+            TemplateId = model.TemplateId,
+            FormatCode = model.FormatCode
+        };
+    }
+
+    internal SendExportDocument Map(SendExportDocumentDto model)
+    {
+        return new SendExportDocument
+        {
+            RecipientContact = model.RecipientContact,
+            TemplateId = model.TemplateId,
+            FormatCode = model.FormatCode,
+            MessageTypeCode = MessageTypeCode.Email
         };
     }
 }

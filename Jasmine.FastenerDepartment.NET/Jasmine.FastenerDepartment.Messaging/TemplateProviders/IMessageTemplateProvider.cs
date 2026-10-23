@@ -1,7 +1,7 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Messaging.Models;
 using Jasmine.FastenerDepartment.Domain.Templates.Models;
 
-namespace Jasmine.FastenerDepartment.Messaging.Providers;
+namespace Jasmine.FastenerDepartment.Messaging.TemplateProviders;
 
 internal interface IMessageTemplateProvider
 {

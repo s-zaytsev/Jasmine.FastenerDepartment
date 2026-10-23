@@ -4,40 +4,34 @@ using Jasmine.FastenerDepartment.Templates.Emails.Constants;
 
 namespace Jasmine.FastenerDepartment.Templates.Emails.Builders;
 
-public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
+internal class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
 {
     private readonly Order _order;
     private readonly bool _hasAttachments;
 
-    protected override string Title { get; set; }
-    protected override string Body { get; set; }
-
-    /// <summary>
-    /// Creates HTML template builder.
-    /// </summary>
-    /// <param name="order">Order.</param>
-    /// <param name="hasAttachments">Whether the email has attachments.</param>
-    public OrderFormEmailTemplateBuilder(Order order, bool hasAttachments, LanguageCode? languageCode)
+    public OrderFormEmailTemplateBuilder(
+        Order order,
+        bool hasAttachments,
+        LanguageCode? languageCode)
+        : base(languageCode)
     {
         _order = order;
         _hasAttachments = hasAttachments;
         LanguageCode = languageCode;
     }
 
-    protected override EmailTemplateBuilderBase SetTitle()
+    protected override void SetTitle()
     {
-        Title = $"{OrderConstants.ORDER.GetText(LanguageCode)} #{_order.Number}";
-        return this;
+        Title = $"{OrderFormConstants.ORDER.GetText(LanguageCode)} #{_order.Number}";
     }
 
-    protected override EmailTemplateBuilderBase SetBody()
+    protected override void SetBody()
     {
         var header = GetHeader();
         var title = GetTitle();
         var productList = GetProductList();
         var attachmentBlock = GetAttachmentInfoBlock();
         Body = string.Join("\n", header, title, productList, attachmentBlock);
-        return this;
     }
 
     private string GetHeader()
@@ -72,13 +66,13 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                         margin-bottom: 0px;
                         font-size: 16px;
                         color: #6B7280"">
-                            {OrderConstants.ORDER.GetText(LanguageCode)} #{_order.GetNumberAsText()}
+                            {OrderFormConstants.ORDER.GetText(LanguageCode)} #{_order.GetNumberAsText()}
                     </p>
                     <p style=""
                         margin-top: 0px;
                         font-family: sans-serif;
                         color: #6B7280"">
-                            {OrderConstants.FROM.GetText(LanguageCode)} {_order.CreatedDate:dd.MM.yyyy}
+                            {OrderFormConstants.FROM.GetText(LanguageCode)} {_order.CreatedDate:dd.MM.yyyy}
                     </p>
                   </div>
                 </td>
@@ -115,10 +109,10 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
     private string GetProductList()
     {
         var groupedProducts = _order.Products
+            .OrderBy(x => (x.Product.Type == null, x.Product.Type.Name))
             .GroupBy(x => x.Product.Type.Name.Value)
-            .OrderBy(x => x.Key)
             .ToDictionary(
-                x => x.Key ?? "others",
+                x => x.Key ?? CommonConstants.OTHERS.GetText(LanguageCode),
                 x => x.OrderBy(x => x.ProductName.Value).ToList());
 
         return string.Join("\n", groupedProducts.Select(x => GetSection(x.Key, x.Value)));
@@ -165,7 +159,7 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                         padding: 2px 5px;
                         font-family: sans-serif;
                         font-size: 12px"">
-                            {count} {OrderConstants.GetPositionText(count).GetText(LanguageCode)}
+                            {count} {CommonConstants.GetPositionText(count).GetText(LanguageCode)}
                     </div>
                   </td>
                 </tr>
@@ -201,7 +195,7 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                   text-align: center;
                   color: #6B7280;
                   padding: 0 5px;"">
-                      {OrderConstants.NUMBER.GetText(LanguageCode)}
+                      {OrderFormConstants.NUMBER.GetText(LanguageCode)}
                 </td>
                 <td style=""
                   width: 450px;
@@ -209,7 +203,7 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                   font-size: 14px;
                   color: #6B7280;
                   padding: 0 5px;"">
-                      {OrderConstants.NAME.GetText(LanguageCode)}
+                      {OrderFormConstants.NAME.GetText(LanguageCode)}
                 </td>
                 <td style=""
                   width: 100px;
@@ -218,7 +212,7 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                   text-align: center;
                   color: #6B7280;
                   padding: 0 5px;"">
-                      {OrderConstants.AMOUNT.GetText(LanguageCode)}
+                      {OrderFormConstants.AMOUNT.GetText(LanguageCode)}
                 </td>
               </tr>
               </thead>
@@ -251,7 +245,7 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                   font-size: 12px;
                   color: #6B7280;
                   padding: 0 5px;"">
-                      {OrderConstants.NAME.GetText(LanguageCode)}
+                      {OrderFormConstants.NAME.GetText(LanguageCode)}
                 </td>
                 <td style=""
                   width: 50px;
@@ -260,7 +254,7 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                   text-align: center;
                   color: #6B7280;
                   padding: 0 5px;"">
-                      {OrderConstants.AMOUNT.GetText(LanguageCode)}
+                      {OrderFormConstants.AMOUNT.GetText(LanguageCode)}
                 </td>
               </tr>
               </thead>
@@ -345,7 +339,7 @@ public class OrderFormEmailTemplateBuilder : EmailTemplateBuilderBase
                     font-family: sans-serif;
                     font-size: 12px;
                     color: #6b7280;"">
-                        {OrderConstants.ATTACHMENTS_BLOCK.GetText(LanguageCode)}
+                        {OrderFormConstants.ATTACHMENTS_BLOCK.GetText(LanguageCode)}
                 </p>
             </div>        ";
     }

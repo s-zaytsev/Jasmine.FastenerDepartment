@@ -1,5 +1,8 @@
-﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Exceptions;
+using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Domain.Common.Services;
+using Jasmine.FastenerDepartment.Domain.Companies.Models;
+using Jasmine.FastenerDepartment.Domain.Companies.Repositories;
 using Jasmine.FastenerDepartment.Domain.MeasurementUnits.Models;
 using Jasmine.FastenerDepartment.Domain.Messaging.Models;
 using Jasmine.FastenerDepartment.Domain.Messaging.Services;
@@ -12,6 +15,7 @@ using Jasmine.FastenerDepartment.Domain.Products.Repositories;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Repositories;
 using Jasmine.FastenerDepartment.Domain.Templates.Models;
+using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
 using Jasmine.FastenerDepartment.Domain.Templates.Services;
 using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
 using System.IO.Compression;
@@ -23,6 +27,7 @@ internal class OrdersService : IOrdersService
     private readonly IOrdersRepository _ordersRepository;
     private readonly IProductsRepository _productsRepository;
     private readonly ISupplierProductsRepository _supplierProductsRepository;
+    private readonly ICompaniesRepository _companiesRepository;
     private readonly ITemplateRenderService _templateRenderService;
     private readonly IMessagesService _messageService;
     private readonly ILanguageService _languageService;
@@ -32,6 +37,7 @@ internal class OrdersService : IOrdersService
         IOrdersRepository ordersRepository,
         IProductsRepository productsRepository,
         ISupplierProductsRepository supplierProductsRepository,
+        ICompaniesRepository companiesRepository,
         ITemplateRenderService templateRenderService,
         IMessagesService messageService,
         ILanguageService languageService,
@@ -40,6 +46,7 @@ internal class OrdersService : IOrdersService
         _ordersRepository = ordersRepository;
         _productsRepository = productsRepository;
         _supplierProductsRepository = supplierProductsRepository;
+        _companiesRepository = companiesRepository;
         _templateRenderService = templateRenderService;
         _messageService = messageService;
         _languageService = languageService;
@@ -108,7 +115,8 @@ internal class OrdersService : IOrdersService
             throw new InvalidOperationException("Order is already cancelled.");
 
         var messageTitle = GetOrderTitle(order);
-        var renderedFiles = await RenderFilesAsync(model.Formats, order, model.TemplateId, model.CompanyId);
+        var company = await GetCompanyAsync(model.CompanyId);
+        var renderedFiles = await RenderFilesAsync(model.TemplateId, model.Formats, order, company);
         var messageRequest = CreateMessageRequest(model, order, messageTitle, renderedFiles);
 
         await _messageService.SendAsync(messageRequest, cancellationToken);
@@ -158,15 +166,31 @@ internal class OrdersService : IOrdersService
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<TemplateRenderResult> RenderOrderFormAsync(
+        Guid id, RenderOrderForm model, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+
+        var order = await GetByIdAsync(id, cancellationToken);
+        var company = await GetCompanyAsync(model.CompanyId);
+
+        var request = new OrderFormRenderRequest(model.TemplateId, model.FormatCode, order, company);
+        var renderResult = await _templateRenderService.RenderOrderFormAsync(request, cancellationToken);
+
+        return renderResult;
+    }
+
     public async Task<FileModel> DownloadOrderFilesAsZipAsync(
         Guid id, DownloadOrderModel model, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(model);
 
         var order = await GetByIdAsync(id, cancellationToken);
-        
+
         var fileName = GetOrderTitle(order);
-        var renderedFiles = await RenderFilesAsync(model.Formats, order, model.TemplateId, model.CompanyId);
+
+        var company = await GetCompanyAsync(model.CompanyId);
+        var renderedFiles = await RenderFilesAsync(model.TemplateId, model.Formats, order, company);
 
         var zipMemoryStream = new MemoryStream();
 
@@ -354,23 +378,29 @@ internal class OrdersService : IOrdersService
         };
     }
 
+    private async Task<Company> GetCompanyAsync(Guid? companyId)
+    {
+        if (!companyId.HasValue) return null;
+
+        var company = await _companiesRepository.GetByIdAsync(companyId.Value);
+        if (company == null)
+            throw new NotFoundException();
+
+        return company;
+    }
+
     private async Task<List<FileModel>> RenderFilesAsync(
+        Guid templateId,
         ICollection<TemplateFormatCode> formatCodes,
         Order order,
-        Guid templateId,
-        Guid? companyId)
+        Company company)
     {
         var renders = new List<FileModel>();
 
         foreach (var format in formatCodes)
         {
-            var render = await _templateRenderService.RenderOrderFormAsync(new()
-            {
-                OrderId = order.Id,
-                TemplateId = templateId,
-                CompanyId = companyId,
-                FormatCode = format
-            });
+            var renderRequest = new OrderFormRenderRequest(templateId, format, order, company);
+            var render = await _templateRenderService.RenderOrderFormAsync(renderRequest);
 
             renders.Add(render.AsFile());
         }
@@ -378,21 +408,20 @@ internal class OrdersService : IOrdersService
         return renders;
     }
 
-    private MessageRequest<OrderFormMessageRequestData> CreateMessageRequest(
+    private MessageRequest CreateMessageRequest(
         SendOrderModel model, Order order, string title, List<FileModel> renderedFiles)
     {
-        var messageRequest = new MessageRequest<OrderFormMessageRequestData>
-        {
-            MessageTypeCode = model.MessageType,
-            TemplateTypeCode = TemplateTypeCode.OrderForm,
-            RecipientContact = model.RecipientContact,
-            Title = title,
-            Attachments = renderedFiles,
-            Data = new(
+        var messageRequest = new MessageRequest(
+            model.MessageType,
+            TemplateTypeCode.OrderForm,
+            model.RecipientContact,
+            title,
+            new OrderFormMessageRequestData(
                 order,
                 renderedFiles.Count + model.Attachments.Count > 0,
                 _languageService.LanguageCode),
-        };
+            renderedFiles
+        );
 
         messageRequest.Attachments.AddRange(model.Attachments);
 

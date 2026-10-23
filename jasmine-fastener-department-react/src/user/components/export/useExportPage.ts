@@ -1,8 +1,14 @@
 import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.ts";
-import {type ExportPageState} from "../../models/exportModels.ts";
-import {downloadProductCatalog, getDocuments} from "../../slices/ExportSlice.ts";
-import {useEffect} from "react";
-import type {ProductCatalogRenderRequest, TemplateFormatCode} from "../../models/templateModels.ts";
+import {type DownloadDocument, type ExportPageState, type SendDocument} from "../../models/exportModels.ts";
+import {
+    clearSelectedTemplate,
+    downloadDocument,
+    getDocuments,
+    selectTemplate,
+    sendDocument
+} from "../../slices/ExportSlice.ts";
+import {useEffect, useState} from "react";
+import type {TemplateFormatCode} from "../../models/templateModels.ts";
 
 const useExportPage = () => {
 
@@ -12,13 +18,29 @@ const useExportPage = () => {
 
     const dispatch = useAppDispatch();
 
+    const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
+
     const handleDownload = (templateId: string, formatCode: TemplateFormatCode) => {
-        const request: ProductCatalogRenderRequest = {
+        const model: DownloadDocument = {
             templateId: templateId,
             formatCode: formatCode,
         }
 
-        dispatch(downloadProductCatalog(request));
+        dispatch(downloadDocument(model));
+    }
+
+    const handleOpenSendDialog = (templateId: string, formatCode: TemplateFormatCode) => {
+        dispatch(selectTemplate({id: templateId, code: formatCode}));
+        setIsSendDialogOpen(true);
+    }
+
+    const handleCloseSendDialog = () => {
+        dispatch(clearSelectedTemplate());
+        setIsSendDialogOpen(false);
+    }
+
+    const handleSend = (model: SendDocument) => {
+        dispatch(sendDocument(model));
     }
 
     useEffect(() => {
@@ -28,7 +50,13 @@ const useExportPage = () => {
     return {
         templates: state.templates,
         handleDownload,
-        loading: state.loading
+        handleOpenSendDialog,
+        handleSend,
+        handleCloseSendDialog,
+        loading: state.loading,
+        isSendDialogOpen,
+        selectedTemplate: state.selectedTemplate,
+        selectedFormatCode: state.selectedFormatCode,
     };
 }
 

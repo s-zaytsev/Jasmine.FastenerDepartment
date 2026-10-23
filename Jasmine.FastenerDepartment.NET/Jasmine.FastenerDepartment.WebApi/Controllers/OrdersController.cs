@@ -149,6 +149,24 @@ public class OrdersController : ControllerBase
     }
 
     /// <summary>
+    /// Render an order form.
+    /// </summary>
+    /// <param name="id">Order identifier.</param>
+    /// <param name="dto">Render order form model.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Order form document.</returns>
+    [HttpPost("{id}/render")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> RenderOrderFormAsync(
+        [FromRoute] Guid id, [FromBody] RenderOrderFormDto dto, CancellationToken cancellationToken)
+    {
+        var model = _mapper.Map(dto);
+        var file = await _ordersService.RenderOrderFormAsync(id, model, cancellationToken);
+
+        return File(file.Content, file.ContentType, file.FileName);
+    }
+
+    /// <summary>
     /// Downloads the order.
     /// </summary>
     /// <param name="id">Order identifier.</param>
@@ -156,7 +174,7 @@ public class OrdersController : ControllerBase
     /// <param name="cancellationToken">Cancellation token.</param>
     [HttpPost("{id}/download")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> DownloadOrderAsync(
+    public async Task<IActionResult> DownloadOrderFilesAsync(
         [FromRoute] Guid id, [FromForm] DownloadOrderDto dto, CancellationToken cancellationToken)
     {
         var model = _mapper.Map(dto);

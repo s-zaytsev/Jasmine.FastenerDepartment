@@ -1,22 +1,29 @@
-import {createSlice} from "@reduxjs/toolkit";
-import type {ExportPageState} from "../models/exportModels.ts";
-import DocumentsApi from "../api/documentsApi.ts";
+import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
+import type {DownloadDocument, ExportPageState, SendDocument} from "../models/exportModels.ts";
 import {createAsyncThunkWithErrorHandler} from "../../shared/thunks/createAsyncThunkWithErrorHandler.ts";
 import {downloadService} from "../../shared/services/downloadService.ts";
-import type {ProductCatalogRenderRequest} from "../models/templateModels.ts";
+import ExportDocumentsApi from "../api/exportDocumentsApi.ts";
+import type {TemplateFormatCode} from "../models/templateModels.ts";
 
 export const getDocuments = createAsyncThunkWithErrorHandler(
     'export/getDocuments',
     async () => {
-        return DocumentsApi.getDocumentsForExport();
+        return ExportDocumentsApi.getDocumentsForExport();
     }
 )
 
-export const downloadProductCatalog = createAsyncThunkWithErrorHandler(
+export const downloadDocument = createAsyncThunkWithErrorHandler(
     "export/downloadDocument",
-    async (request: ProductCatalogRenderRequest) => {
-        const response = await DocumentsApi.downloadProductCatalogDocument(request);
+    async (model: DownloadDocument) => {
+        const response = await ExportDocumentsApi.downloadDocument(model);
         downloadService.downloadFile(response);
+    }
+);
+
+export const sendDocument = createAsyncThunkWithErrorHandler(
+    "export/sendDocument",
+    async (model: SendDocument) => {
+        await ExportDocumentsApi.sendDocument(model);
     }
 );
 
@@ -31,6 +38,14 @@ const exportSlice = createSlice({
     name: "export",
     initialState: initialState,
     reducers: {
+        selectTemplate: (state, action: PayloadAction<{ id: string, code: TemplateFormatCode }>) => {
+            state.selectedTemplate = state.templates.find(x => x.id == action.payload.id);
+            state.selectedFormatCode = action.payload.code;
+        },
+        clearSelectedTemplate: (state) => {
+            state.selectedTemplate = undefined;
+            state.selectedFormatCode = undefined;
+        },
         setSuccess: (state, action) => {
             state.success = action.payload;
         }
@@ -50,13 +65,25 @@ const exportSlice = createSlice({
             });
 
         builder
-            .addCase(downloadProductCatalog.pending, (state) => {
+            .addCase(downloadDocument.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(downloadProductCatalog.fulfilled, (state) => {
+            .addCase(downloadDocument.fulfilled, (state) => {
                 state.loading = false;
             })
-            .addCase(downloadProductCatalog.rejected, (state, action) => {
+            .addCase(downloadDocument.rejected, (state, action) => {
+                state.error = action.payload ?? action.error;
+                state.loading = false;
+            });
+
+        builder
+            .addCase(sendDocument.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(sendDocument.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(sendDocument.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
                 state.loading = false;
             });
@@ -64,6 +91,8 @@ const exportSlice = createSlice({
 });
 
 export const {
+    selectTemplate,
+    clearSelectedTemplate,
     setSuccess
 } = exportSlice.actions;
 

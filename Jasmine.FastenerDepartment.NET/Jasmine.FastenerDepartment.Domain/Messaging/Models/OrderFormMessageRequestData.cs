@@ -19,11 +19,6 @@ public class OrderFormMessageRequestData : MessageRequestData
     public bool HasAttachments { get; init; }
 
     /// <summary>
-    /// Language code.
-    /// </summary>
-    public LanguageCode? LanguageCode { get; set; }
-
-    /// <summary>
     /// Creates order form message request data.
     /// </summary>
     public OrderFormMessageRequestData()

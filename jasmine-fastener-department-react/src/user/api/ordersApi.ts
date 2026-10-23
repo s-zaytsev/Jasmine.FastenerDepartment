@@ -8,6 +8,7 @@ import type {
     DownloadOrder,
     Order,
     OrdersQuery,
+    RenderOrderForm,
     SendOrder
 } from "../models/orderModels.ts";
 
@@ -55,6 +56,15 @@ class OrdersApi {
         }
 
         return api.post(`/orders/${id}/send`, body)
+    }
+
+    async renderOrderForm(id: string, model: RenderOrderForm): Promise<string> {
+        const response = await api.post<Blob>(`/orders/${id}/render`, model, {
+            responseType: 'blob',
+        });
+
+        const text = await response.data.text();
+        return text;
     }
 
     downloadOrder(id: string, model: DownloadOrder) {

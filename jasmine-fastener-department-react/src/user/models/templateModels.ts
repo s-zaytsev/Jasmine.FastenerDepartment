@@ -39,8 +39,7 @@ export enum TemplateTypeCode {
     orderForm = 2
 }
 
-export enum TemplateFormatCode
-{
+export enum TemplateFormatCode {
     html = 1,
     word = 2,
     excel = 3,
@@ -92,16 +91,3 @@ export interface TemplateContentTableColumn {
     code: ContentTableColumn;
     name: string;
 }
-
-export interface ProductCatalogRenderRequest {
-    templateId: string;
-    formatCode: TemplateFormatCode;
-}
-
-export interface OrderFormRenderRequest {
-    templateId: string;
-    formatCode: TemplateFormatCode;
-    orderId: string;
-    companyId?: string;
-}
-

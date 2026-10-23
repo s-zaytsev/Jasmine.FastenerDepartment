@@ -1,7 +1,6 @@
 import {createAsyncThunkWithErrorHandler} from "../../shared/thunks/createAsyncThunkWithErrorHandler.ts";
 import {type ChangeTemplate, type ChangeTemplatePageState, TemplateTypeCode} from "../models/templateModels.ts";
 import TemplatesApi from "../api/templatesApi.ts";
-import DocumentsApi from "../api/documentsApi.ts";
 import {createSlice} from "@reduxjs/toolkit";
 
 export const getTemplate = createAsyncThunkWithErrorHandler(
@@ -35,7 +34,7 @@ export const getTableColumns = createAsyncThunkWithErrorHandler(
 export const getPreview = createAsyncThunkWithErrorHandler(
     "changeTemplate/getPreview",
     async (model: ChangeTemplate) => {
-        return DocumentsApi.getPreview(model);
+        return TemplatesApi.getPreview(model);
     }
 );
 

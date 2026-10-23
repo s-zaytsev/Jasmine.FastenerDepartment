@@ -121,11 +121,13 @@ const useSendOrderPage = () => {
             return;
 
         dispatch(renderOrderForm({
-            templateId: state.selectedTemplate?.id,
-            orderId: params.id!,
-            formatCode: TemplateFormatCode.html,
-            companyId: state.selectedCompany?.id
-        }))
+            id: params.id!,
+            model: {
+                templateId: state.selectedTemplate?.id,
+                formatCode: TemplateFormatCode.html,
+                companyId: state.selectedCompany?.id
+            }
+        }));
     }, [dispatch, params.id, state.selectedCompany?.id, state.selectedTemplate?.id]);
 
     return {

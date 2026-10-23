@@ -23,7 +23,7 @@ const ExportFormatGridItem = (props: ExportFormatGridItemProps) => {
                 gap: '0.2rem',
                 flexDirection: 'column',
                 alignItems: 'center',
-                border: `1.5px solid ${props.isActive ? primitives.colors.primary : 'transparent'}`,
+                border: `1.5px solid ${props.isActive ? primitives.colors.tonal : 'transparent'}`,
                 borderRadius: primitives.border.radius,
                 cursor: 'pointer'
             }}>

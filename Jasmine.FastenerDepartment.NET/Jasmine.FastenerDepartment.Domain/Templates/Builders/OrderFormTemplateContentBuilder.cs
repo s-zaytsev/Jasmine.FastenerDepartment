@@ -184,41 +184,40 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
     private void AppendProducts()
     {
         if (!Data.Content.GroupByType)
-            AppendUngroupedTable(Data.Order, Data.LanguageCode);
+            AppendUngroupedTable();
         else
-            AppendGroupedTables(Data.Order, Data.LanguageCode);
+            AppendGroupedTables();
     }
 
-    private void AppendUngroupedTable(
-        Order order,
-        LanguageCode? languageCode)
+    private void AppendUngroupedTable()
     {
         var table = CreateTable();
-        foreach (var product in order.Products)
+        foreach (var product in Data.Order.Products.OrderBy(x => x.Product.Name.Value))
         {
-            var row = CreateTableRow(product, languageCode);
+            var row = CreateTableRow(product);
             AppendTableRow(table, row);
         }
 
         AppendTable(table);
     }
 
-    private void AppendGroupedTables(
-        Order order,
-        LanguageCode? languageCode)
+    private void AppendGroupedTables()
     {
-        var groupedByType = order.Products
-            .GroupBy(x => x.Product.Type?.Name.Value ?? "Others")
-            .ToDictionary(g => g.Key, g => g.ToList());
+        var others = Others.GetText(Data.LanguageCode);
+
+        var groupedByType = Data.Order.Products
+            .GroupBy(x => x.Product.Type?.Name.Value ?? others)
+            .ToDictionary(g => g.Key, g => g.ToList())
+            .OrderBy(x => (x.Key == others, x.Key));
 
         foreach (var pair in groupedByType)
         {
             AppendTableGroupName(pair.Key);
 
             var table = CreateTable();
-            foreach (var product in pair.Value)
+            foreach (var product in pair.Value.OrderBy(x => x.Product.Name.Value))
             {
-                var row = CreateTableRow(product, languageCode);
+                var row = CreateTableRow(product);
                 AppendTableRow(table, row);
             }
 
@@ -226,14 +225,14 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
         }
     }
 
-    private TRow CreateTableRow(OrderProduct product, LanguageCode? languageCode)
+    private TRow CreateTableRow(OrderProduct product)
     {
         var row = CreateTableRow();
 
         foreach (var code in Data.Content.TableColumnCodes)
         {
             var widthPercent = FixedWidthPercent.TryGetValue(code, out var width) ? width : UnfixedWidthPercent;
-            var cell = GetTableRowCell(code, product, widthPercent.ToString(), languageCode);
+            var cell = GetTableRowCell(code, product, widthPercent.ToString());
             AppendTableRowCell(row, cell);
         }
 
@@ -243,8 +242,7 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
     private TRowCell GetTableRowCell(
         OrderFormTemplateContentTableColumnCode code,
         OrderProduct product,
-        string width,
-        LanguageCode? languageCode)
+        string width)
     {
         return code switch
         {
@@ -267,7 +265,7 @@ public abstract class OrderFormTemplateContentBuilder<TContainer, TTable, TRow, 
 
             OrderFormTemplateContentTableColumnCode.Amount =>
                 CreateTableRowCell(
-                    $"{product.Ordered.Value} {product.Ordered.MeasurementUnit.ShortName.GetText(languageCode)}",
+                    $"{product.Ordered.Value} {product.Ordered.MeasurementUnit.ShortName.GetText(Data.LanguageCode)}",
                     width),
 
             _ => throw new NotSupportedException(),

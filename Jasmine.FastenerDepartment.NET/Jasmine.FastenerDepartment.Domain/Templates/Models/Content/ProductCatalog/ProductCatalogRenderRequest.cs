@@ -1,17 +1,31 @@
-﻿namespace Jasmine.FastenerDepartment.Domain.Templates.Models.Content.ProductCatalog;
+﻿using Jasmine.FastenerDepartment.Domain.Products.Models;
+
+namespace Jasmine.FastenerDepartment.Domain.Templates.Models.Content.ProductCatalog;
 
 /// <summary>
 /// Product catalog render request.
 /// </summary>
-public class ProductCatalogRenderRequest
+public class ProductCatalogRenderRequest : RenderRequestBase
 {
-    /// <summary>
-    /// Template identifier.
-    /// </summary>
-    public Guid TemplateId { get; set; }
 
     /// <summary>
-    /// Format code.
+    /// Collection of products.
     /// </summary>
-    public TemplateFormatCode FormatCode { get; set; }
+    public IEnumerable<Product> Products { get; init; }
+
+    /// <summary>
+    /// Creates a product catalog render request.
+    /// </summary>
+    /// <param name="templateId">Template identifier.</param>
+    /// <param name="formatCode">Format code.</param>
+    /// <param name="products">Collection of products.</param>
+    public ProductCatalogRenderRequest(
+        Guid templateId,
+        TemplateFormatCode formatCode,
+        IEnumerable<Product> products)
+        : base(templateId, formatCode)
+    {
+        Products = products;
+    }
+
 }

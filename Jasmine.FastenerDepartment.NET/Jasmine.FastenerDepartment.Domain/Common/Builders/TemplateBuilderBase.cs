@@ -1,4 +1,5 @@
-﻿using Jasmine.FastenerDepartment.Domain.Templates.Models;
+﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
+using Jasmine.FastenerDepartment.Domain.Templates.Models;
 
 namespace Jasmine.FastenerDepartment.Domain.Common.Builders;
 
@@ -7,6 +8,11 @@ namespace Jasmine.FastenerDepartment.Domain.Common.Builders;
 /// </summary>
 public abstract class TemplateBuilderBase<TContainer>
 {
+    /// <summary>
+    /// Others.
+    /// </summary>
+    protected LocalizedString Others = new("Others", "Остальное");
+
     /// <summary>
     /// Main container.
     /// </summary>

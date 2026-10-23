@@ -1,5 +1,5 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
-using Jasmine.FastenerDepartment.Messaging.Providers;
+using Jasmine.FastenerDepartment.Messaging.TemplateProviders;
 
 namespace Jasmine.FastenerDepartment.Messaging.Factories;
 

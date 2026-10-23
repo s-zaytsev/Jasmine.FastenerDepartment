@@ -6,7 +6,7 @@ namespace Jasmine.FastenerDepartment.Domain.Messaging.Models;
 /// <summary>
 /// Message request.
 /// </summary>
-public class MessageRequest<T> where T : MessageRequestData, new()
+public class MessageRequest
 {
     /// <summary>
     /// Message type.
@@ -31,10 +31,29 @@ public class MessageRequest<T> where T : MessageRequestData, new()
     /// <summary>
     /// Request data.
     /// </summary>
-    public T Data { get; set; }
+    public MessageRequestData Data { get; set; }
 
     /// <summary>
     /// Attachments.
     /// </summary>
     public List<FileModel> Attachments { get; set; }
+
+    /// <summary>
+    /// Creates a message request.
+    /// </summary>
+    public MessageRequest(
+        MessageTypeCode messageTypeCode,
+        TemplateTypeCode templateTypeCode,
+        string recipientContact,
+        string title,
+        MessageRequestData data,
+        List<FileModel> attachments)
+    {
+        MessageTypeCode = messageTypeCode;
+        TemplateTypeCode = templateTypeCode;
+        RecipientContact = recipientContact;
+        Title = title;
+        Data = data;
+        Attachments = attachments;
+    }
 }

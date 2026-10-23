@@ -1,27 +1,38 @@
-﻿namespace Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
+﻿using Jasmine.FastenerDepartment.Domain.Companies.Models;
+using Jasmine.FastenerDepartment.Domain.Orders.Models;
+
+namespace Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
 
 /// <summary>
 /// Order form render request.
 /// </summary>
-public class OrderFormRenderRequest
+public class OrderFormRenderRequest : RenderRequestBase
 {
     /// <summary>
-    /// Template identifier.
+    /// Order.
     /// </summary>
-    public Guid TemplateId { get; set; }
+    public Order Order { get; init; }
 
     /// <summary>
-    /// Format code.
+    /// Company.
     /// </summary>
-    public TemplateFormatCode FormatCode { get; set; }
+    public Company Company { get; init; }
 
     /// <summary>
-    /// Order identifier.
+    /// Creates an order form render request.
     /// </summary>
-    public Guid OrderId { get; set; }
-
-    /// <summary>
-    /// Company identifier.
-    /// </summary>
-    public Guid? CompanyId { get; set; }
+    /// <param name="templateId">Template identifier.</param>
+    /// <param name="formatCode">Format code.</param>
+    /// <param name="order">Order.</param>
+    /// <param name="company">Company.</param>
+    public OrderFormRenderRequest(
+        Guid templateId,
+        TemplateFormatCode formatCode,
+        Order order,
+        Company company)
+        : base(templateId, formatCode)
+    {
+        Order = order;
+        Company = company;
+    }
 }

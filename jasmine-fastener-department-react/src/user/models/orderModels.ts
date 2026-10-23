@@ -146,6 +146,12 @@ export interface SendOrder {
     attachments?: File[];
 }
 
+export interface RenderOrderForm {
+    templateId: string;
+    formatCode: TemplateFormatCode;
+    companyId?: string;
+}
+
 export interface DownloadOrder {
     companyId?: string;
     templateId: string;

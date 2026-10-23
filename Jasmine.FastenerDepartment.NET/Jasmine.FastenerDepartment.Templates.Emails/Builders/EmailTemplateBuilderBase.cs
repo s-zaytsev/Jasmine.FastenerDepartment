@@ -3,14 +3,21 @@ using Jasmine.FastenerDepartment.Templates.Emails.Constants;
 
 namespace Jasmine.FastenerDepartment.Templates.Emails.Builders;
 
-public abstract class EmailTemplateBuilderBase
+internal abstract class EmailTemplateBuilderBase
 {
-    protected abstract string Title { get; set; }
-    protected abstract string Body { get; set; }
+    protected string Title { get; set; }
+
+    protected string Body { get; set; }
+
     protected LanguageCode? LanguageCode { get; set; }
 
-    protected abstract EmailTemplateBuilderBase SetTitle();
-    protected abstract EmailTemplateBuilderBase SetBody();
+    protected EmailTemplateBuilderBase(LanguageCode? languageCode)
+    {
+        LanguageCode = languageCode;
+    }
+
+    protected abstract void SetTitle();
+    protected abstract void SetBody();
 
     public string Build()
     {
@@ -80,7 +87,7 @@ public abstract class EmailTemplateBuilderBase
                         font-size: 1px;
                         line-height: 1px;
                         color: #fff;"">
-                        {OrderConstants.INVISIBLE_SPACES}
+                        {CommonConstants.INVISIBLE_SPACES}
                     </div>
                     <div class=""body-wrapper"">
                        {Body}

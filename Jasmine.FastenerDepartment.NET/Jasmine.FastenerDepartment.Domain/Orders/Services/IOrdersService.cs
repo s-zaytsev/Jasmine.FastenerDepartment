@@ -1,6 +1,8 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Domain.Orders.Models;
 using Jasmine.FastenerDepartment.Domain.Products.Models;
+using Jasmine.FastenerDepartment.Domain.Templates.Models;
+using Jasmine.FastenerDepartment.Domain.Templates.Models.Content.OrderForm;
 
 namespace Jasmine.FastenerDepartment.Domain.Orders.Services;
 
@@ -64,6 +66,16 @@ public interface IOrdersService
     /// <param name="model">Cancel order model.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     Task CancelAsync(Guid id, CancelOrderModel model, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Renders an order form document.
+    /// </summary>
+    /// <param name="id">Order identifier.</param>
+    /// <param name="model">Render order form model.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Template render result.</returns>
+    Task<TemplateRenderResult> RenderOrderFormAsync(
+        Guid id, RenderOrderForm model, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Returns a file model as a zip file.

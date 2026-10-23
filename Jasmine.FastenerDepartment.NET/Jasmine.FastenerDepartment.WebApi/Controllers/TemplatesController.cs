@@ -14,18 +14,22 @@ namespace Jasmine.FastenerDepartment.WebApi.Controllers;
 public class TemplatesController : ControllerBase
 {
     private readonly ITemplatesService _templatesService;
+    private readonly ITemplateRenderService _templateRenderService;
     private readonly WebApiMapper _mapper;
 
     /// <summary>
     /// Creates a controller.
     /// </summary>
     /// <param name="templatesService">Templates service.</param>
+    /// <param name="templateRenderService">Template render service.</param>
     /// <param name="mapper">Mapper.</param>
     public TemplatesController(
         ITemplatesService templatesService,
+        ITemplateRenderService templateRenderService,
         WebApiMapper mapper)
     {
         _templatesService = templatesService;
+        _templateRenderService = templateRenderService;
         _mapper = mapper;
     }
 
@@ -133,5 +137,21 @@ public class TemplatesController : ControllerBase
         var model = _mapper.Map(dto);
         await _templatesService.ChangeTemplateAsync(id, model, cancellationToken);
         return NoContent();
+    }
+
+    /// <summary>
+    /// Renders a preview of a document.
+    /// </summary>
+    /// <param name="dto">Create template model.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Preview of a document.</returns>
+    [HttpPost("preview")]
+    public async Task<IActionResult> RenderTemplatePreviewAsync(
+        [FromBody] ChangeTemplateDto dto, CancellationToken cancellationToken)
+    {
+        var model = _mapper.Map(dto);
+        var render = await _templateRenderService.RenderPreviewAsync(model, cancellationToken);
+
+        return File(render.Content, render.ContentType, render.FileName);
     }
 }

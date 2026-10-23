@@ -8,6 +8,7 @@ import ExportDocumentGroup from "./ExportDocumentGroup.tsx";
 type ExportDocumentGridProps = {
     templates: Template[];
     onDownload: (templateId: string, formatCode: TemplateFormatCode) => void;
+    onSend: (templateId: string, formatCode: TemplateFormatCode) => void;
 }
 
 const ExportDocumentGrid = (props: ExportDocumentGridProps) => {
@@ -35,6 +36,7 @@ const ExportDocumentGrid = (props: ExportDocumentGridProps) => {
                     title={key}
                     templates={value}
                     onDownload={props.onDownload}
+                    onSend={props.onSend}
                 />
             ))}
         </Box>

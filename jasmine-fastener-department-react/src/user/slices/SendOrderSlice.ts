@@ -3,10 +3,10 @@ import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import RecipientsApi from "../api/recipientsApi.ts";
 import type {SendOrderState} from "../models/orderModels.ts";
 import TemplatesApi from "../api/templatesApi.ts";
-import {type OrderFormRenderRequest, TemplateFormatCode, type TemplatesQuery} from "../models/templateModels.ts";
+import {TemplateFormatCode, type TemplatesQuery} from "../models/templateModels.ts";
 import CompaniesApi from "../api/companiesApi.ts";
-import DocumentsApi from "../api/documentsApi.ts";
 import type {FileModel} from "../../shared/models/models.ts";
+import OrdersApi from "../api/ordersApi.ts";
 
 export const getCompanies = createAsyncThunkWithErrorHandler(
     "sendOrder/getCompanies",
@@ -31,8 +31,8 @@ export const getRecipients = createAsyncThunkWithErrorHandler(
 
 export const renderOrderForm = createAsyncThunkWithErrorHandler(
     "sendOrder/renderOrderForm",
-    async (request: OrderFormRenderRequest) => {
-        return DocumentsApi.renderOrderForm(request);
+    async ({id, model}: any) => {
+        return OrdersApi.renderOrderForm(id, model);
     }
 );
 

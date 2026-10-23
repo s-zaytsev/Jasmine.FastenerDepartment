@@ -28,6 +28,15 @@ class TemplatesApi {
             .then(x => x.data);
     }
 
+    async getPreview(model: ChangeTemplate): Promise<string> {
+        const response = await api.post<Blob>(`/templates/preview`, model, {
+            responseType: 'blob',
+        });
+
+        const htmlText = await response.data.text();
+        return htmlText;
+    }
+
     createTemplate(model: ChangeTemplate): Promise<void> {
         return api.post<Promise<void>>('templates', model)
             .then(x => x.data);

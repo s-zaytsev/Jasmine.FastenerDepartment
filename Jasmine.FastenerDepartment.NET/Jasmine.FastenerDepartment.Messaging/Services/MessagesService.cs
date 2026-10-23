@@ -18,8 +18,7 @@ internal class MessagesService : IMessagesService
         _typeProvidersFactory = typeProvidersFactory;
     }
 
-    public async Task SendAsync<T>(MessageRequest<T> request, CancellationToken cancellationToken = default)
-        where T : MessageRequestData, new()
+    public async Task SendAsync(MessageRequest request, CancellationToken cancellationToken = default)
     {
         var templateProvider = _templateProvidersFactory.GetProvider(request.MessageTypeCode);
         var template = templateProvider.Render(request.TemplateTypeCode, request.Data);
@@ -30,8 +29,7 @@ internal class MessagesService : IMessagesService
         await messageProvider.SendAsync(model, cancellationToken);
     }
 
-    private SendModel CreateSendModel<T>(MessageRequest<T> request, string template)
-        where T : MessageRequestData, new()
+    private SendModel CreateSendModel(MessageRequest request, string template)
     {
         return new SendModel
         {

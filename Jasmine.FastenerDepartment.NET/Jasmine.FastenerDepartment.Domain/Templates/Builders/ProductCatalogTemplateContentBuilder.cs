@@ -62,9 +62,9 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
         SetMainContainer();
 
         if (!Data.Content.GroupByType)
-            AppendUngroupedTable(Data.Products);
+            AppendUngroupedTable();
         else
-            AppendGroupedTables(Data.Products);
+            AppendGroupedTables();
 
         var result = ConvertMainContainerToResult();
         return result;
@@ -116,11 +116,10 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
     /// <param name="cell">Table row cell.</param>
     protected abstract void AppendTableRowCell(TRow row, TRowCell cell);
 
-    private void AppendUngroupedTable(
-        IEnumerable<Product> products)
+    private void AppendUngroupedTable()
     {
         var table = CreateTable();
-        foreach (var product in products)
+        foreach (var product in Data.Products.OrderBy(x => x.Name.Value))
         {
             var row = CreateTableRow(product);
             AppendTableRow(table, row);
@@ -129,17 +128,22 @@ public abstract class ProductCatalogTemplateContentBuilder<TContainer, TTable, T
         AppendTable(table);
     }
 
-    private void AppendGroupedTables(IEnumerable<Product> products)
+    private void AppendGroupedTables()
     {
-        var groupedByType = products
-            .GroupBy(x => x.Type?.Name.Value ?? "Others")
-            .ToDictionary(g => g.Key, g => g.ToList());
+        var others = Others.GetText(Data.LanguageCode);
+
+        var groupedByType = Data.Products
+            .GroupBy(x => x.Type?.Name.Value ?? others)
+            .ToDictionary(g => g.Key, g => g.ToList())
+            .OrderBy(x => (x.Key == others, x.Key));
 
         foreach (var pair in groupedByType)
         {
             AppendTableGroupName(pair.Key);
+
             var table = CreateTable();
-            foreach (var product in pair.Value)
+
+            foreach (var product in pair.Value.OrderBy(x => x.Name.Value))
             {
                 var row = CreateTableRow(product);
                 AppendTableRow(table, row);
