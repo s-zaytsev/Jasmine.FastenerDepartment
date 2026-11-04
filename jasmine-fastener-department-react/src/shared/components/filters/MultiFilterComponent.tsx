@@ -3,11 +3,13 @@ import {Box, FormControl, MenuItem, OutlinedInput, Select} from "@mui/material";
 import Typography from "../Typography.tsx";
 import {memo, useMemo} from "react";
 import MultiFilterMenuItem from "./MultiFilterMenuItem.tsx";
+import FilledButton from "../buttons/FilledButton.tsx";
 
 type MultiFilterComponentProps<T> = {
     title: string;
     filter?: MultiFilter<T>;
     onChange: (id: T, isEnabled: boolean) => void;
+    onClear: () => void;
 }
 
 function MultiFilterComponent<T>(props: MultiFilterComponentProps<T>) {
@@ -33,8 +35,11 @@ function MultiFilterComponent<T>(props: MultiFilterComponentProps<T>) {
                     MenuProps={{ PaperProps: { sx: { maxHeight: 500 } } }}
                 >
 
-                    <MenuItem disabled value={`placeholder-${props.title}`}>
-                        <em>{props.title}</em>
+                    <MenuItem value={`placeholder-${props.title}`}>
+                        <Box  className={'w-full flex justify-between items-center'} >
+                            <em>{props.title}</em>
+                            <FilledButton variant={'text'} onClick={props.onClear}>Очистить все</FilledButton>
+                        </Box>
                     </MenuItem>
 
                     {props.filter?.items.map((item, index) =>

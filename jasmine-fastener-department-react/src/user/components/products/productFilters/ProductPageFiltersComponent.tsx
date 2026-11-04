@@ -41,12 +41,14 @@ const ProductPageFiltersComponent = (props: ProductPageFiltersProps) => {
                             title={'Поставщики'}
                             filter={props.filters?.suppliers}
                             onChange={props.onSuppliersChange}
+                            onClear={props.resetSuppliers}
                         />
 
                         <MultiFilterComponent
                             title={'Тип товара'}
                             filter={props.filters?.types}
                             onChange={props.onTypeChange}
+                            onClear={props.resetTypes}
                         />
 
                         {props.filters.priceRange && <PriceRangeFilterComponent
