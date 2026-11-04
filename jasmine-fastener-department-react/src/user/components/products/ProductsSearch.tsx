@@ -17,7 +17,7 @@ const ProductsSearch = (props: ProductsSearchProps) => {
 
     useEffect(() => {
         const timerId = setTimeout(() => {
-            props.onSearch(searchText, true);
+            props.onSearch(searchText, false);
         }, 500);
         return () => {
             clearTimeout(timerId);
