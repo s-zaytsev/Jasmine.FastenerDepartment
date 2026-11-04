@@ -3,6 +3,7 @@ using Jasmine.FastenerDepartment.Documents;
 using Jasmine.FastenerDepartment.Domain;
 using Jasmine.FastenerDepartment.EF;
 using Jasmine.FastenerDepartment.Messaging;
+using Jasmine.FastenerDepartment.Templates.Emails;
 using Jasmine.FastenerDepartment.WebApi.Configuration;
 using Jasmine.FastenerDepartment.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +41,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddWebServices();
-        builder.Services.AddDomainServices(builder.Configuration);
+        builder.Services.AddDomainServices();
         builder.Services.AddEFServices();
         builder.Services.AddDocumentsServices();
         builder.Services.AddApplicationServices(builder.Configuration);

@@ -1,7 +1,7 @@
 ﻿using Jasmine.FastenerDepartment.Templates.Emails.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jasmine.FastenerDepartment.Messaging;
+namespace Jasmine.FastenerDepartment.Templates.Emails;
 
 /// <summary>
 /// Service collection extensions.

@@ -34,9 +34,8 @@ internal class Program
     private static IServiceProvider Configure(IConfigurationRoot configuration)
     {
         var services = new ServiceCollection();
-        services.AddDomainServices(configuration);
+        services.AddDomainServices();
         services.AddEFServices();
-        //    services.AddInfrastructureServices(configuration);
         services.AddApplicationServices(configuration);
 
         services.AddTransient<IJsonProductService, JsonProductService>();
