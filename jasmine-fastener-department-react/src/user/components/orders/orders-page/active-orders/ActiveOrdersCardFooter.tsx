@@ -4,7 +4,7 @@ import type {Order} from "../../../../models/orderModels.ts";
 
 type ActiveOrdersGridRowFooterProps = {
     order: Order;
-    onChange: (id: string) => void;
+    onComplete: (id: string) => void;
     onCancel: (id: string) => void;
 }
 
@@ -27,10 +27,10 @@ const ActiveOrdersCardFooter = (props: ActiveOrdersGridRowFooterProps) => {
                 variant={'outlined'}
                 onClick={(e) => {
                     e.stopPropagation();
-                    props.onChange(props.order.id);
+                    props.onComplete(props.order.id);
                 }}
             >
-                Редактировать
+                Завершить
             </FilledButton>
         </Box>
     )

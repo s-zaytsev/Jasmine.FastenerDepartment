@@ -22,14 +22,14 @@ const ActiveOrdersCard = (props: ActiveOrdersGridRowProps) => {
                 <ActiveOrdersCardHeader
                     order={props.order}
                     onSend={props.onSend}
-                    onComplete={props.onComplete}
+                    onChange={props.onChange}
                 />
 
                 <ActiveOrdersCardBody order={props.order}/>
 
                 <ActiveOrdersCardFooter
                     order={props.order}
-                    onChange={props.onChange}
+                    onComplete={props.onComplete}
                     onCancel={props.onCancel}
                 />
             </Box>

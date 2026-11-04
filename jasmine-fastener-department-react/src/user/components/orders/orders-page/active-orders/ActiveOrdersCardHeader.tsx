@@ -1,13 +1,13 @@
 import type {Order} from "../../../../models/orderModels.ts";
 import {Box} from "@mui/material";
 import IconButton from "../../../../../shared/components/buttons/IconButton.tsx";
-import {DoneOutlined, EmailOutlined} from "@mui/icons-material";
+import {EditOutlined, EmailOutlined} from "@mui/icons-material";
 import Typography from "../../../../../shared/components/Typography.tsx";
 
 type ActiveOrdersGridRowHeaderProps = {
     order: Order;
     onSend: (id: string) => void;
-    onComplete: (id: string) => void;
+    onChange: (id: string) => void;
 }
 
 const ActiveOrdersCardHeader = (props: ActiveOrdersGridRowHeaderProps) => {
@@ -32,13 +32,13 @@ const ActiveOrdersCardHeader = (props: ActiveOrdersGridRowHeaderProps) => {
                 </IconButton>
 
                 <IconButton
-                    description={'Завершить заказ'}
+                    description={'Редактировать заказ'}
                     hasBackground={true}
                     onClick={(e) => {
                         e.stopPropagation();
-                        props.onComplete(props.order.id);
+                        props.onChange(props.order.id);
                     }}>
-                    <DoneOutlined/>
+                    <EditOutlined/>
                 </IconButton>
             </Box>
         </Box>
