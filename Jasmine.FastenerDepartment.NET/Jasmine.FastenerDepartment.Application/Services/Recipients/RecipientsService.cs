@@ -2,7 +2,7 @@
 using Jasmine.FastenerDepartment.Domain.Recipients.Models;
 using Jasmine.FastenerDepartment.Domain.Recipients.Repositories;
 using Jasmine.FastenerDepartment.Domain.Recipients.Services;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Recipients;
 

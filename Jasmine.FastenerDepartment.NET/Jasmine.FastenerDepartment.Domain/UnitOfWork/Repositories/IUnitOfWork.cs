@@ -1,7 +1,6 @@
-﻿
-using System.Data;
+﻿using System.Data;
 
-namespace Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+namespace Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 
 /// <summary>
 /// Unit of work.

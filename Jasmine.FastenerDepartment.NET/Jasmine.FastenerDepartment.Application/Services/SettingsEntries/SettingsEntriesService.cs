@@ -3,7 +3,7 @@ using Jasmine.FastenerDepartment.Domain.Settings.Models.Emails;
 using Jasmine.FastenerDepartment.Domain.Settings.Models.Keys;
 using Jasmine.FastenerDepartment.Domain.Settings.Repositories;
 using Jasmine.FastenerDepartment.Domain.Settings.Services;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 using Microsoft.Extensions.Configuration;
 
 namespace Jasmine.FastenerDepartment.Application.Services.SettingsEntries;

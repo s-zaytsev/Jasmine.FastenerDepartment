@@ -2,7 +2,7 @@
 using Jasmine.FastenerDepartment.Domain.Companies.Models;
 using Jasmine.FastenerDepartment.Domain.Companies.Repositories;
 using Jasmine.FastenerDepartment.Domain.Companies.Services;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Companies;
 

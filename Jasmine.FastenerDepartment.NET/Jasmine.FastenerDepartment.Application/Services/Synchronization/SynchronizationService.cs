@@ -3,7 +3,7 @@ using Jasmine.FastenerDepartment.Domain.Common.Extensions;
 using Jasmine.FastenerDepartment.Domain.HistoryEntries.Repositories;
 using Jasmine.FastenerDepartment.Domain.Products.Models;
 using Jasmine.FastenerDepartment.Domain.Products.Repositories;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 using System.Linq;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Synchronization;

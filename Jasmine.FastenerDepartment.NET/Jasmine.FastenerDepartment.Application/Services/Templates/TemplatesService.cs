@@ -4,7 +4,7 @@ using Jasmine.FastenerDepartment.Domain.Templates;
 using Jasmine.FastenerDepartment.Domain.Templates.Models;
 using Jasmine.FastenerDepartment.Domain.Templates.Repositories;
 using Jasmine.FastenerDepartment.Domain.Templates.Services;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Templates;
 

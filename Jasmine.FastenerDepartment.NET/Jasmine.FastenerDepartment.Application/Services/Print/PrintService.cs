@@ -1,6 +1,6 @@
 ﻿using Jasmine.FastenerDepartment.Domain.Products.Models;
 using Jasmine.FastenerDepartment.Domain.Products.Repositories;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Print;
 

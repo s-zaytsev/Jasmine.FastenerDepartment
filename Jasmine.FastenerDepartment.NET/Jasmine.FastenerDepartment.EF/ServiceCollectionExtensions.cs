@@ -9,6 +9,7 @@ using Jasmine.FastenerDepartment.Domain.Recipients.Repositories;
 using Jasmine.FastenerDepartment.Domain.Settings.Repositories;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Repositories;
 using Jasmine.FastenerDepartment.Domain.Templates.Repositories;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 using Jasmine.FastenerDepartment.EF.Repositories.Companies;
 using Jasmine.FastenerDepartment.EF.Repositories.MeasurementUnits;
 using Jasmine.FastenerDepartment.EF.Repositories.Orders;

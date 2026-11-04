@@ -1,7 +1,7 @@
 ﻿using Jasmine.FastenerDepartment.Domain.ProductTypes.Models;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Repositories;
 using Jasmine.FastenerDepartment.Domain.ProductTypes.Services;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 
 namespace Jasmine.FastenerDepartment.Application.Services.ProductTypes;
 

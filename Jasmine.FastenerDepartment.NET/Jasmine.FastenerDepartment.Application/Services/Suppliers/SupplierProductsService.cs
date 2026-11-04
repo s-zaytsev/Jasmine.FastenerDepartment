@@ -3,7 +3,7 @@ using Jasmine.FastenerDepartment.Domain.Common.Models;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Models;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Repositories;
 using Jasmine.FastenerDepartment.Domain.Suppliers.Services;
-using Jasmine.FastenerDepartment.EF.Repositories.UnitOfWork;
+using Jasmine.FastenerDepartment.Domain.UnitOfWork.Repositories;
 
 namespace Jasmine.FastenerDepartment.Application.Services.Suppliers;
 
