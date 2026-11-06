@@ -2,8 +2,8 @@ import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.
 import {useNavigate} from "react-router-dom";
 import {useCallback, useEffect} from "react";
 import {
-    changeNeededOrderStatus,
-    changeNeededPrintStatus,
+    setNeededOrderStatus,
+    setNeededPrintStatus,
     changeOrderStatus,
     changePrintStatus,
     changeQuery,
@@ -47,15 +47,30 @@ const useProductsPage = () => {
         navigate(id)
     }, [navigate]);
 
-    const handleChangePrintStatus = useCallback((id: string) => {
-        dispatch(changeNeededPrintStatus({id}));
-        dispatch(changePrintStatus(id));
-    }, [dispatch]);
+    const handleChangePrintStatus = useCallback(async (id: string) => {
+        try {
+            dispatch(setNeededPrintStatus({id}));
+            await dispatch(changePrintStatus(id));
+            dispatch(getProducts(state.query));
+            dispatch(getPageFilters(state.query));
+        }
+        finally {
+            dispatch(setNeededPrintStatus({id: undefined}));
+        }
+    }, [dispatch, state.query]);
 
-    const handleChangeOrderStatus = useCallback((id: string) => {
-        dispatch(changeNeededOrderStatus({id}));
-        dispatch(changeOrderStatus(id));
-    }, [dispatch]);
+    const handleChangeOrderStatus = useCallback(async (id: string) => {
+        try {
+            dispatch(setNeededOrderStatus({id}));
+            await dispatch(changeOrderStatus(id));
+
+            dispatch(getProducts(state.query));
+            dispatch(getPageFilters(state.query));
+        }
+        finally {
+            dispatch(setNeededOrderStatus({id: undefined}));
+        }
+    }, [dispatch, state.query]);
 
     const handleSort = useCallback((parameter: number) => {
         const sortDesc = state.query.sortBy !== parameter ? false : !state.query.sortDesc;
@@ -91,6 +106,8 @@ const useProductsPage = () => {
         query: state.query,
         filters: state.filters,
         productTypes: state.productTypes,
+        changingPrintStatusProductId: state.changingPrintStatusProductId,
+        changingOrderStatusProductId: state.changingOrderStatusProductId,
         loading: state.loading,
         handleNavigateToCreate,
         handleNavigateToProduct,

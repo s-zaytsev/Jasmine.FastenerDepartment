@@ -1,5 +1,4 @@
 import Page from "../../../shared/components/layout/Page.tsx";
-import Loader from "../../../shared/components/Loader.tsx";
 import useExportPage from "./useExportPage.ts";
 import ExportDocumentGrid from "./ExportDocumentGrid.tsx";
 import SendExportDocumentDialog from "./dialogs/SendExportDocumentDialog.tsx";
@@ -10,17 +9,14 @@ const ExportPage = () => {
         templates,
         selectedTemplate,
         selectedFormatCode,
+        sendingTemplateId,
+        downloadingTemplateId,
         isSendDialogOpen,
         handleDownload,
         handleOpenSendDialog,
         handleCloseSendDialog,
-        handleSend,
-        loading
+        handleSend
     } = useExportPage();
-
-    if (loading) {
-        return <Loader/>;
-    }
 
     return (
         <Page
@@ -29,6 +25,8 @@ const ExportPage = () => {
         >
             <ExportDocumentGrid
                 templates={templates}
+                sendingTemplateId={sendingTemplateId}
+                downloadingTemplateId={downloadingTemplateId}
                 onDownload={handleDownload}
                 onSend={handleOpenSendDialog}
             />

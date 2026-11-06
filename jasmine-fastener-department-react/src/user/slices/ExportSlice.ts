@@ -46,6 +46,12 @@ const exportSlice = createSlice({
             state.selectedTemplate = undefined;
             state.selectedFormatCode = undefined;
         },
+        setSendingTemplateId: (state, action: PayloadAction<{ id?: string }>) => {
+            state.sendingTemplateId = action.payload.id;
+        },
+        setDownloadingTemplateId: (state, action: PayloadAction<{ id?: string }>) => {
+            state.downloadingTemplateId = action.payload.id;
+        },
         setSuccess: (state, action) => {
             state.success = action.payload;
         }
@@ -93,6 +99,8 @@ const exportSlice = createSlice({
 export const {
     selectTemplate,
     clearSelectedTemplate,
+    setSendingTemplateId,
+    setDownloadingTemplateId,
     setSuccess
 } = exportSlice.actions;
 

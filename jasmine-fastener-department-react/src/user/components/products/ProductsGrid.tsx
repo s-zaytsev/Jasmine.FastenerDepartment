@@ -11,6 +11,8 @@ type ProductGridProps = {
     page?: Page<Product>;
     query: ProductsQuery;
     productTypes: ProductType[];
+    changingPrintStatusProductId?: string;
+    changingOrderStatusProductId?: string;
     onSort: (parameter: number) => void;
     onPageNoChanged: (parameter: number) => void;
     onPageSizeChanged: (parameter: number) => void;
@@ -44,6 +46,9 @@ const ProductsGrid = (props: ProductGridProps) => {
                         <ProductGridRow
                             product={product}
                             headColumns={columns}
+                            isActionsDisabled={!!props.changingPrintStatusProductId || !!props.changingOrderStatusProductId}
+                            isChangingOrderStatus={props.changingOrderStatusProductId === product.id}
+                            isChangingPrintStatus={props.changingPrintStatusProductId === product.id}
                             onNavigateToProduct={props.onNavigateToProduct}
                             onChangeOrderStatus={props.onChangeOrderStatus}
                             onChangePrintStatus={props.onChangePrintStatus}

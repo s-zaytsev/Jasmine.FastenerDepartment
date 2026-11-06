@@ -117,6 +117,8 @@ export interface ProductsPageState extends StateBase {
     filters: ProductPageFilters;
     page?: Page<Product>;
     productTypes: ProductType[];
+    changingPrintStatusProductId?: string;
+    changingOrderStatusProductId?: string;
 }
 
 export interface ChangeProductPageState extends StateBase {

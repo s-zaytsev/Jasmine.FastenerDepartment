@@ -5,6 +5,8 @@ export interface ExportPageState extends StateBase {
     templates: Template[];
     selectedTemplate?: Template;
     selectedFormatCode?: TemplateFormatCode;
+    sendingTemplateId?: string;
+    downloadingTemplateId?: string;
 }
 
 export interface DownloadDocument {

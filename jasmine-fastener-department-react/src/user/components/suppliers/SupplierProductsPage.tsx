@@ -6,8 +6,8 @@ import {useAppDispatch, useAppSelector} from "../../../shared/hooks/sharedHooks.
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {
-    changeNeededOrderStatus,
-    changeNeededPrintStatus,
+    setNeededOrderStatus,
+    setNeededPrintStatus,
     changeOrderStatus,
     changePrintStatus
 } from "../../slices/ProductsSlice.ts";
@@ -38,12 +38,12 @@ const SupplierProductsPage = () => {
     }
 
     function handlePrintStatus(id: string) {
-        dispatch(changeNeededPrintStatus({id}));
+        dispatch(setNeededPrintStatus({id}));
         dispatch(changePrintStatus(id));
     }
 
     function handleOrderStatus(id: string) {
-        dispatch(changeNeededOrderStatus({id}));
+        dispatch(setNeededOrderStatus({id}));
         dispatch(changeOrderStatus(id));
     }
 

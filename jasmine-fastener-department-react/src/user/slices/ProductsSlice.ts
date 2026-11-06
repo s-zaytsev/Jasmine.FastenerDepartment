@@ -63,15 +63,21 @@ const productsSlice = createSlice({
         changeQuery: (state, action) => {
             state.query = action.payload;
         },
-        changeNeededPrintStatus: (state, action: PayloadAction<{ id: string }>) => {
+        setNeededPrintStatus: (state, action: PayloadAction<{ id?: string }>) => {
             const {id} = action.payload;
-            const item = state.page?.items.find((item) => item.id === id);
+            const item = state.page?.items
+                .find((item) => item.id === id || item.id === state.changingPrintStatusProductId);
             if (item) item.isNeededToPrint = !item.isNeededToPrint;
+
+            state.changingPrintStatusProductId = action.payload.id;
         },
-        changeNeededOrderStatus: (state, action: PayloadAction<{ id: string }>) => {
+        setNeededOrderStatus: (state, action: PayloadAction<{ id?: string }>) => {
             const {id} = action.payload;
-            const item = state.page?.items.find((item) => item.id === id);
+            const item = state.page?.items
+                .find((item) => item.id === id || item.id === state.changingOrderStatusProductId);
             if (item) item.isNeededToOrder = !item.isNeededToOrder;
+
+            state.changingOrderStatusProductId = action.payload.id;
         },
         setSuccess: (state, action) => {
             state.success = action.payload;
@@ -145,8 +151,8 @@ const productsSlice = createSlice({
 
 export const {
     changeQuery,
-    changeNeededPrintStatus,
-    changeNeededOrderStatus,
+    setNeededPrintStatus,
+    setNeededOrderStatus,
     setSuccess
 } = productsSlice.actions;
 

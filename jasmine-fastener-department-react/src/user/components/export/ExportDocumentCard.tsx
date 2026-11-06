@@ -9,6 +9,9 @@ import IconButton from "../../../shared/components/buttons/IconButton.tsx";
 
 type ExportDocumentCardProps = {
     template: Template;
+    isSending?: boolean;
+    isDownloading?: boolean;
+    isDisable?: boolean;
     onDownload: (templateId: string, formatCode: TemplateFormatCode) => void;
     onSend: (templateId: string, formatCode: TemplateFormatCode) => void;
 }
@@ -35,11 +38,23 @@ const ExportDocumentCard = (props: ExportDocumentCardProps) => {
                     <Typography variant={'headlineH3'}>{props.template?.name}</Typography>
 
                     <Box className={'flex gap-[0.5rem]'}>
-                        <IconButton onClick={handleSend} hasBackground={true} description={'Отправить документ'}>
+                        <IconButton
+                            onClick={handleSend}
+                            hasBackground={true}
+                            isDisabled={props.isDisable}
+                            isLoading={props.isSending}
+                            description={'Отправить документ'}
+                        >
                             <EmailOutlined/>
                         </IconButton>
 
-                        <IconButton onClick={handleDownload} hasBackground={true} description={'Скачать документ'}>
+                        <IconButton
+                            onClick={handleDownload}
+                            hasBackground={true}
+                            isDisabled={props.isDisable}
+                            isLoading={props.isDownloading}
+                            description={'Скачать документ'}
+                        >
                             <FileDownloadOutlined/>
                         </IconButton>
                     </Box>

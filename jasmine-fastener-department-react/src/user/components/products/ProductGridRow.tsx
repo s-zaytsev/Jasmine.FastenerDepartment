@@ -13,6 +13,9 @@ import {memo, useCallback} from "react";
 type ProductGridRowProps = {
     product: Product;
     headColumns?: TableColumnDefinition[];
+    isChangingPrintStatus?: boolean;
+    isChangingOrderStatus?: boolean;
+    isActionsDisabled?: boolean;
     onNavigateToProduct: (parameter: string) => void;
     onChangePrintStatus: (parameter: string) => void;
     onChangeOrderStatus: (parameter: string) => void;
@@ -70,6 +73,8 @@ const ProductGridRow = (props: ProductGridRowProps) => {
             <Box className={'flex items-center gap-[1rem]'} width={getWidth(6)}>
                 <IconButton
                     isActive={props.product.isNeededToPrint}
+                    isLoading={props.isChangingPrintStatus}
+                    isDisabled={props.isActionsDisabled}
                     description={!props.product.isNeededToPrint ? 'Добавить в список печати' : 'Убрать из списка печати'}
                     onClick={handleChangePrintStatus}
                 >
@@ -78,6 +83,8 @@ const ProductGridRow = (props: ProductGridRowProps) => {
 
                 <IconButton
                     isActive={props.product.isNeededToOrder}
+                    isLoading={props.isChangingOrderStatus}
+                    isDisabled={props.isActionsDisabled}
                     description={!props.product.isNeededToOrder ? 'Добавить в список заказа' : 'Убрать из списка заказа'}
                     onClick={handleChangeOrderStatus}
                 >

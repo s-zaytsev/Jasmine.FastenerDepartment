@@ -12,6 +12,8 @@ const ProductsPage = () => {
         query,
         filters,
         productTypes,
+        changingPrintStatusProductId,
+        changingOrderStatusProductId,
         loading,
         handleNavigateToCreate,
         handleNavigateToProduct,
@@ -74,6 +76,8 @@ const ProductsPage = () => {
                 page={page}
                 query={query}
                 productTypes={productTypes}
+                changingOrderStatusProductId={changingOrderStatusProductId}
+                changingPrintStatusProductId={changingPrintStatusProductId}
                 onSort={handleSort}
                 onPageNoChanged={handlePageNoChange}
                 onPageSizeChanged={handlePageSizeChange}

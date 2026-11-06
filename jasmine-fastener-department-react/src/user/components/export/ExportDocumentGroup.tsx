@@ -7,6 +7,8 @@ import SectionHeader from "../../../shared/components/section/SectionHeader.tsx"
 type ExportDocumentGroupProps = {
     title: string;
     templates: Template[];
+    sendingTemplateId?: string;
+    downloadingTemplateId?: string;
     onDownload: (templateId: string, formatCode: TemplateFormatCode) => void;
     onSend: (templateId: string, formatCode: TemplateFormatCode) => void;
 }
@@ -22,6 +24,9 @@ const ExportDocumentGroup = (props: ExportDocumentGroupProps) => {
                             <ExportDocumentCard
                                 key={x.id}
                                 template={x}
+                                isDownloading={x.id === props.downloadingTemplateId}
+                                isSending={x.id === props.sendingTemplateId}
+                                isDisable={!!props.sendingTemplateId || !!props.downloadingTemplateId}
                                 onDownload={props.onDownload}
                                 onSend={props.onSend}
                             />

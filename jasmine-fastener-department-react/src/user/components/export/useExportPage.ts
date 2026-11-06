@@ -5,7 +5,8 @@ import {
     downloadDocument,
     getDocuments,
     selectTemplate,
-    sendDocument
+    sendDocument,
+    setDownloadingTemplateId, setSendingTemplateId
 } from "../../slices/ExportSlice.ts";
 import {useEffect, useState} from "react";
 import type {TemplateFormatCode} from "../../models/templateModels.ts";
@@ -20,13 +21,19 @@ const useExportPage = () => {
 
     const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
 
-    const handleDownload = (templateId: string, formatCode: TemplateFormatCode) => {
-        const model: DownloadDocument = {
-            templateId: templateId,
-            formatCode: formatCode,
-        }
+    const handleDownload = async (templateId: string, formatCode: TemplateFormatCode) => {
+        try {
+            dispatch(setDownloadingTemplateId({id: templateId}));
 
-        dispatch(downloadDocument(model));
+            const model: DownloadDocument = {
+                templateId: templateId,
+                formatCode: formatCode,
+            }
+
+            await dispatch(downloadDocument(model));
+        } finally {
+            dispatch(setDownloadingTemplateId({id: undefined}));
+        }
     }
 
     const handleOpenSendDialog = (templateId: string, formatCode: TemplateFormatCode) => {
@@ -39,8 +46,13 @@ const useExportPage = () => {
         setIsSendDialogOpen(false);
     }
 
-    const handleSend = (model: SendDocument) => {
-        dispatch(sendDocument(model));
+    const handleSend = async (model: SendDocument) => {
+        try {
+            dispatch(setSendingTemplateId({id: model.templateId}));
+            await dispatch(sendDocument(model));
+        } finally {
+            dispatch(setSendingTemplateId({id: undefined}));
+        }
     }
 
     useEffect(() => {
@@ -57,6 +69,8 @@ const useExportPage = () => {
         isSendDialogOpen,
         selectedTemplate: state.selectedTemplate,
         selectedFormatCode: state.selectedFormatCode,
+        sendingTemplateId: state.sendingTemplateId,
+        downloadingTemplateId: state.downloadingTemplateId
     };
 }
 
