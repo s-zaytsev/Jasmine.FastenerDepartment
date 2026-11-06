@@ -1,5 +1,5 @@
 import {type MouseEventHandler, type ReactNode} from "react";
-import {Button, Tooltip} from "@mui/material";
+import {Button, CircularProgress, Tooltip} from "@mui/material";
 import {primitives} from "../../../assets/variables/primitives.ts";
 import {semanticColors} from "../../../assets/variables/semanticColors.ts";
 
@@ -8,13 +8,14 @@ type IconButtonProps = {
     description: string;
     isDisabled?: boolean;
     hasBackground?: boolean;
+    isLoading?: boolean;
     onClick: MouseEventHandler<HTMLButtonElement> | undefined;
     children: ReactNode;
 }
 
 const IconButton = (props: IconButtonProps) => {
     const isActive = props.isActive ?? true;
-    const isDisabled = props.isDisabled;
+    const isDisabled = props.isDisabled || props.isLoading;
     const backgroundColor = !isDisabled ? primitives.colors.tonal : semanticColors.surface.medium;
 
     return (
@@ -28,7 +29,11 @@ const IconButton = (props: IconButtonProps) => {
                     backgroundColor: props.hasBackground ? backgroundColor : undefined,
                     borderRadius: primitives.border.radius,
                 }}>
-                {props.children}
+                {
+                    props.isLoading ?
+                        <CircularProgress size={24} thickness={5.6} sx={{color: primitives.colors.primary}}/> :
+                        props.children
+                }
             </Button>
         </Tooltip>
     );
