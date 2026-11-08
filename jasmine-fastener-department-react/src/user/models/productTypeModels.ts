@@ -3,6 +3,7 @@ import type {StateBase} from "../../shared/models/models.ts";
 export interface ProductTypesState extends StateBase {
     productTypes: ExtendedProductType[];
     selectedProductType?: ExtendedProductType;
+    isSubmitting: boolean;
 }
 
 export  interface ProductType {

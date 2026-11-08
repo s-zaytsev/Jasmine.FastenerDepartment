@@ -2,7 +2,6 @@ import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 import OrdersApi from "../api/ordersApi.ts";
 import {type OrderPageState, type OrdersQuery, OrdersQueryParameter} from "../models/orderModels.ts";
 import {createAsyncThunkWithErrorHandler} from "../../shared/thunks/createAsyncThunkWithErrorHandler.ts";
-import {downloadService} from "../../shared/services/downloadService.ts";
 
 export const getCompletedOrdersPage = createAsyncThunkWithErrorHandler(
     "orders/getCompletedOrdersPage",
@@ -18,25 +17,10 @@ export const getActiveOrdersPage = createAsyncThunkWithErrorHandler(
     }
 );
 
-export const sendOrder = createAsyncThunkWithErrorHandler(
-    "orders/sendOrder",
-    async ({id, model}: any) => {
-        return OrdersApi.sendOrder(id, model);
-    }
-);
-
 export const cancelOrder = createAsyncThunkWithErrorHandler(
     "orders/cancelOrder",
     async ({id, model}: any) => {
         return OrdersApi.cancelOrder(id, model);
-    }
-);
-
-export const downloadOrder = createAsyncThunkWithErrorHandler(
-    "orders/downloadOrder",
-    async ({id, model}: any) => {
-        const response = await OrdersApi.downloadOrder(id, model);
-        downloadService.downloadFile(response);
     }
 );
 
@@ -62,6 +46,7 @@ const initialState: OrderPageState = {
     completedOrders: undefined,
     activeOrders: undefined,
     selectedOrder: undefined,
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -109,29 +94,16 @@ const ordersSlice = createSlice({
             });
 
         builder
-            .addCase(sendOrder.pending, (state) => {
-                state.loading = true;
-            })
-            .addCase(sendOrder.fulfilled, (state) => {
-                state.success = 'Заказ отправлен';
-                state.loading = false;
-            })
-            .addCase(sendOrder.rejected, (state, action) => {
-                state.error = action.payload ?? action.error;
-                state.loading = false;
-            });
-
-        builder
             .addCase(cancelOrder.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(cancelOrder.fulfilled, (state) => {
                 state.success = 'Заказ отменен';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(cancelOrder.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
     }
 });

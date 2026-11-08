@@ -7,6 +7,7 @@ const CompleteOrderPage = () => {
     const {
         model,
         loading,
+        isSubmitting,
         productTypes,
         handleSubmit
     } = useCompleteOrderPage();
@@ -21,12 +22,12 @@ const CompleteOrderPage = () => {
             description={'Проверка деталей заказа и его завершение'}
             button={{
                 label: 'Завершить',
-                onClick: handleSubmit
+                onClick: handleSubmit,
+                isLoading: isSubmitting
         }}>
             <CompleteOrderProductForm
                 model={model}
                 productTypes={productTypes}
-                onSubmit={handleSubmit}
             />
         </Page>
     )

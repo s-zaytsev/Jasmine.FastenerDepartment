@@ -44,6 +44,7 @@ const initialState: SettingsPageState = {
         title: '',
         subTitle: ''
     },
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -93,26 +94,26 @@ const settingsSlice = createSlice({
 
         builder
             .addCase(changeCompanySettings.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(changeCompanySettings.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(changeCompanySettings.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder
             .addCase(changeEmailSettings.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(changeEmailSettings.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(changeEmailSettings.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
     }
 });

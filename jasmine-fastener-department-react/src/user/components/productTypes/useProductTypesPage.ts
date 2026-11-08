@@ -31,20 +31,17 @@ const useProductTypesPage = () => {
     }, [dispatch]);
 
     const handleCreate = useCallback(async (model: ChangeProductType) => {
-        handleClose();
         await dispatch(createProductType(model));
+        handleClose();
         await dispatch(getExtendedProductTypes());
     }, [dispatch]);
 
     const handleChange = useCallback(async (model: ChangeProductType) => {
         const id = state.selectedProductType?.id;
+        if (!id) return;
 
-        if (!id) {
-            return;
-        }
-
-        handleClose();
         await dispatch(changeProductType({id, model}));
+        handleClose();
         await dispatch(getExtendedProductTypes());
     }, [dispatch, state.selectedProductType?.id]);
 
@@ -59,6 +56,7 @@ const useProductTypesPage = () => {
         handleChange,
         handleCreate,
         handleClose,
+        isSubmitting: state.isSubmitting,
         loading: state.loading,
         productTypes: state.productTypes,
         selectedProductType: state.selectedProductType

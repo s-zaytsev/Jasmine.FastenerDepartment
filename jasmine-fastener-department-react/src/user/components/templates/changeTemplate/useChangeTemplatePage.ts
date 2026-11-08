@@ -55,7 +55,8 @@ const useChangeTemplatePage = () => {
         preview: state.preview,
         handleChangeTemplate,
         handleUpdatePreview,
-        loading: state.loading
+        loading: state.loading,
+        isSubmitting: state.isSubmitting
     };
 }
 

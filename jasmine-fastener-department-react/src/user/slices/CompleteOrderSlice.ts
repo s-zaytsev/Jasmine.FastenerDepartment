@@ -33,6 +33,7 @@ const initialState: CompleteOrderState = {
     order: undefined,
     productTypes: [],
     loading: false,
+    isSubmitting: false,
     success: undefined,
     error: undefined
 };
@@ -81,15 +82,15 @@ const completeOrderSlice = createSlice({
 
         builder
             .addCase(completeOrder.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(completeOrder.fulfilled, (state) => {
                 state.success = 'Заказ завершен';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(completeOrder.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder

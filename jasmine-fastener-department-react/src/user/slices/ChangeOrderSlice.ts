@@ -44,6 +44,7 @@ const initialState: ChangeOrderState = {
     order: undefined,
     products: [],
     productTypes: [],
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -127,15 +128,15 @@ const changeOrderSlice = createSlice({
 
         builder
             .addCase(changeOrder.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(changeOrder.fulfilled, (state) => {
                 state.success = 'Данные заказа обновлены';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(changeOrder.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder

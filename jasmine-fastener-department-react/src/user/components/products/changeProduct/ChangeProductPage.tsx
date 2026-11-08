@@ -13,6 +13,7 @@ const ChangeProductPage = () => {
         suppliers,
         productTypes,
         loading,
+        isSubmitting,
         tabIndex,
         handleChangeTabIndex,
         handleSubmit,
@@ -29,7 +30,8 @@ const ChangeProductPage = () => {
             button={{
                 label: 'Сохранить',
                 type: "submit",
-                formId: 'product-edit-form'
+                formId: 'product-edit-form',
+                isLoading: isSubmitting
             }}>
 
             <Tabs

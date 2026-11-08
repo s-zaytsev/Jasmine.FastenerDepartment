@@ -4,6 +4,7 @@ import {type Product} from "./productModel.ts";
 export interface SuppliersPageState extends StateBase {
     suppliers: ExtendedSupplier[];
     selectedSupplier?: ExtendedSupplier;
+    isSubmitting: boolean;
 }
 
 export interface SupplierProductsPageState extends StateBase {

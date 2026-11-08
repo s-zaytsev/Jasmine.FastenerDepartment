@@ -55,6 +55,7 @@ const initialState: CreateProductPageState = {
     units: [],
     suppliers: [],
     productTypes: [],
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -87,12 +88,12 @@ const createProductSlice = createSlice({
 
         builder
             .addCase(saveProduct.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
                 state.error = undefined;
                 state.success = undefined;
             })
             .addCase(saveProduct.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = "Товар успешно создан";
                 state.model = {
                     id: '',
@@ -110,7 +111,7 @@ const createProductSlice = createSlice({
             })
             .addCase(saveProduct.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = undefined;
             });
 

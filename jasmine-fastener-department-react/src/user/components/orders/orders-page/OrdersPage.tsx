@@ -13,6 +13,7 @@ const OrdersPage = () => {
         completedOrders,
         selectedOrder,
         loading,
+        isSubmitting,
         isCancelDialogOpen,
         handleCancelDialogClose,
         handleNavigateToCreate,
@@ -67,6 +68,7 @@ const OrdersPage = () => {
             <CancelOrderDialog
                 order={selectedOrder!}
                 open={isCancelDialogOpen}
+                isSubmitting={isSubmitting}
                 onClose={handleCancelDialogClose}
                 onSubmit={handleCancelOrder}
             />

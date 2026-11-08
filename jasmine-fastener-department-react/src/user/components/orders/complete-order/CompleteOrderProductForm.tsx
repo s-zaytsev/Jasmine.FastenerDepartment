@@ -2,7 +2,6 @@ import type {CompleteOrder, CompleteOrderForm} from "../../../models/orderModels
 import {Box} from "@mui/material";
 import {useFieldArray, useForm} from "react-hook-form";
 import type {ProductType} from "../../../models/productTypeModels.ts";
-import FilledButton from "../../../../shared/components/buttons/FilledButton.tsx";
 import {useEffect} from "react";
 import useGroup from "../../../../shared/hooks/useGroup.ts";
 import Section from "../../../../shared/components/section/Section.tsx";
@@ -11,7 +10,6 @@ import CompleteOrderProductFormSectionTable from "./CompleteOrderProductFormSect
 type CompleteOrderGridProps = {
     model: CompleteOrder;
     productTypes: ProductType[];
-    onSubmit: (formData: CompleteOrderForm) => void;
 }
 
 const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
@@ -91,15 +89,6 @@ const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
                             control={control}/>
                     </Section>
                 ))}
-            </Box>
-
-            <Box className={'flex justify-end mt-[1rem]'}>
-                <FilledButton
-                    onClick={() => props.onSubmit(getValues())}
-                    variant={'contained'}
-                >
-                    Сохранить
-                </FilledButton>
             </Box>
         </Box>
     )

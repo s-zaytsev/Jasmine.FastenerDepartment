@@ -2,6 +2,7 @@ import {useAppDispatch, useAppSelector} from "../../../../shared/hooks/sharedHoo
 import type {DownloadOrder, SendOrder, SendOrderState} from "../../../models/orderModels.ts";
 import {useCallback, useEffect, useState} from "react";
 import {
+    downloadOrder,
     getCompanies,
     getRecipients,
     getTemplates,
@@ -9,13 +10,12 @@ import {
     selectCompany,
     selectFormat,
     selectRecipient,
-    selectTemplate,
+    selectTemplate, sendOrder,
     setExtraFiles
 } from "../../../slices/SendOrderSlice.ts";
 import {TemplateFormatCode, TemplateTypeCode} from "../../../models/templateModels.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import type {FileModel} from "../../../../shared/models/models.ts";
-import {downloadOrder, sendOrder} from "../../../slices/OrdersSlice.ts";
 
 const useSendOrderPage = () => {
     const state = useAppSelector<SendOrderState>(
@@ -139,6 +139,8 @@ const useSendOrderPage = () => {
         selectedCompany: state.selectedCompany,
         selectedRecipient: state.selectedRecipient,
         selectedFormats: state.selectedFormats,
+        isSubmitting: state.isSubmitting,
+        isDownloading: state.isDownloading,
         handleSelectTemplate,
         handleSelectCompany,
         handleSelectRecipient,

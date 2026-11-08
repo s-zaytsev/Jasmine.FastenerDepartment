@@ -47,8 +47,8 @@ const useOrderPage = () => {
     }, [navigate]);
 
     const handleCancelOrder = useCallback(async (model: CancelOrder) => {
-        handleCancelDialogClose();
         await dispatch(cancelOrder({id: state.selectedOrder?.id, model: model}));
+        handleCancelDialogClose();
         dispatch(clearSelectedOrder());
         await dispatch(getCompletedOrdersPage(state.completedOrdersQuery));
         await dispatch(getActiveOrdersPage(state.activeOrdersQuery));
@@ -64,6 +64,7 @@ const useOrderPage = () => {
         completedOrders: state.completedOrders,
         selectedOrder: state.selectedOrder,
         loading: state.loading,
+        isSubmitting: state.isSubmitting,
         isCancelDialogOpen,
         handleCancelDialogClose,
         handleNavigateToCreate,

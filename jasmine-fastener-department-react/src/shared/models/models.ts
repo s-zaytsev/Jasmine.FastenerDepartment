@@ -1,4 +1,5 @@
 import type {ProductMeasurementUnitCode} from "../../user/models/productModel.ts";
+import type {ReactNode} from "react";
 
 export interface QueryBase<TSortParameter> {
     pageNo: number;
@@ -98,4 +99,21 @@ export interface FileModel {
     size: number;
     type: string;
     lastModified: number;
+}
+
+export interface HeaderButton {
+    label: string;
+    type?: "submit" | "reset" | "button";
+    formId?: string;
+    isDisabled?: boolean;
+    isLoading?: boolean;
+    onClick?: (args?: any) => void;
+}
+
+export interface HeaderIconButton {
+    icon: ReactNode;
+    description: string;
+    isDisabled?: boolean;
+    isLoading?: boolean;
+    onClick?: (args?: any) => void;
 }

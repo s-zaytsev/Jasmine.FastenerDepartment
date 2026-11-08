@@ -23,6 +23,7 @@ const initialState: CreateCompanyPageState = {
         inn: '',
         phoneNumber: ''
     },
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -39,18 +40,18 @@ const createCompanySlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(createCompany.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
                 state.error = undefined;
                 state.success = undefined;
             })
             .addCase(createCompany.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = "Компания успешно создана";
                 state.error = undefined;
             })
             .addCase(createCompany.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = undefined;
             });
     }

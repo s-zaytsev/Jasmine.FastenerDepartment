@@ -7,6 +7,7 @@ import {TemplateFormatCode, type TemplatesQuery} from "../models/templateModels.
 import CompaniesApi from "../api/companiesApi.ts";
 import type {FileModel} from "../../shared/models/models.ts";
 import OrdersApi from "../api/ordersApi.ts";
+import {downloadService} from "../../shared/services/downloadService.ts";
 
 export const getCompanies = createAsyncThunkWithErrorHandler(
     "sendOrder/getCompanies",
@@ -36,6 +37,21 @@ export const renderOrderForm = createAsyncThunkWithErrorHandler(
     }
 );
 
+export const sendOrder = createAsyncThunkWithErrorHandler(
+    "sendOrder/sendOrder",
+    async ({id, model}: any) => {
+        return OrdersApi.sendOrder(id, model);
+    }
+);
+
+export const downloadOrder = createAsyncThunkWithErrorHandler(
+    "sendOrder/downloadOrder",
+    async ({id, model}: any) => {
+        const response = await OrdersApi.downloadOrder(id, model);
+        downloadService.downloadFile(response);
+    }
+);
+
 const initialState: SendOrderState = {
     companies: [],
     templates: [],
@@ -43,6 +59,8 @@ const initialState: SendOrderState = {
     preview: '',
     selectedFormats: [],
     extraFiles: [],
+    isSubmitting: false,
+    isDownloading: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -128,6 +146,31 @@ const sendOrderSlice = createSlice({
             .addCase(renderOrderForm.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
                 state.loading = false;
+            });
+
+        builder
+            .addCase(sendOrder.pending, (state) => {
+                state.isSubmitting = true;
+            })
+            .addCase(sendOrder.fulfilled, (state) => {
+                state.success = 'Заказ отправлен';
+                state.isSubmitting = false;
+            })
+            .addCase(sendOrder.rejected, (state, action) => {
+                state.error = action.payload ?? action.error;
+                state.isSubmitting = false;
+            });
+
+        builder
+            .addCase(downloadOrder.pending, (state) => {
+                state.isDownloading = true;
+            })
+            .addCase(downloadOrder.fulfilled, (state) => {
+                state.isDownloading = false;
+            })
+            .addCase(downloadOrder.rejected, (state, action) => {
+                state.error = action.payload ?? action.error;
+                state.isDownloading = false;
             });
     }
 });

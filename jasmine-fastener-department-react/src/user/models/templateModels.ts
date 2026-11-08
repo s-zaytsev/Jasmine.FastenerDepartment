@@ -9,6 +9,7 @@ export interface CreateTemplatePageState extends StateBase {
     types: TemplateType[];
     columnGroups: TemplateContentTableColumnGroup[];
     preview: string;
+    isSubmitting: boolean;
 }
 
 export interface ChangeTemplatePageState extends StateBase {
@@ -16,6 +17,7 @@ export interface ChangeTemplatePageState extends StateBase {
     types: TemplateType[];
     columnGroups: TemplateContentTableColumnGroup[];
     preview: string;
+    isSubmitting: boolean;
 }
 
 export interface TemplatesQuery {

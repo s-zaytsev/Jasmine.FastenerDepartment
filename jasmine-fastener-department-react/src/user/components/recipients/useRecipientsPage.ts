@@ -31,20 +31,17 @@ const useRecipientsPage = () => {
     }, [dispatch]);
 
     const handleCreate = useCallback(async (model: ChangeRecipient) => {
-        handleClose();
         await dispatch(createRecipient(model));
+        handleClose();
         await dispatch(getRecipients());
     }, [dispatch]);
 
     const handleChange = useCallback(async (model: ChangeRecipient) => {
         const id = state.selected?.id;
+        if (!id) return;
 
-        if (!id) {
-            return;
-        }
-
-        handleClose();
         await dispatch(changeRecipient({id, model}));
+        handleClose();
         await dispatch(getRecipients());
     }, [dispatch, state.selected?.id]);
 
@@ -60,6 +57,7 @@ const useRecipientsPage = () => {
         handleChange,
         handleClose,
         loading: state.loading,
+        isSubmitting: state.isSubmitting,
         recipients: state.recipients,
         selected: state.selected
     };

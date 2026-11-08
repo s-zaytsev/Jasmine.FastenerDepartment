@@ -1,25 +1,15 @@
-import {memo, type ReactNode} from "react";
+import {memo} from "react";
 import {Box} from "@mui/material";
 import FilledButton from "../buttons/FilledButton.tsx";
 import PageHeaderTitle from "./PageHeaderTitle.tsx";
 import IconButton from "../buttons/IconButton.tsx";
+import type {HeaderButton, HeaderIconButton} from "../../models/models.ts";
 
 type PageHeaderProps = {
     title: string;
     description: string;
-    button?: {
-        label: string;
-        type?: "submit" | "reset" | "button";
-        formId?: string;
-        isDisabled?: boolean;
-        onClick?: (args?: any) => void;
-    };
-    iconButton?: {
-        icon: ReactNode;
-        description: string;
-        isDisabled?: boolean;
-        onClick?: (args?: any) => void;
-    };
+    button?: HeaderButton;
+    iconButton?: HeaderIconButton;
 }
 
 const PageHeader = (props: PageHeaderProps) => {
@@ -34,6 +24,7 @@ const PageHeader = (props: PageHeaderProps) => {
                         description={props.iconButton?.description}
                         onClick={props.iconButton.onClick}
                         isDisabled={props.iconButton.isDisabled}
+                        isLoading={props.iconButton.isLoading}
                     >
                         {props.iconButton.icon}
                     </IconButton>
@@ -41,6 +32,7 @@ const PageHeader = (props: PageHeaderProps) => {
 
                 {props.button && <Box>
                     <FilledButton
+                        loading={props.button.isLoading}
                         disabled={props.button.isDisabled}
                         type={props.button.type || "button"}
                         form={props.button.formId}

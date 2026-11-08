@@ -8,6 +8,7 @@ const CreateCompanyPage = () => {
     const {
         model,
         loading,
+        isSubmitting,
         handleSubmit
     } = useCreateCompanyPage();
 
@@ -18,7 +19,8 @@ const CreateCompanyPage = () => {
             button={{
                 label: 'Создать',
                 type: "submit",
-                formId: 'company-edit-form'
+                formId: 'company-edit-form',
+                isLoading: isSubmitting,
             }}
         >
             {loading && <Loader />}

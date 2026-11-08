@@ -20,6 +20,7 @@ type OrderStepperProps = {
     onUpdate: (products: ChangeOrderProduct[]) => void;
     onSubmit: () => void;
     isLoading: boolean;
+    isSubmitting: boolean;
 }
 
 const OrderStepper = (props: OrderStepperProps) => {
@@ -68,6 +69,7 @@ const OrderStepper = (props: OrderStepperProps) => {
                     activeStep={activeStep}
                     steps={props.steps}
                     supplier={props.model.supplier}
+                    isSubmitting={props.isSubmitting}
                     onStepBack={handleBack}
                     onStepNext={handleNext}
                     onSubmit={props.onSubmit}

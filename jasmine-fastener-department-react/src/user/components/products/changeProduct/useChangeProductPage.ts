@@ -41,6 +41,7 @@ const useChangeProductPage = () => {
         suppliers: state.suppliers,
         productTypes: state.productTypes,
         loading: state.loading,
+        isSubmitting: state.isSubmitting,
         tabIndex: tabIndex,
         handleChangeTabIndex,
         handleSubmit,

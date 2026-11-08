@@ -44,7 +44,7 @@ const useCreateOrderPage = () => {
             products: state.model.products
         }));
         navigate("/orders");
-    }, [dispatch]);
+    }, [dispatch, navigate, state.model.products, state.model.supplier?.id]);
 
     const handleMoveToOrder = useCallback((product: ProductToOrder) => {
         return dispatch(addExistedProduct(product));
@@ -74,6 +74,7 @@ const useCreateOrderPage = () => {
         handleUpdateProducts,
         handleChangeSupplier,
         loading: state.loading,
+        isSubmitting: state.isSubmitting
     };
 }
 

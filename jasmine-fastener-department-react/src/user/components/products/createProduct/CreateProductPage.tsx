@@ -10,6 +10,7 @@ const CreateProductPage = () => {
         suppliers,
         productTypes,
         loading,
+        isSubmitting,
         handleSubmit
     } = useCreateProductPage();
 
@@ -24,7 +25,8 @@ const CreateProductPage = () => {
             button={{
                 label: 'Сохранить',
                 type: "submit",
-                formId: 'product-edit-form'
+                formId: 'product-edit-form',
+                isLoading: isSubmitting
             }}>
             <Box className={"flex"}>
                 <ProductForm

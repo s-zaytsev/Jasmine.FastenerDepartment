@@ -7,9 +7,14 @@ import Loader from "../../../../shared/components/Loader.tsx";
 const ChangeCompanyPage = () => {
     const {
         model,
+        isSubmitting,
         loading,
         handleSubmit
     } = useChangeCompanyPage();
+
+    if (loading) {
+        return <Loader text={'Загрузка данных о компании'}/>;
+    }
 
     return (
         <Page
@@ -18,7 +23,8 @@ const ChangeCompanyPage = () => {
             button={{
                 label: 'Сохранить',
                 type: "submit",
-                formId: 'company-edit-form'
+                formId: 'company-edit-form',
+                isLoading: isSubmitting
             }}
         >
             {loading && <Loader />}

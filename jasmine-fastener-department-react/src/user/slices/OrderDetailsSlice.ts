@@ -30,6 +30,7 @@ export const downloadDocument = createAsyncThunkWithErrorHandler(
 const initialState: OrderDetailsPageState = {
     order: undefined,
     productTypes: [],
+    isDownloading: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -72,14 +73,14 @@ const orderDetailsSlice = createSlice({
 
         builder
             .addCase(downloadDocument.pending, (state) => {
-                state.loading = true;
+                state.isDownloading = true;
             })
             .addCase(downloadDocument.fulfilled, (state) => {
-                state.loading = false;
+                state.isDownloading = false;
             })
             .addCase(downloadDocument.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isDownloading = false;
             });
     }
 });

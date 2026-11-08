@@ -20,6 +20,7 @@ const useCreateCompanyPage = () => {
     return {
         model: state.model,
         loading: state.loading,
+        isSubmitting: state.isSubmitting,
         handleSubmit
     };
 }

@@ -43,6 +43,7 @@ const initialState: CreateTemplatePageState = {
     types: [],
     columnGroups: [],
     preview: '',
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -59,14 +60,14 @@ const createTemplateSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(createTemplate.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(createTemplate.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(createTemplate.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder

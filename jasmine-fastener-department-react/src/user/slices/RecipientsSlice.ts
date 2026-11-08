@@ -27,6 +27,7 @@ export const changeRecipient = createAsyncThunkWithErrorHandler(
 const initialState: RecipientsPageState = {
     recipients: [],
     selected: undefined,
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -62,28 +63,28 @@ const recipientsSlice = createSlice({
 
         builder
             .addCase(createRecipient.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(createRecipient.fulfilled, (state) => {
                 state.success = 'Контакт создан';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(createRecipient.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder
             .addCase(changeRecipient.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(changeRecipient.fulfilled, (state) => {
                 state.success = 'Контакт обновлен';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(changeRecipient.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
     }
 });

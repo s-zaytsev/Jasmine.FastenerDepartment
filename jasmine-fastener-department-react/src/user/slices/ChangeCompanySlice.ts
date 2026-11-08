@@ -30,6 +30,7 @@ const initialState: ChangeCompanyPageState = {
         inn: '',
         phoneNumber: ''
     },
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -70,18 +71,18 @@ const changeCompanySlice = createSlice({
 
         builder
             .addCase(changeCompany.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
                 state.error = undefined;
                 state.success = undefined;
             })
             .addCase(changeCompany.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = "Данные компании обновлены";
                 state.error = undefined;
             })
             .addCase(changeCompany.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = undefined;
             });
     }

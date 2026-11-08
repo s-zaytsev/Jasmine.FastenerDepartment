@@ -64,6 +64,7 @@ const useChangeOrderPage = () => {
         handleDeleteProduct,
         handleUpdateProducts,
         loading: state.loading,
+        isSubmitting: state.isSubmitting
     };
 }
 

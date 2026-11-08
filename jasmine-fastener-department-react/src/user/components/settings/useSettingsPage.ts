@@ -66,7 +66,8 @@ const useSettingsPage = () => {
         handleChangeLanguage,
         handleChangeCompanySettings,
         handleChangeEmailSettings,
-        handleSubmit
+        handleSubmit,
+        isSubmitting: state.isSubmitting
     }
 }
 

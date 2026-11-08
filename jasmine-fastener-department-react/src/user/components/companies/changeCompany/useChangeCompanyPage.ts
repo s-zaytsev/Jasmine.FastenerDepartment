@@ -30,6 +30,7 @@ const useChangeCompanyPage = () => {
     return {
         model: state.model,
         loading: state.loading,
+        isSubmitting: state.isSubmitting,
         handleSubmit
     };
 }

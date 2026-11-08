@@ -28,6 +28,7 @@ const useCreateProductPage = () => {
         suppliers: state.suppliers,
         productTypes: state.productTypes,
         loading: state.loading,
+        isSubmitting: state.isSubmitting,
         handleSubmit
     };
 }

@@ -11,7 +11,8 @@ const SettingsPage = () => {
         forms,
         language,
         handleChangeLanguage,
-        handleSubmit
+        handleSubmit,
+        isSubmitting
     } = useSettingsPage();
 
     return (
@@ -21,7 +22,8 @@ const SettingsPage = () => {
             button={{
                 label: 'Сохранить',
                 type: 'submit',
-                formId: 'settings-edit-form'
+                formId: 'settings-edit-form',
+                isLoading: isSubmitting
             }}
         >
             <Box className={'flex flex-col justify-center w-full items-center gap-[1rem]'}>

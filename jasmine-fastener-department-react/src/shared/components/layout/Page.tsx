@@ -1,23 +1,13 @@
 import {Box, Fade} from "@mui/material";
 import type {ReactNode} from "react";
 import PageHeader from "../header/PageHeader.tsx";
+import type {HeaderButton, HeaderIconButton} from "../../models/models.ts";
 
 export interface PageProps {
     title: string;
     description: string;
-    button?: {
-        label: string;
-        type?: "submit" | "reset" | "button";
-        formId?: string;
-        isDisabled?: boolean;
-        onClick?: (args?: any) => void;
-    };
-    iconButton?: {
-        icon: ReactNode;
-        description: string;
-        isDisabled?: boolean;
-        onClick?: (args?: any) => void;
-    };
+    button?: HeaderButton;
+    iconButton?: HeaderIconButton;
     children: ReactNode;
 }
 

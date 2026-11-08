@@ -10,6 +10,7 @@ type OrderStepperFooterProps = {
     activeStep: number;
     steps: StepperItem<OrderStepperStep>[];
     supplier?: Supplier;
+    isSubmitting: boolean;
     onStepBack: () => void;
     onStepNext: () => void;
     onSubmit: () => void;
@@ -46,7 +47,11 @@ const OrderStepperFooter = (props: OrderStepperFooterProps) => {
 
                 {
                     (props.activeStep === props.steps.length - 1) &&
-                    <FilledButton variant={'contained'} onClick={props.onSubmit}>
+                    <FilledButton
+                        variant={'contained'}
+                        onClick={props.onSubmit}
+                        loading={props.isSubmitting}
+                    >
                         Сохранить
                     </FilledButton>
                 }

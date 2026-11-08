@@ -6,10 +6,12 @@ export interface CompaniesPageState extends StateBase {
 
 export interface CreateCompanyPageState extends StateBase {
     model: ChangeCompany;
+    isSubmitting: boolean;
 }
 
 export interface ChangeCompanyPageState extends StateBase {
     model: ChangeCompany;
+    isSubmitting: boolean;
 }
 
 export interface Company {

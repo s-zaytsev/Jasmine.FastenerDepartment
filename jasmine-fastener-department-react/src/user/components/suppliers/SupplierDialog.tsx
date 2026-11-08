@@ -7,6 +7,7 @@ import Typography from "../../../shared/components/Typography.tsx";
 type SupplierDialogProps = {
     supplier?: ExtendedSupplier;
     open: boolean;
+    isSubmitting: boolean;
     onClose: () => void;
     onSubmit: (model: ChangeSupplierModel) => void;
 }
@@ -68,7 +69,7 @@ const SupplierDialog = (props: SupplierDialogProps) => {
                 </Box>
 
                 <Box className={'mt-[1rem] flex justify-end'}>
-                    <FilledButton variant="contained" onClick={onSubmit} disabled={!name}>
+                    <FilledButton variant="contained" onClick={onSubmit} disabled={!name} loading={props.isSubmitting}>
                         {isNew ? 'Создать' : 'Обновить'}
                     </FilledButton>
                 </Box>

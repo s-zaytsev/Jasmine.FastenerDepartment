@@ -14,6 +14,7 @@ const SuppliersPage = () => {
         handleChange,
         handleClose,
         handleNavigateToSupplierProducts,
+        isSubmitting,
         loading,
         suppliers,
         selectedSupplier
@@ -40,6 +41,7 @@ const SuppliersPage = () => {
             <SupplierDialog
                 supplier={selectedSupplier}
                 open={open}
+                isSubmitting={isSubmitting}
                 onClose={handleClose}
                 onSubmit={!selectedSupplier ? handleCreate : handleChange}
             />

@@ -7,6 +7,7 @@ import type {CancelOrder, Order} from "../../../models/orderModels.ts";
 type CancelOrderDialogProps = {
     order: Order;
     open: boolean;
+    isSubmitting: boolean;
     onClose: () => void;
     onSubmit: (model: CancelOrder) => void;
 }
@@ -52,7 +53,7 @@ const CancelOrderDialog = (props: CancelOrderDialogProps) => {
                 </Box>
 
                 <Box className={'mt-[1rem] flex justify-end'}>
-                    <FilledButton variant="contained" onClick={onSubmit}>
+                    <FilledButton variant="contained" onClick={onSubmit} loading={props.isSubmitting}>
                         Отправить
                     </FilledButton>
                 </Box>

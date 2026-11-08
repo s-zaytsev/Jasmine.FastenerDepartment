@@ -66,6 +66,7 @@ const useSuppliersPage = () => {
         handleChange,
         handleClose,
         handleNavigateToSupplierProducts,
+        isSubmitting: state.isSubmitting,
         loading: state.loading,
         suppliers: state.suppliers,
         selectedSupplier: state.selectedSupplier

@@ -15,6 +15,8 @@ const SendOrderPage = () => {
         selectedCompany,
         selectedRecipient,
         selectedFormats,
+        isSubmitting,
+        isDownloading,
         handleSelectCompany,
         handleSelectRecipient,
         handleSelectTemplate,
@@ -31,12 +33,14 @@ const SendOrderPage = () => {
             button={{
                 label: 'Отправить',
                 isDisabled: !selectedRecipient || !selectedTemplate || selectedFormats?.length === 0,
+                isLoading: isSubmitting,
                 onClick: handleSubmit
             }}
             iconButton={{
                 icon: <FileDownloadOutlined/>,
                 description: 'Скачать файлы заказа',
                 isDisabled: !selectedTemplate || selectedFormats?.length === 0,
+                isLoading: isDownloading,
                 onClick: handleDownload
             }}
         >

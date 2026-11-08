@@ -3,6 +3,7 @@ import type {StateBase} from "../../shared/models/models.ts";
 export interface RecipientsPageState extends StateBase {
     recipients: Recipient[];
     selected?: Recipient;
+    isSubmitting: boolean;
 }
 
 export interface Recipient {

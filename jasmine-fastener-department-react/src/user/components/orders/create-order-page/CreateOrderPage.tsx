@@ -15,7 +15,8 @@ const CreateOrderPage = () => {
         handleDeleteProduct,
         handleUpdateProducts,
         handleChangeSupplier,
-        loading
+        loading,
+        isSubmitting
     } = useCreateOrderPage();
 
     return (
@@ -31,6 +32,7 @@ const CreateOrderPage = () => {
                 onSelectSupplier={handleChangeSupplier}
                 onSubmit={handleSubmit}
                 isLoading={loading}
+                isSubmitting={isSubmitting}
             />
         </Page>
     );

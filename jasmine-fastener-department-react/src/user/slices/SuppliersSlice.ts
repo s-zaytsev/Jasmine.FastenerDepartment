@@ -27,6 +27,7 @@ export const changeSupplier = createAsyncThunkWithErrorHandler(
 const initialState: SuppliersPageState = {
     suppliers: [],
     selectedSupplier: undefined,
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -62,35 +63,35 @@ const suppliersSlice = createSlice({
 
         builder
             .addCase(createSupplier.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
                 state.error = undefined;
                 state.success = undefined;
             })
             .addCase(createSupplier.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = "Поставщик добавлен";
                 state.error = undefined;
             })
             .addCase(createSupplier.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = undefined;
             });
 
         builder
             .addCase(changeSupplier.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
                 state.error = undefined;
                 state.success = undefined;
             })
             .addCase(changeSupplier.fulfilled, (state) => {
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = "Данные поставщика обновлены";
                 state.error = undefined;
             })
             .addCase(changeSupplier.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
                 state.success = undefined;
             });
     }

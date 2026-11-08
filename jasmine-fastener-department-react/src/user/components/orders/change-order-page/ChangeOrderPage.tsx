@@ -13,7 +13,8 @@ const ChangeOrderPage = () => {
         handleMoveToOrder,
         handleDeleteProduct,
         handleUpdateProducts,
-        loading
+        loading,
+        isSubmitting
     } = useChangeOrderPage()
 
     return (
@@ -30,6 +31,7 @@ const ChangeOrderPage = () => {
                 }}
                 onSubmit={handleSubmit}
                 isLoading={loading}
+                isSubmitting={isSubmitting}
             />
         </Page>
     );

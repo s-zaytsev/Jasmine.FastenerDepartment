@@ -127,6 +127,7 @@ export interface ChangeProductPageState extends StateBase {
     units: MeasurementUnit[];
     suppliers: Supplier[];
     productTypes: ProductType[];
+    isSubmitting: boolean;
 }
 
 export interface CreateProductPageState extends StateBase {
@@ -135,6 +136,7 @@ export interface CreateProductPageState extends StateBase {
     units: MeasurementUnit[];
     suppliers: Supplier[];
     productTypes: ProductType[];
+    isSubmitting: boolean;
 }
 
 export const shortMeasurementUnitName = (code: ProductMeasurementUnitCode) => {

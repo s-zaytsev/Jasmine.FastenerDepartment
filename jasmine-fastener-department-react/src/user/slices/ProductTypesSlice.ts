@@ -27,6 +27,7 @@ export const changeProductType = createAsyncThunkWithErrorHandler(
 const initialState: ProductTypesState = {
     productTypes: [],
     selectedProductType: undefined,
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -62,28 +63,28 @@ const productTypesSlice = createSlice({
 
         builder
             .addCase(createProductType.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(createProductType.fulfilled, (state) => {
                 state.success = 'Тип товара создан';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(createProductType.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder
             .addCase(changeProductType.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(changeProductType.fulfilled, (state) => {
                 state.success = 'Тип товара обновлен';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(changeProductType.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
     }
 });

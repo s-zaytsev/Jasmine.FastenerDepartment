@@ -44,6 +44,7 @@ const initialState: CreateOrderState = {
     productsToOrder: [],
     suppliers: [],
     productTypes: [],
+    isSubmitting: false,
     loading: false,
     success: undefined,
     error: undefined
@@ -99,15 +100,15 @@ const createOrderSlice = createSlice({
 
         builder
             .addCase(createOrder.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(createOrder.fulfilled, (state) => {
                 state.success = 'Заказ создан';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(createOrder.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder

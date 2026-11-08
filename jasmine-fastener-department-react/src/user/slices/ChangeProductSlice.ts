@@ -52,6 +52,7 @@ const initialState: ChangeProductPageState = {
     units: [],
     suppliers: [],
     productTypes: [],
+    isSubmitting: false,
     success: undefined,
     error: undefined
 };
@@ -98,15 +99,15 @@ const changeProductSlice = createSlice({
 
         builder
             .addCase(save.pending, (state) => {
-                state.loading = true;
+                state.isSubmitting = true;
             })
             .addCase(save.fulfilled, (state) => {
                 state.success = 'Данные товара обновлены';
-                state.loading = false;
+                state.isSubmitting = false;
             })
             .addCase(save.rejected, (state, action) => {
                 state.error = action.payload ?? action.error;
-                state.loading = false;
+                state.isSubmitting = false;
             });
 
         builder

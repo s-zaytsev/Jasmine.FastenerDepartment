@@ -3,6 +3,7 @@ import type {StateBase} from "../../shared/models/models.ts";
 export interface SettingsPageState extends StateBase {
     companySettings: ChangeCompanySettings;
     emailSettings: ChangeEmailSettings;
+    isSubmitting: boolean;
 }
 
 export interface CompanySettings {

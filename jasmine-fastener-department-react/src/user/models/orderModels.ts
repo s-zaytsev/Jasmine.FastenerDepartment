@@ -12,6 +12,7 @@ export interface OrderPageState extends StateBase {
     activeOrdersQuery: OrdersQuery;
     activeOrders?: Page<Order>;
     selectedOrder?: Order;
+    isSubmitting: boolean;
 }
 
 export interface CreateOrderState extends StateBase {
@@ -20,6 +21,7 @@ export interface CreateOrderState extends StateBase {
     productsToOrder: ProductToOrder[];
     suppliers: Supplier[];
     productTypes: ProductType[];
+    isSubmitting: boolean;
 }
 
 export interface ChangeOrderState extends StateBase {
@@ -27,6 +29,7 @@ export interface ChangeOrderState extends StateBase {
     model: OrderStepperModel;
     products: ProductToOrder[];
     productTypes: ProductType[];
+    isSubmitting: boolean;
 }
 
 export interface SendOrderState extends StateBase {
@@ -39,27 +42,21 @@ export interface SendOrderState extends StateBase {
     selectedFormats: TemplateFormatCode[];
     extraFiles: FileModel[];
     preview: string;
+    isSubmitting: boolean;
+    isDownloading: boolean;
 }
 
 export interface CompleteOrderState extends StateBase {
     order?: Order;
     model: CompleteOrder;
     productTypes: ProductType[];
-}
-
-export interface FulfilledOrderState extends StateBase {
-    order?: Order;
-    productTypes: ProductType[];
-}
-
-export interface CancelledOrderState extends StateBase {
-    order?: Order;
-    productTypes: ProductType[];
+    isSubmitting: boolean;
 }
 
 export interface OrderDetailsPageState extends StateBase {
     order?: Order;
     productTypes: ProductType[];
+    isDownloading: boolean;
 }
 
 export interface OrdersQuery extends QueryBase<OrdersQueryParameter> {

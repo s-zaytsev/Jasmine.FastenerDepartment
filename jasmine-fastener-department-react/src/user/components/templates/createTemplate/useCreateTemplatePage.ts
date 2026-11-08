@@ -39,7 +39,8 @@ const useCreateTemplatePage = () => {
         preview: state.preview,
         handleCreateTemplate,
         handleUpdatePreview,
-        loading: state.loading
+        loading: state.loading,
+        isSubmitting: state.isSubmitting
     };
 }
 

@@ -13,6 +13,7 @@ const ProductTypesPage = () => {
         handleChange,
         handleCreate,
         handleClose,
+        isSubmitting,
         loading,
         productTypes,
         selectedProductType
@@ -38,6 +39,7 @@ const ProductTypesPage = () => {
             <ProductTypeDialog
                 productType={selectedProductType}
                 open={open}
+                isSubmitting={isSubmitting}
                 onClose={handleClose}
                 onSubmit={!selectedProductType ? handleCreate : handleChange}
             />

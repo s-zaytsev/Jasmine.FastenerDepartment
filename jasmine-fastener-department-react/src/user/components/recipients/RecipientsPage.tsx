@@ -13,6 +13,7 @@ const ProductTypesPage = () => {
         handleChange,
         handleCreate,
         handleClose,
+        isSubmitting,
         loading,
         recipients,
         selected
@@ -38,6 +39,7 @@ const ProductTypesPage = () => {
             <RecipientDialog
                 recipient={selected}
                 open={open}
+                isSubmitting={isSubmitting}
                 onClose={handleClose}
                 onSubmit={!selected ? handleCreate : handleChange}
             />

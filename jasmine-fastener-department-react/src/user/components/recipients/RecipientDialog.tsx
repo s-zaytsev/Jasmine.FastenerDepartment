@@ -7,6 +7,7 @@ import FilledButton from "../../../shared/components/buttons/FilledButton.tsx";
 type RecipientDialogProps = {
     recipient?: Recipient;
     open: boolean;
+    isSubmitting: boolean;
     onClose: () => void;
     onSubmit: (model: ChangeRecipient) => void;
 }
@@ -69,7 +70,7 @@ const RecipientDialog = (props: RecipientDialogProps) => {
                 </Box>
 
                 <Box className={'mt-[1rem] flex justify-end'}>
-                    <FilledButton variant="contained" onClick={onSubmit} disabled={!name}>
+                    <FilledButton variant="contained" onClick={onSubmit} disabled={!name} loading={props.isSubmitting}>
                         {isNew ? 'Создать' : 'Обновить'}
                     </FilledButton>
                 </Box>
