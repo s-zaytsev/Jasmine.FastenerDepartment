@@ -59,4 +59,16 @@ internal class OrdersRepository : RepositoryBase<Guid, Order>, IOrdersRepository
 
         return predicates;
     }
+
+    protected override Expression<Func<Order, object>> GetSorting<E>(E parameter)
+    {
+        return parameter switch
+        {
+            OrdersQueryParameter.CreatedDate => x => x.CreatedDate,
+            OrdersQueryParameter.ClosedDate => x => x.ClosedDate,
+            OrdersQueryParameter.ModifiedDate => x => x.ModifiedDate,
+            OrdersQueryParameter.Status => x => x.StatusCode,
+            _ => x => x.CreatedDate,
+        };
+    }
 }

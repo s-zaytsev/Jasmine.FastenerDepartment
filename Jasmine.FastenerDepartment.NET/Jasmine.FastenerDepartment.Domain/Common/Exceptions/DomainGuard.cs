@@ -27,7 +27,8 @@ internal static class DomainGuard
         { OrderExceptionCode.ProductsListCannotBeChanged, OrderExceptionMessages.ProductsListCannotBeChanged },
         { OrderExceptionCode.ProductNameCannotBeChanged, OrderExceptionMessages.ProductNameCannotBeChanged },
         { OrderExceptionCode.ProductTypeCannotBeChanged, OrderExceptionMessages.ProductTypeCannotBeChanged },
-        { OrderExceptionCode.SupplierProductNumberCannotBeChanged, OrderExceptionMessages.SupplierProductNumberCannotBeChanged }
+        { OrderExceptionCode.SupplierProductNumberCannotBeChanged, OrderExceptionMessages.SupplierProductNumberCannotBeChanged },
+        { OrderExceptionCode.AlreadyClosed, OrderExceptionMessages.AlreadyClosed }
     };
 
     private static readonly IDictionary<Enum, LocalizedString> _productExceptions = new Dictionary<Enum, LocalizedString>

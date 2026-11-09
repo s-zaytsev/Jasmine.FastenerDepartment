@@ -31,4 +31,8 @@ internal static class OrderExceptionMessages
     public static LocalizedString SupplierProductNumberCannotBeChanged = new(
         "Existing supplier product number cannot be changed",
         "Артикул существующего товара поставщика не может быть изменен");
+
+    public static LocalizedString AlreadyClosed = new(
+        "Order is already closed",
+        "Заказ уже закрыт");
 }

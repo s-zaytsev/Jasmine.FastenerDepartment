@@ -27,10 +27,10 @@ export const cancelOrder = createAsyncThunkWithErrorHandler(
 const initialState: OrderPageState = {
     completedOrdersQuery: {
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 12,
         search: '',
         sortDesc: true,
-        sortBy: OrdersQueryParameter.createdDate,
+        sortBy: OrdersQueryParameter.closedDate,
         onlyCompleted: true,
         onlyActive: false
     },

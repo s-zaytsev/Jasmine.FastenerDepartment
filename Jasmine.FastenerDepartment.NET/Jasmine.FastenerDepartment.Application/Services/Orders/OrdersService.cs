@@ -136,6 +136,8 @@ internal class OrdersService : IOrdersService
             throw new InvalidOperationException("Order is already completed.");
         }
 
+        order.Finish(OrderStatusCode.Fulfilled, model.Comment);
+
         AddExtraProducts(order, model);
 
         var lastProductNumber = await _productsRepository.GetLastProductNumberAsync(cancellationToken);
@@ -150,7 +152,6 @@ internal class OrdersService : IOrdersService
 
         await ProcessSupplierProductsAsync(order, cancellationToken);
 
-        order.ChangeStatus(OrderStatusCode.Fulfilled);
         _ordersRepository.Update(order);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -160,7 +161,7 @@ internal class OrdersService : IOrdersService
     {
         var order = await GetByIdAsync(id, cancellationToken);
 
-        order.ChangeStatus(OrderStatusCode.Cancelled, model.Comment);
+        order.Finish(OrderStatusCode.Cancelled, model.Comment);
 
         _ordersRepository.Update(order);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

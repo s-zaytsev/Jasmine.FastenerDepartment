@@ -9,6 +9,7 @@ namespace Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 /// </summary>
 /// <param name="Id">Identifier.</param>
 /// <param name="CreatedDate">Created date.</param>
+/// <param name="ClosedDate">Closed date.</param>
 /// <param name="Number">Number.</param>
 /// <param name="StatusCode">Status code.</param>
 /// <param name="Supplier">Supplier.</param>
@@ -17,6 +18,7 @@ namespace Jasmine.FastenerDepartment.WebApi.Dtos.Orders;
 public record OrderDto(
     Guid Id,
     DateTime CreatedDate,
+    DateTime? ClosedDate,
     string Number,
     OrderStatusCode StatusCode,
     SupplierDto Supplier,

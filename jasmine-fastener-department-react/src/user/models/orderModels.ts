@@ -74,6 +74,7 @@ export enum OrdersQueryParameter {
 export interface Order {
     id: string;
     createdDate: string;
+    closedDate?: string;
     number: number;
     statusCode: OrderStatusCode;
     supplier?: Supplier;

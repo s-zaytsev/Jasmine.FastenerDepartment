@@ -8,5 +8,6 @@ internal enum OrderExceptionCode
     ProductsListCannotBeChanged = 2004,
     ProductNameCannotBeChanged = 2005,
     ProductTypeCannotBeChanged = 2006,
-    SupplierProductNumberCannotBeChanged = 2007
+    SupplierProductNumberCannotBeChanged = 2007,
+    AlreadyClosed = 2008
 }

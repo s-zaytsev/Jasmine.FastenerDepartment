@@ -78,6 +78,22 @@ public class Order : AggregateRootBase<Guid>
     }
 
     /// <summary>
+    /// Closes the order with message.
+    /// </summary>
+    /// <param name="statusCode">Status code.</param>
+    /// <param name="comment">Comment.</param>
+    public void Finish(OrderStatusCode statusCode, string comment = null)
+    {
+        if (StatusCode == OrderStatusCode.Fulfilled || StatusCode == OrderStatusCode.Cancelled)
+        {
+            DomainGuard.ThrowOrderException(OrderExceptionCode.AlreadyClosed);
+        }
+
+        ClosedDate = DateTime.UtcNow;
+        ChangeStatus(statusCode, comment);
+    }
+
+    /// <summary>
     /// Changes order status.
     /// </summary>
     /// <param name="statusCode">Order status code.</param>

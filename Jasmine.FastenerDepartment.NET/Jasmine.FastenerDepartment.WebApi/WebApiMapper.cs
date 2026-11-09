@@ -322,6 +322,7 @@ public class WebApiMapper
         return new(
             order.Id,
             order.CreatedDate,
+            order.ClosedDate,
             order.GetNumberAsText(),
             order.StatusCode,
             Map(order.Supplier),

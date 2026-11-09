@@ -16,9 +16,14 @@ const CompletedOrdersCard = (props: OrdersGridRowProps) => {
         <DoneOutlined/> :
         <CancelOutlined/>
 
+    const date = props.order.closedDate ?
+        new Date(props.order.closedDate).toLocaleDateString() :
+        new Date(props.order.historyEntries.at(-1)!.createdDate).toLocaleDateString();
+    ;
+
     const text = (props.order.statusCode === OrderStatusCode.fulfilled ?
         'Доставлен' :
-        'Отменен') + ` ${new Date(props.order.historyEntries.at(-1)!.createdDate).toLocaleDateString()}`
+        'Отменен') + ` ${date}`
 
     return (
         <Card onClick={() => props.onNavigateToDetails(props.order.id)}>
