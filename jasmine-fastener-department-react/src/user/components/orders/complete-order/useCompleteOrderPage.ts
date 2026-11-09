@@ -16,8 +16,8 @@ const useCompleteOrderPage = () => {
     const notification = useNotify();
 
     const handleSubmit = async (formData: CompleteOrderForm) => {
-        if (!formData?.products || formData.products.every(x => !x.isFulfilled)) {
-            notification.notifyError('Нет доставленных товаров')
+        if (!formData.products || formData.products.every(x => !x.isFulfilled)) {
+            notification.notifyError('Выберите доставленные товары')
             return;
         }
 

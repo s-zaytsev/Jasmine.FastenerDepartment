@@ -5,6 +5,13 @@ import {Box} from "@mui/material";
 import SortTableHead from "../../../../shared/components/tables/SortTableHead.tsx";
 import CompleteOrderProductFormSectionTableRow from "./CompleteOrderProductFormSectionTableRow.tsx";
 
+const columns: TableColumnDefinition[] = [
+    {title: 'Статус', width: '30%'},
+    {title: "Наименование"},
+    {title: "Количество", width: '35%'},
+    {title: "", width: '20%'}
+];
+
 type CompleteOrderProductFormSectionTableProps = {
     rows: Array<{
         field: FieldArrayWithId<CompleteOrderForm, "products", "id">;
@@ -14,13 +21,6 @@ type CompleteOrderProductFormSectionTableProps = {
 }
 
 const CompleteOrderProductFormSectionTable = (props: CompleteOrderProductFormSectionTableProps) => {
-    const columns: TableColumnDefinition[] = [
-        {title: 'Статус', width: '30%'},
-        {title: "Наименование"},
-        {title: "Количество", width: '35%'},
-        {title: "", width: '20%'}
-    ];
-
     return (
         <Box className={'w-full mt-[0.5rem]'}>
             <SortTableHead columns={columns}/>

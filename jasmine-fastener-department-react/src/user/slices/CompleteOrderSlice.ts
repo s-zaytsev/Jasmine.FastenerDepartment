@@ -42,9 +42,6 @@ const completeOrderSlice = createSlice({
     name: "completeOrder",
     initialState: initialState,
     reducers: {
-        updateProducts: (state, action) => {
-            state.model.products = action.payload;
-        },
         setSuccess: (state, action) => {
             state.success = action.payload;
         }
@@ -109,7 +106,6 @@ const completeOrderSlice = createSlice({
 });
 
 export const {
-    updateProducts,
     setSuccess
 } = completeOrderSlice.actions;
 

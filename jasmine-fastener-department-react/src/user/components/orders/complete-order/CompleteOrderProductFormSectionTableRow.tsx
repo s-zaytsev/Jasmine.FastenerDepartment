@@ -19,12 +19,12 @@ type CompleteOrderProductFormSectionTableRowProps = {
 
 const CompleteOrderProductFormSectionTableRow = (props: CompleteOrderProductFormSectionTableRowProps) => {
 
-    const isFulfilled = useWatch({
+    const product = useWatch({
         control: props.control,
-        name: `products.${props.productIndex}.isFulfilled`,
+        name: `products.${props.productIndex}`,
     });
 
-    const opacity = isFulfilled ? 1 : 0.3;
+    const opacity = product.isFulfilled ? 1 : 0.3;
 
     function getWidth(columnNumber: number) {
         return props.columns?.at(columnNumber)?.width || '100%'

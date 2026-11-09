@@ -10,12 +10,16 @@ import CompleteOrderProductFormSectionTable from "./CompleteOrderProductFormSect
 type CompleteOrderGridProps = {
     model: CompleteOrder;
     productTypes: ProductType[];
+    onSubmit: (formData: CompleteOrderForm) => void;
 }
 
 const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
     const {
+        formState: {
+            isValid
+        },
         control,
-        getValues,
+        handleSubmit,
         reset,
     } = useForm<CompleteOrderForm>({
         defaultValues: {
@@ -26,8 +30,6 @@ const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
 
     const {
         fields,
-        //    append,
-        //     remove
     } = useFieldArray({
         control,
         name: 'products'
@@ -41,7 +43,6 @@ const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
             sortFn: (a, b) => a.productName.localeCompare(b.productName),
             sortGroups: true
         });
-
 
     /*
         const addField = () => {
@@ -68,17 +69,25 @@ const CompleteOrderProductForm = (props: CompleteOrderGridProps) => {
         }
     */
 
+    const onSubmit = (data: CompleteOrderForm) => {
+        if (!isValid) return;
+        props.onSubmit(data);
+    };
+
     useEffect(() => {
-        if (props.model.products.length > 0 && fields.length === 0) {
-            reset({
-                products: props.model.products
-            });
-        }
-    }, [props.model.products, reset, fields.length]);
+        reset({
+            products: props.model.products
+        });
+    }, [props.model.products, reset]);
 
     return (
         <Box className={'w-[90%] m-auto'}>
-            <Box component={"form"} className={'flex flex-col gap-[2rem]'}>
+            <Box
+                component="form"
+                 id="complete-order-form"
+                 onSubmit={handleSubmit(onSubmit)}
+                className={'flex flex-col gap-[2rem]'}
+            >
                 {Object.entries(groupedByType).map(([key, groupFields]) => (
                     <Section key={key} title={key}>
                         <CompleteOrderProductFormSectionTable
